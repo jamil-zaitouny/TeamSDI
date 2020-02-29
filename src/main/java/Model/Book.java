@@ -33,5 +33,8 @@ public class Book extends BaseEntity<String> {
         this.title = title;
     }
 
+    public String getAuthorName(){return authorName;}
+    public void setAuthorName(String authorName){this.authorName = authorName;}
+
 
 }
