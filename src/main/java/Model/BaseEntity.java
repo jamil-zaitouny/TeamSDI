@@ -6,7 +6,7 @@ public class BaseEntity<IDType> {
     BaseEntity(IDType id){
         this.id = id;
     }
-    IDType getId() {
+    public IDType getId() {
         return id;
     }
 
