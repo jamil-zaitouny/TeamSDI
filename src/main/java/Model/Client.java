@@ -1,4 +1,4 @@
-package Main.Model;
+package Model;
 
 public class Client extends BaseEntity<Integer>{
     private String name;

@@ -1,4 +1,4 @@
-package Main.Model;
+package Model;
 
 public class BaseEntity<IDType> {
     private IDType id;
