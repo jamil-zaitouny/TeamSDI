@@ -36,23 +36,23 @@ public class BooksInMemoryRepositoryTests
     @Test
     public void testFindOne() throws Exception {
         //TODO
-        //assertEquals("Failed",new Book("2","b","b"),books.findOne("2").get());
+        assertEquals("Failed",new Book("9781234567811","b","b"),books.findOne("9781234567811").get());
     }
 
     @Test
     public void testAdd() throws Exception {
         //TODO
-        //assertNotNull(books.add(new Book("6","e","e")));
+        assertNotNull(books.add(new Book("9781234567821","e","e")));
     }
 
     @Test
     public void testDelete() throws Exception {
-        assertNotNull(books.delete("4"));
+        assertNotNull(books.delete("9781234567811"));
     }
 
-    @Test(expected = ValidatorException.class)
+    @Test
     public void testUpdate() throws Exception {
-        assertNotNull(books.update(new Book("1","b","c")));
+        assertNotNull(books.update(new Book("9781234567811","b","c")));
     }
 
 }
