@@ -6,20 +6,14 @@ import javafx.util.Pair;
 
 import java.util.List;
 
-public class ClientValidator implements IValidator {
+public class ClientValidator implements IValidator<Client> {
+
     @Override
-    public void validate(Object o) throws ValidatorException {
-        if(o instanceof Pair){
-            if(
-                    ((Pair<List, Client>) o)
-                            .getKey()
-                            .stream()
-                            .noneMatch(v -> v.equals(((Pair<List, Client>) o).getValue())
-                            )
-            ){
-                return;
-            }
+    public void validate(Client client) throws ValidatorException {
+        if(client.getId() < 0){
+            throw new ValidatorException("ID can't be negative!");
+        }else if(client.getName().length() > 50){
+            throw new ValidatorException("Client name character limit exceeded!");
         }
-        throw new ValidatorException("The client already exists in the database!");
     }
 }
