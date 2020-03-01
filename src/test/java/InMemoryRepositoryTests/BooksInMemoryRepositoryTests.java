@@ -21,11 +21,11 @@ public class BooksInMemoryRepositoryTests
     @Before
     public void setUp() throws Exception {
         books=new BookRepositoryInMemmory(new BookValidator());
-        books.add(new Book("1","a","a"));
-        books.add(new Book("2","b","b"));
-        books.add(new Book("3","c","c"));
-        books.add(new Book("4","d","d"));
-        books.add(new Book("5","e","e"));
+        books.add(new Book("9781234567897","a","a"));
+        books.add(new Book("9781234567898","b","b"));
+        books.add(new Book("9781234567899","c","c"));
+        books.add(new Book("9781234567810","d","d"));
+        books.add(new Book("9781234567811","e","e"));
     }
 
     @After

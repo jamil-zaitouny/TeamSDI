@@ -4,8 +4,8 @@ public class Book extends BaseEntity<String> {
     private String title;
     private String authorName;
 
-    public Book(String IBAN, String title, String authorName) {
-        super(IBAN);
+    public Book(String ISBN, String title, String authorName) {
+        super(ISBN);
         this.title = title;
         this.authorName = authorName;
     }
@@ -20,7 +20,7 @@ public class Book extends BaseEntity<String> {
 
     @Override
     public String toString() {
-        return "IBAN: " + this.getId() + "\n"
+        return "ISBN: " + this.getId() + "\n"
                 +"Title: " + this.title + "\n"
                 +"Author: " + this.authorName + "\n";
     }

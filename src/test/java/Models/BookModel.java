@@ -8,7 +8,7 @@ import org.junit.Test;
 
 
 public class BookModel {
-    private final static String IBAN = "NL75RABO1495696898";
+    private final static String ISBN = "9781234567897";
     private final static String TITLE = "Red Rising";
     private final static String AUTHOR = "Pierce Brown";
 
@@ -16,7 +16,7 @@ public class BookModel {
 
     @Before
     public void setUp(){
-        book = new Book(IBAN, TITLE, AUTHOR);
+        book = new Book(ISBN, TITLE, AUTHOR);
     }
     @After
     public void tearDown(){
@@ -25,7 +25,7 @@ public class BookModel {
 
     @Test
     public void testGetBookID() throws Exception{
-        Assert.assertEquals( "The ID should be, ",IBAN, book.getId());
+        Assert.assertEquals( "The ID should be, ",ISBN, book.getId());
     }
     @Test
     public void testSetBookID() throws Exception{
