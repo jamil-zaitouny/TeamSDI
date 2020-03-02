@@ -21,10 +21,8 @@ public class ClientRepositoryInMemory<ID, T extends BaseEntity<ID>> implements R
 
     @Override
     public Optional<T> findOne(ID id) {
-        if (id == null) {
-            throw new IllegalArgumentException("id must not be null");
-        }
-        return Optional.ofNullable(clients.get(id));
+        Optional<ID> optionalId=Optional.of(id);
+        return Optional.ofNullable(clients.get(optionalId.orElseThrow(()->new IllegalArgumentException("The ID must not be null!"))));
     }
 
     @Override
@@ -36,26 +34,23 @@ public class ClientRepositoryInMemory<ID, T extends BaseEntity<ID>> implements R
 
     @Override
     public Optional<T> add(T entity) throws ValidatorException {
-        if (entity == null) {
-            throw new IllegalArgumentException("id must not be null");
-        }
+        Optional<T> optionalT = Optional.ofNullable(entity);
+        optionalT.orElseThrow(() -> new IllegalArgumentException("The entity must not be null!"));
         validator.validate(entity);
         return Optional.ofNullable(clients.putIfAbsent(entity.getId(), entity));
     }
 
     @Override
     public Optional<T> delete(ID id) {
-        if (id == null) {
-            throw new IllegalArgumentException("id must not be null");
-        }
+        Optional<ID> optionalID = Optional.of(id);
+        optionalID.orElseThrow(IllegalArgumentException::new);
         return Optional.ofNullable(clients.remove(id));
     }
 
     @Override
     public Optional<T> update(T entity) throws ValidatorException {
-        if (entity == null) {
-            throw new IllegalArgumentException("entity must not be null");
-        }
+        Optional<T> optionalT = Optional.ofNullable(entity);
+        optionalT.orElseThrow(() -> new IllegalArgumentException("The entity must not be null!"));
         validator.validate(entity);
         return Optional.ofNullable(clients.computeIfPresent(entity.getId(), (k, v) -> entity));
     }
