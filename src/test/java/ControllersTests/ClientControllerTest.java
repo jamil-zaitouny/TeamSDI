@@ -4,7 +4,7 @@ import Controller.ClientController;
 import Model.Client;
 import Model.Exceptions.ValidatorException;
 import Model.Validators.ClientValidator;
-import Repository.ClientRepositoryInMemory;
+import Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +17,7 @@ public class ClientControllerTest {
 
     @Before
     public void setUp()  {
-        clientController=new ClientController(new ClientRepositoryInMemory<>(new ClientValidator()));
+        clientController=new ClientController(new RepositoryInMemory<>(new ClientValidator()));
         clientController.addClient(new Client(1,"a"));
         clientController.addClient(new Client(2,"a"));
         clientController.addClient(new Client(3,"a"));

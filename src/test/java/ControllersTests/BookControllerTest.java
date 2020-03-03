@@ -4,7 +4,7 @@ import Controller.BookController;
 import Model.Book;
 import Model.Exceptions.ValidatorException;
 import Model.Validators.BookValidator;
-import Repository.BookRepositoryInMemmory;
+import Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,7 +18,7 @@ public class BookControllerTest {
 
     @Before
     public void setUp() {
-        bookController=new BookController(new BookRepositoryInMemmory<>(new BookValidator()));
+        bookController=new BookController(new RepositoryInMemory<>(new BookValidator()));
         bookController.addBook(new Book("9781234567897","a","a"));
         bookController.addBook(new Book("9781234567898","b","b"));
         bookController.addBook(new Book("9781234567899","c","c"));

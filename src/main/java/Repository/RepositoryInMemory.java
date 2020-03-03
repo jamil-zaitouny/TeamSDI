@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ClientRepositoryInMemory<ID, T extends BaseEntity<ID>> implements RepositoryInterface<ID, T>
+public class RepositoryInMemory<ID, T extends BaseEntity<ID>> implements RepositoryInterface<ID, T>
 {
     private Map<ID, T> clients;
     private IValidator<T> validator;
 
-    public ClientRepositoryInMemory(IValidator<T> validator) {
+    public RepositoryInMemory(IValidator<T> validator) {
         this.validator = validator;
         clients = new HashMap<>();
     }

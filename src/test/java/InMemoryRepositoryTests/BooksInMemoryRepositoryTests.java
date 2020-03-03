@@ -1,26 +1,22 @@
 package InMemoryRepositoryTests;
 
 import Model.Book;
-import Model.Exceptions.ValidatorException;
+import Repository.RepositoryInMemory;
 import Model.Validators.BookValidator;
-import Repository.BookRepositoryInMemmory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 
 public class BooksInMemoryRepositoryTests
 {
 
-    private BookRepositoryInMemmory books;
+    private RepositoryInMemory books;
 
     @Before
     public void setUp() throws Exception {
-        books=new BookRepositoryInMemmory(new BookValidator());
+        books=new RepositoryInMemory(new BookValidator());
         books.add(new Book("9781234567897","a","a"));
         books.add(new Book("9781234567898","b","b"));
         books.add(new Book("9781234567899","c","c"));

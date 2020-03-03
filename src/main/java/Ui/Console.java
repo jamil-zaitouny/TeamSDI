@@ -1,7 +1,6 @@
 package Ui;
 
-import Controller.BookController;
-import Controller.ClientController;
+import Controller.*;
 
 public class Console extends DefaultConsole{
     private ClientController clientController;

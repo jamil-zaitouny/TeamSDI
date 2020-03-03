@@ -7,10 +7,10 @@ public abstract class DefaultConsole {
     static final int ExitOption = 0;
 
     public void run() {
-        while (true) {
+        int number=0;
+        while (number!=-1) {
             displayMenu();
             int choice = readAnswer();
-            int number=0;
             try {
                 number = dealChoice(choice);
             }
@@ -18,7 +18,6 @@ public abstract class DefaultConsole {
             {
                 System.out.println(exception.getMessage());
             }
-            if(number == -1) break;
         }
     }
 
