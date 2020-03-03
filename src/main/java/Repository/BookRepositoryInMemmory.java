@@ -5,10 +5,8 @@ import Model.Book;
 import Model.Exceptions.ValidatorException;
 import Model.Validators.IValidator;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import javax.swing.text.html.Option;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BookRepositoryInMemmory<ID, T extends BaseEntity<ID>> implements RepositoryInterface<ID, T>
@@ -23,41 +21,34 @@ public class BookRepositoryInMemmory<ID, T extends BaseEntity<ID>> implements Re
 
     @Override
     public Optional<T> findOne(ID id) {
-        if (id == null) {
-            throw new IllegalArgumentException("id must not be null");
-        }
-        return Optional.ofNullable(books.get(id));
+        Optional<ID> optionalID = Optional.of(id);
+        return Optional.ofNullable(books.get(optionalID.orElseThrow(()-> new IllegalArgumentException("The ID must not be null!"))));
     }
 
     @Override
     public Iterable<T> findAll() {
-        return books.values()
-                .stream()
-                .collect(Collectors.toSet());
+        return new HashSet<>(books.values());
     }
 
     @Override
     public Optional<T> add(T entity) throws ValidatorException {
-        if (entity == null) {
-            throw new IllegalArgumentException("id must not be null");
-        }
+        Optional<T> optionalT = Optional.ofNullable(entity);
+        optionalT.orElseThrow(() -> new IllegalArgumentException("The entity must not be null!"));
         validator.validate(entity);
         return Optional.ofNullable(books.putIfAbsent(entity.getId(), entity));
     }
 
     @Override
     public Optional<T> delete(ID id) {
-        if (id == null) {
-            throw new IllegalArgumentException("id must not be null");
-        }
+        Optional<ID> optionalID = Optional.of(id);
+        optionalID.orElseThrow(IllegalArgumentException::new);
         return Optional.ofNullable(books.remove(id));
     }
 
     @Override
     public Optional<T> update(T entity) throws ValidatorException {
-        if (entity == null) {
-            throw new IllegalArgumentException("entity must not be null");
-        }
+        Optional<T> optionalT = Optional.ofNullable(entity);
+        optionalT.orElseThrow(()-> new IllegalArgumentException("The entity must not be null!"));
         validator.validate(entity);
         return Optional.ofNullable(books.computeIfPresent(entity.getId(), (k, v) -> entity));
     }

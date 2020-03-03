@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Optional;
+
 public class Book extends BaseEntity<String> {
     private String title;
     private String authorName;
@@ -12,10 +14,8 @@ public class Book extends BaseEntity<String> {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Book){
-            return ((Book) obj).getId().equals(this.getId());
-        }
-        return false;
+        Optional<Object> optionalO = Optional.ofNullable(obj).filter(v -> v instanceof Book);
+        return optionalO.filter(v -> ((Book) v).getId().equals(this.getId())).isPresent();
     }
 
     @Override

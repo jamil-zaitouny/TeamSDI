@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Optional;
+
 public class Client extends BaseEntity<Integer>{
     private String name;
     public static String className = "Clients";
@@ -16,10 +18,10 @@ public class Client extends BaseEntity<Integer>{
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Client){
-            return ((Client) obj).getId() == this.getId();
-        }
-        return false;
+        Optional<Object> objectOptional = Optional.ofNullable(obj).filter(v -> v instanceof Client);
+        return objectOptional
+                .filter(v->((Client) v).getId().equals(this.getId()))
+                .isPresent();
     }
 
     @Override
