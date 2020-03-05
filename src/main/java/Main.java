@@ -24,7 +24,7 @@ public class Main {
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
-        PurchaseController purchaseController=new PurchaseController(purchaseRepo);
+        PurchaseController purchaseController=new PurchaseController(purchaseRepo,clientRepo,bookRepo);
 
         bookController.addBook(book);
 
