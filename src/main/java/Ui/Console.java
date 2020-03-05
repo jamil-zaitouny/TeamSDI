@@ -5,13 +5,16 @@ import Controller.*;
 public class Console extends DefaultConsole{
     private ClientController clientController;
     private BookController bookController;
+    private PurchaseController purchaseController;
 
     private static final int BooksOption = 1;
     private static final int ClientsOption = 2;
+    private static final int PurchasesOption = 3;
 
-    public Console(ClientController clientController, BookController bookController) {
+    public Console(ClientController clientController, BookController bookController,PurchaseController purchaseController) {
         this.clientController = clientController;
         this.bookController = bookController;
+        this.purchaseController=purchaseController;
     }
 
     @Override
@@ -22,6 +25,9 @@ public class Console extends DefaultConsole{
                 break;
             case ClientsOption:
                 dealClients();
+                break;
+            case PurchasesOption:
+                dealPurchases();
                 break;
             case ExitOption:
                 return -1;
@@ -41,11 +47,18 @@ public class Console extends DefaultConsole{
         bookConsole.run();
     }
 
+    private void dealPurchases()
+    {
+        PurchaseConsole purchaseConsole=new PurchaseConsole(purchaseController);
+        purchaseConsole.run();
+    }
+
     @Override
     public void displayMenu() {
         System.out.println("Options: ");
         System.out.println("\t1.Books ");
         System.out.println("\t2.Clients ");
+        System.out.println("\t3.Purchases ");
         System.out.println("\t0.Exit ");
         System.out.println("Choose: ");
     }

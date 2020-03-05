@@ -1,9 +1,11 @@
 import Controller.*;
 import Model.Book;
 import Model.Client;
+import Model.Purchase;
 import Model.Validators.BookValidator;
 import Model.Validators.ClientValidator;
 
+import Model.Validators.PurchaseValidator;
 import Repository.RepositoryInMemory;
 import Ui.Console;
 
@@ -14,16 +16,19 @@ public class Main {
 
         ClientValidator clientValidator = new ClientValidator();
         BookValidator bookValidator = new BookValidator();
+        PurchaseValidator purchaseValidator = new PurchaseValidator();
 
         RepositoryInMemory<Integer, Client> clientRepo = new RepositoryInMemory<>(clientValidator);
         RepositoryInMemory<String, Book> bookRepo = new RepositoryInMemory<>(bookValidator);
+        RepositoryInMemory<Integer, Purchase> purchaseRepo = new RepositoryInMemory<>(purchaseValidator);
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
+        PurchaseController purchaseController=new PurchaseController(purchaseRepo);
 
         bookController.addBook(book);
 
-        Console console = new Console(clientController, bookController);
+        Console console = new Console(clientController, bookController,purchaseController);
         console.run();
     }
 }

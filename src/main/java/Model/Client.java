@@ -37,4 +37,5 @@ public class Client extends BaseEntity<Integer>{
     public void setName(String name) {
         this.name = name;
     }
+
 }
