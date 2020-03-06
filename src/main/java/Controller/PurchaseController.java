@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Book;
 import Model.Client;
+import Model.Exceptions.InvalidClientDetailsException;
 import Model.Exceptions.ValidatorException;
 import Model.Purchase;
 import Repository.RepositoryInMemory;
@@ -24,8 +25,9 @@ public class PurchaseController
 
     public void addPurchase(Purchase purchase) throws ValidatorException
     {
-        if(clients.findOne(purchase.getClientId()).get()!=null && books.findOne(purchase.getBookId()).get()!=null)
-            this.repository.add(purchase);
+        clients.findOne(purchase.getClientId()).orElseThrow(()->new ValidatorException("Inexisting client"));
+        books.findOne(purchase.getBookId()).orElseThrow(()->new ValidatorException("Inexisting book"));
+        this.repository.add(purchase);
     }
 
     public Set<Purchase> getAllPurchases()
