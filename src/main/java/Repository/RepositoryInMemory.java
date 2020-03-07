@@ -14,15 +14,13 @@ public class RepositoryInMemory<ID, T extends BaseEntity<ID>> implements Reposit
     private Map<ID, T> clients;
     private IValidator<T> validator;
 
-    public RepositoryInMemory(IValidator<T> validator) {
-        this.validator = validator;
+    public RepositoryInMemory() {
         clients = new HashMap<>();
     }
 
     @Override
     public Optional<T> findOne(ID id) {
-        Optional<ID> optionalId=Optional.of(id);
-        return Optional.ofNullable(clients.get(optionalId.orElseThrow(()->new IllegalArgumentException("The ID must not be null!"))));
+        return Optional.ofNullable(clients.get(id));
     }
 
     @Override
@@ -36,7 +34,6 @@ public class RepositoryInMemory<ID, T extends BaseEntity<ID>> implements Reposit
     public Optional<T> add(T entity) throws ValidatorException {
         Optional<T> optionalT = Optional.ofNullable(entity);
         optionalT.orElseThrow(() -> new IllegalArgumentException("The entity must not be null!"));
-        validator.validate(entity);
         return Optional.ofNullable(clients.putIfAbsent(entity.getId(), entity));
     }
 
@@ -51,7 +48,6 @@ public class RepositoryInMemory<ID, T extends BaseEntity<ID>> implements Reposit
     public Optional<T> update(T entity) throws ValidatorException {
         Optional<T> optionalT = Optional.ofNullable(entity);
         optionalT.orElseThrow(() -> new IllegalArgumentException("The entity must not be null!"));
-        validator.validate(entity);
         return Optional.ofNullable(clients.computeIfPresent(entity.getId(), (k, v) -> entity));
     }
 }

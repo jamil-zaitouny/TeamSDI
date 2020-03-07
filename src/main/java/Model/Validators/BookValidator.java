@@ -3,20 +3,17 @@ package Model.Validators;
 import Model.Book;
 import Model.Client;
 import Model.Exceptions.ValidatorException;
-import javafx.util.Pair;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BookValidator implements IValidator<Book>{
 
     @Override
     public void validate(Book book) throws ValidatorException {
-        if(!(book.getId().length() == 13)){
-            throw new ValidatorException("The ISBN should be 13 character's long");
-        }else if(book.getTitle().length() > 100){
-            throw new ValidatorException("The title cannot have more than 100 characters");
-        }else if(book.getAuthorName().length() >100){
-            throw new ValidatorException("The author name cannot be more than 100 characters long!");
-        }
+        Optional<Book> bookOptional = Optional.ofNullable(book);
+        bookOptional.filter(v->v.getId().length() == 13).orElseThrow(() -> new ValidatorException("The ISBN should be 13 character's long"));
+        bookOptional.filter(v->v.getTitle().length() < 100).orElseThrow(() -> new ValidatorException("The title cannot have more than 100 characters"));
+        bookOptional.filter(v -> v.getAuthorName().length() < 100).orElseThrow(() -> new ValidatorException("The author name cannot be more than 100"));
     }
 }

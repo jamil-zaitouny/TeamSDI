@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Book;
 import Model.Exceptions.ValidatorException;
+import Model.Validators.BookValidator;
+import Model.Validators.IValidator;
 import Repository.RepositoryInMemory;
 
 import java.util.Set;
@@ -10,14 +12,16 @@ import java.util.stream.StreamSupport;
 
 public class BookController {
     private RepositoryInMemory<String, Book> repository;
-
+    private IValidator<Book> validator;
 
     public BookController(RepositoryInMemory<String, Book> repository) {
+        validator = new BookValidator();
         this.repository = repository;
     }
 
     public void addBook(Book book) throws ValidatorException
     {
+        validator.validate(book);
         this.repository.add(book);
     }
 

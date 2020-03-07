@@ -3,13 +3,15 @@ package Model.Validators;
 import Model.Exceptions.ValidatorException;
 import Model.Purchase;
 
+import java.util.Optional;
+
+
 public class PurchaseValidator implements IValidator<Purchase>
 {
     @Override
     public void validate(Purchase purchase) throws ValidatorException {
-        if(purchase.getClientId()<0)
-            throw new ValidatorException("Invalid client id");
-        else if (purchase.getBookId().length()!=13)
-            throw new ValidatorException("Invalid book ISBN");
+        Optional<Purchase> purchaseOptional = Optional.ofNullable(purchase);
+        purchaseOptional.filter(v -> v.getClientId() > 0).orElseThrow(() -> new ValidatorException("Invalid Client id"));
+        purchaseOptional.filter(v -> v.getBookId().length() == 13).orElseThrow(() -> new ValidatorException("Invalid Client id"));
     }
 }
