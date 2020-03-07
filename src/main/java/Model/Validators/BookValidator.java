@@ -14,6 +14,6 @@ public class BookValidator implements IValidator<Book>{
         Optional<Book> bookOptional = Optional.ofNullable(book);
         bookOptional.filter(v->v.getId().length() == 13).orElseThrow(() -> new ValidatorException("The ISBN should be 13 character's long"));
         bookOptional.filter(v->v.getTitle().length() < 100).orElseThrow(() -> new ValidatorException("The title cannot have more than 100 characters"));
-        bookOptional.filter(v -> v.getAuthorName().length() < 100).orElseThrow(() -> new ValidatorException("The author name cannot be more than 100"));
+        bookOptional.filter(v -> v.getAuthorName().length() < 100).orElseThrow(() -> new ValidatorException("The author name cannot have more than 100 characters"));
     }
 }
