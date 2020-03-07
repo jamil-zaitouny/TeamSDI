@@ -7,8 +7,8 @@ public class Purchase extends BaseEntity<Integer>
     private String bookId;
     private int clientId;
 
-    public Purchase(Integer id, String bookId, int clientId) {
-        super(id);
+    public Purchase(int purchaseID, String bookId, int clientId) {
+        super(purchaseID);
         this.bookId = bookId;
         this.clientId = clientId;
     }
@@ -31,8 +31,9 @@ public class Purchase extends BaseEntity<Integer>
 
     @Override
     public String toString() {
-        return "Book:" +bookId+ "\n"+
-                "Client=" + clientId;
+        return "PurchaseID: "+ this.getId() + "\n" +
+                "Book: " + bookId + "\n"+
+                "Client: " + clientId;
     }
 
     @Override

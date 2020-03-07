@@ -14,13 +14,9 @@ public class Main {
 
         Book book = new Book("1234567890999", "Fram, ursul polar", "Cezar Petrescu");
 
-        ClientValidator clientValidator = new ClientValidator();
-        BookValidator bookValidator = new BookValidator();
-        PurchaseValidator purchaseValidator = new PurchaseValidator();
-
-        RepositoryInMemory<Integer, Client> clientRepo = new RepositoryInMemory<>(clientValidator);
-        RepositoryInMemory<String, Book> bookRepo = new RepositoryInMemory<>(bookValidator);
-        RepositoryInMemory<Integer, Purchase> purchaseRepo = new RepositoryInMemory<>(purchaseValidator);
+        RepositoryInMemory<Integer, Client> clientRepo = new RepositoryInMemory<>();
+        RepositoryInMemory<String, Book> bookRepo = new RepositoryInMemory<>();
+        RepositoryInMemory<Integer, Purchase> purchaseRepo = new RepositoryInMemory<>();
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
