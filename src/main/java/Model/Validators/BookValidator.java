@@ -3,7 +3,6 @@ package Model.Validators;
 import Model.Book;
 import Model.Client;
 import Model.Exceptions.ValidatorException;
-import javafx.util.Pair;
 
 import java.util.List;
 

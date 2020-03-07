@@ -2,7 +2,6 @@ package Model.Validators;
 
 import Model.Client;
 import Model.Exceptions.ValidatorException;
-import javafx.util.Pair;
 
 import java.util.List;
 
