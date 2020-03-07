@@ -25,8 +25,8 @@ public class PurchaseController
 
     public void addPurchase(Purchase purchase) throws ValidatorException
     {
-        clients.findOne(purchase.getClientId()).orElseThrow(()->new ValidatorException("Inexisting client"));
-        books.findOne(purchase.getBookId()).orElseThrow(()->new ValidatorException("Inexisting book"));
+        clients.findOne(purchase.getClientId()).orElseThrow(()->new ValidatorException("Client does not exist!"));
+        books.findOne(purchase.getBookId()).orElseThrow(()->new ValidatorException("Book does not exist!"));
         this.repository.add(purchase);
     }
 
