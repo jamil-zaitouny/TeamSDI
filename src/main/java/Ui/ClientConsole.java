@@ -2,6 +2,9 @@ package Ui;
 
 import Controller.ClientController;
 import Model.Client;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,7 +20,7 @@ public class ClientConsole extends DefaultConsole {
     }
 
     @Override
-    protected int dealChoice(int choice) {
+    protected int dealChoice(int choice) throws IOException {
         switch (choice) {
             case PrintClientsOption:
                 printClients();
@@ -34,7 +37,7 @@ public class ClientConsole extends DefaultConsole {
         return 0;
     }
 
-    private void addClient() {
+    private void addClient() throws IOException {
         this.clientController.addClient(readClient());
     }
 

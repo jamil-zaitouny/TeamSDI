@@ -3,6 +3,8 @@ package Ui;
 import Controller.PurchaseController;
 import Model.Purchase;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +21,7 @@ public class PurchaseConsole extends DefaultConsole
     }
 
     @Override
-    protected int dealChoice(int choice) {
+    protected int dealChoice(int choice) throws IOException {
         switch (choice) {
             case PrintPurchasesOption:
                 printPurchases();
@@ -36,8 +38,10 @@ public class PurchaseConsole extends DefaultConsole
         return 0;
     }
 
-    private void addPurchase() {
+    private void addPurchase() throws IOException {
+
         this.purchaseController.addPurchase(readPurchase());
+
     }
 
     private void printPurchases() {

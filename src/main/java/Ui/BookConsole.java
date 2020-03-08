@@ -3,6 +3,8 @@ package Ui;
 import Controller.BookController;
 import Model.Book;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,13 +21,19 @@ public class BookConsole extends DefaultConsole{
     }
 
     @Override
-    public int dealChoice(int choice) {
+    public int dealChoice(int choice) throws IOException {
         switch (choice) {
             case PrintBooksOption:
                 printBooks();
                 break;
             case AddBookOption:
-                addBook();
+                try {
+                    addBook();
+                } catch (TransformerException e) {
+                    e.printStackTrace();
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                }
                 break;
             case ExitOption:
                 return -1;
@@ -36,7 +44,7 @@ public class BookConsole extends DefaultConsole{
         return 0;
     }
 
-    private void addBook() {
+    private void addBook() throws IOException, TransformerException, ParserConfigurationException {
         this.controller.addBook(readBook());
     }
 
