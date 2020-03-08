@@ -2,7 +2,7 @@ package InMemoryRepositoryTests;
 
 import Model.Book;
 import Repository.RepositoryInMemory;
-import Model.Validators.BookValidator;
+import Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 public class BooksInMemoryRepositoryTests
 {
 
-    private RepositoryInMemory books;
+    private RepositoryInterface books;
 
     @Before
     public void setUp() throws Exception {
-        books=new RepositoryInMemory(new BookValidator());
+        books=new RepositoryInMemory<String, Book>();
         books.add(new Book("9781234567897","a","a"));
         books.add(new Book("9781234567898","b","b"));
         books.add(new Book("9781234567899","c","c"));

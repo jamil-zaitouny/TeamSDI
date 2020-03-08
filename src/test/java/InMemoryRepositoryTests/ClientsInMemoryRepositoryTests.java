@@ -1,7 +1,6 @@
 package InMemoryRepositoryTests;
 
 import Model.Client;
-import Model.Validators.ClientValidator;
 import Repository.RepositoryInMemory;
 import Repository.RepositoryInterface;
 import org.junit.After;
@@ -16,7 +15,7 @@ public class ClientsInMemoryRepositoryTests {
 
     @Before
     public void setUp() throws Exception {
-        clients=new RepositoryInMemory(new ClientValidator());
+        clients=new RepositoryInMemory<Integer, Client>();
         clients.add(new Client(1,"a"));
         clients.add(new Client(2,"a"));
         clients.add(new Client(3,"a"));
