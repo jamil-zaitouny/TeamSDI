@@ -18,19 +18,19 @@ public class PurchaseFileRepositoryTest {
     private RepositoryInterface purchases;
     private RepositoryInterface clients;
     private RepositoryInterface books;
-
+    private String directory = "C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\";
     @Before
     public void setUp() throws Exception {
-        clients=new ClientFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\","ClientTest.csv");
+        clients=new ClientFileRepository(directory,"ClientTest.csv");
         clients.add(new Client(1,"a"));
         clients.add(new Client(2,"a"));
 
-        books=new BookFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\","BookTest.csv");
+        books=new BookFileRepository(directory,"BookTest.csv");
         books.add(new Book("1234567890098","a","a"));
         books.add(new Book("1234567890078","b","b"));
         books.add(new Book("1334567890078","c","c"));
 
-        purchases=new PurchaseFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\","PurchasesTest.csv");
+        purchases=new PurchaseFileRepository(directory,"PurchasesTest.csv");
         purchases.add(new Purchase(1,"1234567890098",1));
         purchases.add(new Purchase(2,"1234567890078",2));
         purchases.add(new Purchase(3,"1334567890078",1));

@@ -15,12 +15,12 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException {
-
+        String directory = "C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\";
         Book book = new Book("1234567890999", "Fram, ursul polar", "Cezar Petrescu");
 
-        RepositoryInterface<Integer, Purchase> purchaseRepo = new PurchaseFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\");
-        RepositoryInterface<String, Book> bookRepo = new BookFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\");
-        RepositoryInterface<Integer, Client> clientRepo = new ClientFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\");
+        RepositoryInterface<Integer, Purchase> purchaseRepo = new PurchaseFileRepository(directory);
+        RepositoryInterface<String, Book> bookRepo = new BookFileRepository(directory);
+        RepositoryInterface<Integer, Client> clientRepo = new ClientFileRepository(directory);
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
