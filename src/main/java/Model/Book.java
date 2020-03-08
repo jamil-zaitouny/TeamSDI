@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Optional;
 
-public class Book extends BaseEntity<String> {
+public class Book extends BaseEntity<String> implements FileOperations {
     private String title;
     private String authorName;
 
@@ -25,6 +25,8 @@ public class Book extends BaseEntity<String> {
                 +"Author: " + this.authorName + "\n";
     }
 
+
+
     public String getTitle() {
         return title;
     }
@@ -37,4 +39,13 @@ public class Book extends BaseEntity<String> {
     public void setAuthorName(String authorName){this.authorName = authorName;}
 
 
+    @Override
+    public String[] toCSV() {
+        return (getId() + "," + getTitle() + "," + getAuthorName()).split(",");
+    }
+
+    @Override
+    public String toXML() {
+        return null;
+    }
 }

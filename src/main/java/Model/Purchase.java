@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Optional;
 
-public class Purchase extends BaseEntity<Integer>
+public class Purchase extends BaseEntity<Integer> implements FileOperations
 {
     private String bookId;
     private int clientId;
@@ -33,7 +33,7 @@ public class Purchase extends BaseEntity<Integer>
     public String toString() {
         return "PurchaseID: "+ this.getId() + "\n" +
                 "Book: " + bookId + "\n"+
-                "Client: " + clientId;
+                "Client: " + clientId + "\n";
     }
 
     @Override
@@ -42,5 +42,16 @@ public class Purchase extends BaseEntity<Integer>
         return objectOptional
                 .filter(v->((Purchase) v).getId().equals(this.getId()))
                 .isPresent();
+    }
+
+    @Override
+    public String[] toCSV() {
+        return (getId() + "," + getBookId() + "," + getClientId()).split(",");
+    }
+
+
+    @Override
+    public String toXML() {
+        return null;
     }
 }
