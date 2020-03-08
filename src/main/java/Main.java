@@ -18,9 +18,9 @@ public class Main {
 
         Book book = new Book("1234567890999", "Fram, ursul polar", "Cezar Petrescu");
 
-        RepositoryInterface<Integer, Purchase> purchaseRepo = new PurchaseFileRepository();
-        RepositoryInterface<String, Book> bookRepo = new BookFileRepository();
-        RepositoryInterface<Integer, Client> clientRepo = new ClientFileRepository();
+        RepositoryInterface<Integer, Purchase> purchaseRepo = new PurchaseFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\");
+        RepositoryInterface<String, Book> bookRepo = new BookFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\");
+        RepositoryInterface<Integer, Client> clientRepo = new ClientFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\");
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);

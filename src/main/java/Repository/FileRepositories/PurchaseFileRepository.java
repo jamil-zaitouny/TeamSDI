@@ -16,15 +16,17 @@ import static Repository.FileRepositories.FileUtilities.getCSVWriter;
 
 public class PurchaseFileRepository extends RepositoryInMemory<Integer, Purchase> {
     private String fileName;
-    private String directory = "C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\";
-    public PurchaseFileRepository(){
+    private String directory;
+    public PurchaseFileRepository(String directory){
         super();
+        this.directory = directory;
         this.fileName = "Purchases.csv";
         this.directory += this.fileName;
         loadCSV();
     }
-    public PurchaseFileRepository(String fileName){
+    public PurchaseFileRepository(String directory, String fileName){
         super();
+        this.directory = directory;
         this.fileName = fileName;
         this.directory += this.fileName;
         loadCSV();

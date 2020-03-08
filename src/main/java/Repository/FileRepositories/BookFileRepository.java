@@ -19,14 +19,16 @@ import static Repository.FileRepositories.FileUtilities.getCSVWriter;
 public class BookFileRepository extends RepositoryInMemory<String, Book> {
     private String fileName;
     private String directory = "C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\";
-    public BookFileRepository(){
+    public BookFileRepository(String directory){
         super();
+        this.directory = directory;
         this.fileName = "books.csv";
         this.directory += this.fileName;
         loadCSV();
     }
-    public BookFileRepository(String fileName){
+    public BookFileRepository(String directory, String fileName){
         super();
+        this.directory = directory;
         this.fileName = fileName;
         this.directory += this.fileName;
         loadCSV();

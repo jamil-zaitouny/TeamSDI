@@ -14,7 +14,7 @@ public class ClientFileRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        clients=new Repository.FileRepositories.ClientFileRepository("ClientTest.csv");
+        clients=new Repository.FileRepositories.ClientFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\","ClientTest.csv");
     }
 
     @After

@@ -17,7 +17,7 @@ public class BookFileRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        books=new BookFileRepository("BookTest.csv");
+        books=new BookFileRepository("C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\","BookTest.csv");
     }
 
     @After
