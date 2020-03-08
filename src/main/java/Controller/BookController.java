@@ -7,6 +7,9 @@ import Model.Validators.IValidator;
 import Repository.RepositoryInMemory;
 import Repository.RepositoryInterface;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -20,8 +23,7 @@ public class BookController {
         this.repository = repository;
     }
 
-    public void addBook(Book book) throws ValidatorException
-    {
+    public void addBook(Book book) throws ValidatorException, IOException {
         validator.validate(book);
         this.repository.add(book);
     }
