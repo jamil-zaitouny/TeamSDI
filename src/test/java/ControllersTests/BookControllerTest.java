@@ -4,12 +4,14 @@ import Controller.BookController;
 import Model.Book;
 import Model.Exceptions.ValidatorException;
 import Model.Validators.BookValidator;
+import Repository.FileRepositories.BookFileRepository;
 import Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class BookControllerTest {
@@ -17,8 +19,8 @@ public class BookControllerTest {
     private BookController bookController;
 
     @Before
-    public void setUp() {
-        bookController=new BookController(new RepositoryInMemory<>(new BookValidator()));
+    public void setUp() throws IOException {
+        bookController=new BookController(new RepositoryInMemory<String, Book>());
         bookController.addBook(new Book("9781234567897","a","a"));
         bookController.addBook(new Book("9781234567898","b","b"));
         bookController.addBook(new Book("9781234567899","c","c"));
@@ -32,14 +34,12 @@ public class BookControllerTest {
     }
 
     @Test
-    public void addBookPositiveTest()
-    {
+    public void addBookPositiveTest() throws IOException {
         bookController.addBook(new Book("9781234567812","x", "y"));
     }
 
     @Test(expected = ValidatorException.class)
-    public void addBookNegativeTest()
-    {
+    public void addBookNegativeTest() throws IOException {
         bookController.addBook(new Book("", "", ""));
     }
 

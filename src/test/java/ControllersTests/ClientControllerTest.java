@@ -10,14 +10,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class ClientControllerTest {
     private ClientController clientController;
 
     @Before
-    public void setUp()  {
-        clientController=new ClientController(new RepositoryInMemory<>(new ClientValidator()));
+    public void setUp() throws IOException {
+        clientController=new ClientController(new RepositoryInMemory<>());
         clientController.addClient(new Client(1,"a"));
         clientController.addClient(new Client(2,"a"));
         clientController.addClient(new Client(3,"a"));
@@ -31,12 +32,12 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void addClientPositiveTest() {
+    public void addClientPositiveTest() throws IOException {
         this.clientController.addClient(new Client(10, "abc"));
     }
 
     @Test(expected = ValidatorException.class)
-    public void addClientNegativeTest()  {
+    public void addClientNegativeTest() throws IOException {
         this.clientController.addClient(new Client(7, ""));
         this.clientController.addClient(new Client(-1, "abc"));
     }
