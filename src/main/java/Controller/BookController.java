@@ -19,14 +19,28 @@ public class BookController {
         this.repository = repository;
     }
 
-    public void addBook(Book book) throws ValidatorException
-    {
+    public void addBook(String IBSN, String title, String author, String genre) throws ValidatorException {
+        Book book = new Book(IBSN, title, author, genre);
         validator.validate(book);
         this.repository.add(book);
     }
 
-    public Set<Book>  getAllBooks()
+    public void deleteBook(String ibsn) {
+        this.repository.delete(ibsn);
+    }
+
+    public void updateBook(String ibsn, String newTitle, String newAuthor, String genre)
     {
+        Book newBook = new Book(ibsn, newTitle, newAuthor, genre);
+        this.validator.validate(newBook);
+        this.repository.update(newBook);
+    }
+
+    public Book searchByIbsn(String ibsn){
+        return this.repository.findOne(ibsn).get();
+    }
+
+    public Set<Book> getAllBooks() {
         return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
     }
 }

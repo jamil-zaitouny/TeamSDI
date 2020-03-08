@@ -18,11 +18,30 @@ public class ClientController {
         this.repository = repository;
     }
 
-    public void addClient(Client client) throws ValidatorException
+    public void addClient(Integer id, String name) throws ValidatorException
     {
+        Client client = new Client(id, name);
         validator.validate(client);
         this.repository.add(client);
     }
+
+    public void deleteClient(Integer id)
+    {
+        this.repository.delete(id);
+    }
+
+    public void updateClient(Integer id, String newName)
+    {
+        Client newClient = new Client(id, newName);
+        this.validator.validate(newClient);
+        this.repository.update(newClient);
+    }
+
+    public Client searchById(Integer id)
+    {
+        return this.repository.findOne(id).get();
+    }
+
 
     public Set<Client> getAllClients()
     {

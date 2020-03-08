@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class RepositoryInMemory<ID, T extends BaseEntity<ID>> implements RepositoryInterface<ID, T>
 {
     private Map<ID, T> clients;
-    private IValidator<T> validator;
 
     public RepositoryInMemory() {
         clients = new HashMap<>();

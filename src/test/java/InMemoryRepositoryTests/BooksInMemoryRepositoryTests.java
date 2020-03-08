@@ -16,12 +16,12 @@ public class BooksInMemoryRepositoryTests
 
     @Before
     public void setUp() throws Exception {
-        books=new RepositoryInMemory(new BookValidator());
-        books.add(new Book("9781234567897","a","a"));
-        books.add(new Book("9781234567898","b","b"));
-        books.add(new Book("9781234567899","c","c"));
-        books.add(new Book("9781234567810","d","d"));
-        books.add(new Book("9781234567811","e","e"));
+        books=new RepositoryInMemory();
+        books.add(new Book("9781234567897","a","a", "A"));
+        books.add(new Book("9781234567898","b","b", "c"));
+        books.add(new Book("9781234567899","c","c", "b"));
+        books.add(new Book("9781234567810","d","d","c"));
+        books.add(new Book("9781234567811","e","e", "b"));
     }
 
     @After
@@ -32,13 +32,13 @@ public class BooksInMemoryRepositoryTests
     @Test
     public void testFindOne() throws Exception {
         //TODO
-        assertEquals("Failed",new Book("9781234567811","b","b"),books.findOne("9781234567811").get());
+        assertEquals("Failed",new Book("9781234567811","b","b", "A"),books.findOne("9781234567811").get());
     }
 
     @Test
     public void testAdd() throws Exception {
         //TODO
-        assertNotNull(books.add(new Book("9781234567821","e","e")));
+        assertNotNull(books.add(new Book("9781234567821","e","e", "A")));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class BooksInMemoryRepositoryTests
 
     @Test
     public void testUpdate() throws Exception {
-        assertNotNull(books.update(new Book("9781234567811","b","c")));
+        assertNotNull(books.update(new Book("9781234567811","b","c","A")));
     }
 
 }

@@ -3,7 +3,6 @@ package ControllersTests;
 import Controller.BookController;
 import Model.Book;
 import Model.Exceptions.ValidatorException;
-import Model.Validators.BookValidator;
 import Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,12 +17,12 @@ public class BookControllerTest {
 
     @Before
     public void setUp() {
-        bookController=new BookController(new RepositoryInMemory<>(new BookValidator()));
-        bookController.addBook(new Book("9781234567897","a","a"));
-        bookController.addBook(new Book("9781234567898","b","b"));
-        bookController.addBook(new Book("9781234567899","c","c"));
-        bookController.addBook(new Book("9781234567810","d","d"));
-        bookController.addBook(new Book("9781234567811","e","e"));
+        bookController=new BookController(new RepositoryInMemory<>());
+        bookController.addBook("9781234567897","a","a", "a");
+        bookController.addBook("9781234567898","b","b", "b");
+        bookController.addBook("9781234567899","c","c", "a");
+        bookController.addBook("9781234567810","d","d", "b");
+        bookController.addBook("9781234567811","e","e", "c");
     }
 
     @After
@@ -34,13 +33,40 @@ public class BookControllerTest {
     @Test
     public void addBookPositiveTest()
     {
-        bookController.addBook(new Book("9781234567812","x", "y"));
+        bookController.addBook("9781234567812","x", "y", "a");
     }
 
     @Test(expected = ValidatorException.class)
     public void addBookNegativeTest()
     {
-        bookController.addBook(new Book("", "", ""));
+        bookController.addBook("", "", "", "");
+    }
+
+    @Test
+    public void deleteBookPositiveTest()
+    {
+        this.bookController.deleteBook("9781234567897");
+        Assert.assertEquals(4, bookController.getAllBooks().size());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void deleteBookNegativeTest()
+    {
+        this.bookController.deleteBook(null);
+    }
+
+
+    @Test
+    public void updateBookPositiveTest()
+    {
+        String ibsn = "9781234569999";
+        String author = "b";
+        String title = "b";
+        String newTitle = "c";
+        this.bookController.addBook(ibsn,title,author, "a");
+        this.bookController.updateBook(ibsn, newTitle,author, "a");
+        Book book = this.bookController.searchByIbsn(ibsn);
+        Assert.assertEquals(book.getTitle(), newTitle);
     }
 
     @Test

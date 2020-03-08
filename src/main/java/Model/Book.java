@@ -5,11 +5,13 @@ import java.util.Optional;
 public class Book extends BaseEntity<String> {
     private String title;
     private String authorName;
+    private String genre;
 
-    public Book(String ISBN, String title, String authorName) {
+    public Book(String ISBN, String title, String authorName, String genre) {
         super(ISBN);
         this.title = title;
         this.authorName = authorName;
+        this.genre = genre;
     }
 
     @Override
@@ -21,8 +23,8 @@ public class Book extends BaseEntity<String> {
     @Override
     public String toString() {
         return "ISBN: " + this.getId() + "\n"
-                +"Title: " + this.title + "\n"
-                +"Author: " + this.authorName + "\n";
+                + "Title: " + this.title + "\n"
+                + "Author: " + this.authorName + "\n";
     }
 
     public String getTitle() {
@@ -33,8 +35,16 @@ public class Book extends BaseEntity<String> {
         this.title = title;
     }
 
-    public String getAuthorName(){return authorName;}
-    public void setAuthorName(String authorName){this.authorName = authorName;}
+    public String getAuthorName() {
+        return authorName;
+    }
 
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
 
 }

@@ -15,7 +15,7 @@ public class ClientsInMemoryRepositoryTests {
 
     @Before
     public void setUp() throws Exception {
-        clients=new RepositoryInMemory(new ClientValidator());
+        clients=new RepositoryInMemory();
         clients.add(new Client(1,"a"));
         clients.add(new Client(2,"a"));
         clients.add(new Client(3,"a"));
