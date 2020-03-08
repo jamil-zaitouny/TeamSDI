@@ -3,6 +3,7 @@ package InMemoryRepositoryTests;
 import Model.Client;
 import Model.Validators.ClientValidator;
 import Repository.RepositoryInMemory;
+import Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class ClientsInMemoryRepositoryTests {
-    private RepositoryInMemory clients;
+    private RepositoryInterface clients;
 
     @Before
     public void setUp() throws Exception {

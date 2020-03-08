@@ -14,9 +14,9 @@ public class Main {
 
         Book book = new Book("1234567890999", "Fram, ursul polar", "Cezar Petrescu");
 
-        RepositoryInMemory<Integer, Client> clientRepo = new RepositoryInMemory<>();
-        RepositoryInMemory<String, Book> bookRepo = new RepositoryInMemory<>();
-        RepositoryInMemory<Integer, Purchase> purchaseRepo = new RepositoryInMemory<>();
+        RepositoryInterface<Integer, Purchase> purchaseRepo = new PurchaseFileRepository();
+        RepositoryInterface<String, Book> bookRepo = new BookFileRepository();
+        RepositoryInterface<Integer, Client> clientRepo = new ClientFileRepository();
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
