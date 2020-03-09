@@ -18,7 +18,7 @@ public class PurchaseFileRepositoryTest {
     private RepositoryInterface purchases;
     private RepositoryInterface clients;
     private RepositoryInterface books;
-    private String directory = "C:\\Users\\jamil\\Desktop\\TeamSDI\\src\\main\\java\\Files\\";
+    private String directory = ".\\src\\main\\java\\Files\\";
     @Before
     public void setUp() throws Exception {
         clients=new ClientFileRepository(directory,"ClientTest.csv");
