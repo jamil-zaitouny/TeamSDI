@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException {
-        String directory = System.getProperty("user.dir") + "\\src\\main\\java\\Files\\";
+        String directory = ".\\src\\main\\java\\Files\\";
         Book book = new Book("1234567890999", "Fram, ursul polar", "Cezar Petrescu");
 
         RepositoryInterface<Integer, Purchase> purchaseRepo = new PurchaseFileRepository(directory);
