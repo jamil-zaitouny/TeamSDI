@@ -3,7 +3,6 @@ package ControllersTests;
 import Controller.ClientController;
 import Model.Client;
 import Model.Exceptions.ValidatorException;
-import Model.Validators.ClientValidator;
 import Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,12 +16,12 @@ public class ClientControllerTest {
 
     @Before
     public void setUp()  {
-        clientController=new ClientController(new RepositoryInMemory<>(new ClientValidator()));
-        clientController.addClient(new Client(1,"a"));
-        clientController.addClient(new Client(2,"a"));
-        clientController.addClient(new Client(3,"a"));
-        clientController.addClient(new Client(4,"a"));
-        clientController.addClient(new Client(5,"a"));
+        clientController=new ClientController(new RepositoryInMemory<>());
+        clientController.addClient(1,"a");
+        clientController.addClient(2,"a");
+        clientController.addClient(3,"a");
+        clientController.addClient(4,"a");
+        clientController.addClient(5,"a");
     }
 
     @After
@@ -32,14 +31,40 @@ public class ClientControllerTest {
 
     @Test
     public void addClientPositiveTest() {
-        this.clientController.addClient(new Client(10, "abc"));
+        this.clientController.addClient(10, "abc");
     }
 
     @Test(expected = ValidatorException.class)
     public void addClientNegativeTest()  {
-        this.clientController.addClient(new Client(7, ""));
-        this.clientController.addClient(new Client(-1, "abc"));
+        this.clientController.addClient(7, "");
+        this.clientController.addClient(-1, "abc");
     }
+
+    @Test
+    public void deleteClientPositiveTest()
+    {
+        this.clientController.deleteClient(2);
+        Assert.assertEquals(4, this.clientController.getAllClients().size());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void deleteClientNegativeTest()
+    {
+        this.clientController.deleteClient(null);
+    }
+
+    @Test
+    public void updateBookPositiveTest()
+    {
+        int id = 10;
+        String name = "b";
+        String newName = "c";
+        this.clientController.addClient(id, name);
+        this.clientController.updateClient(id ,newName);
+        Client client = this.clientController.searchById(id);
+        Assert.assertEquals(client.getName(), newName);
+    }
+
 
     @Test
     public void getAllTest()   {

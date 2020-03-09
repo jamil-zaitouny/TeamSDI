@@ -11,12 +11,13 @@ public class BookModel {
     private final static String ISBN = "9781234567897";
     private final static String TITLE = "Red Rising";
     private final static String AUTHOR = "Pierce Brown";
+    private final static String GENRE = "Pierce Brown";
 
     private Book book;
 
     @Before
     public void setUp(){
-        book = new Book(ISBN, TITLE, AUTHOR);
+        book = new Book(ISBN, TITLE, AUTHOR, GENRE);
     }
     @After
     public void tearDown(){

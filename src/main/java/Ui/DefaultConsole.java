@@ -1,5 +1,6 @@
 package Ui;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class DefaultConsole {
@@ -34,6 +35,6 @@ public abstract class DefaultConsole {
         }
     }
 
-    protected abstract int dealChoice(int choice);
+    protected abstract int dealChoice(int choice) throws IOException;
     protected abstract void displayMenu();
 }
