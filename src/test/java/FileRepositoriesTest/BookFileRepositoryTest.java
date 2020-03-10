@@ -18,6 +18,9 @@ public class BookFileRepositoryTest {
     @Before
     public void setUp() throws Exception {
         books=new BookFileRepository(".\\src\\main\\java\\Files\\","BookTest.csv");
+        books.add(new Book("9781234567810","d","d","bla"));
+        books.add(new Book("9781234567821","e","e","bla"));
+
     }
 
     @After
@@ -27,12 +30,12 @@ public class BookFileRepositoryTest {
 
     @Test
     public void testFindOne() throws Exception {
-        assertEquals(new Book("9781234567810","d","d"),books.findOne("9781234567810").get());
+        assertEquals(new Book("9781234567810","d","d","bla"),books.findOne("9781234567810").get());
     }
 
     @Test
     public void testAdd() throws Exception {
-        assertNotNull(books.add(new Book("9781234567821","e","e")));
+        assertNotNull(books.add(new Book("9781234567821","e","e","bla")));
     }
 
     @Test
@@ -42,12 +45,12 @@ public class BookFileRepositoryTest {
 
     @Test
     public void testUpdate() throws Exception {
-        assertNotNull(books.update(new Book("9781234567811","b","c")));
+        assertNotNull(books.update(new Book("9781234567811","b","c", "bla")));
     }
     @Test
     public void testSize() throws Exception{
         AtomicInteger accumulator = new AtomicInteger();
         books.findAll().forEach(v-> accumulator.addAndGet(1));
-        assertEquals(accumulator.get(), 9);
+        assertEquals(accumulator.get(), 5);
     }
 }

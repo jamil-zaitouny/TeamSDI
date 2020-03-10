@@ -24,7 +24,8 @@ public class Book extends BaseEntity<String> implements FileOperations {
     public String toString() {
         return "ISBN: " + this.getId() + "\n"
                 + "Title: " + this.title + "\n"
-                + "Author: " + this.authorName + "\n";
+                + "Author: " + this.authorName + "\n"
+                + "Genre" + this.getGenre() + "\n";
     }
 
 
@@ -51,7 +52,7 @@ public class Book extends BaseEntity<String> implements FileOperations {
 
     @Override
     public String[] toCSV() {
-        return (getId() + "," + getTitle() + "," + getAuthorName()).split(",");
+        return (getId() + "," + getTitle() + "," + getAuthorName()+ "," + getGenre()).split(",") ;
     }
 
     @Override

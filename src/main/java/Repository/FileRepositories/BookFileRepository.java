@@ -41,7 +41,7 @@ public class BookFileRepository extends RepositoryInMemory<String, Book> {
                     .readAll()
                     .forEach(v -> {
                         try {
-                            this.add(new Book(v[0], v[1], v[2]));
+                            this.add(new Book(v[0], v[1], v[2],v[3]));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

@@ -26,9 +26,9 @@ public class PurchaseFileRepositoryTest {
         clients.add(new Client(2,"a"));
 
         books=new BookFileRepository(directory,"BookTest.csv");
-        books.add(new Book("1234567890098","a","a"));
-        books.add(new Book("1234567890078","b","b"));
-        books.add(new Book("1334567890078","c","c"));
+        books.add(new Book("1234567890098","a","a", "bla"));
+        books.add(new Book("1234567890078","b","b", "bla"));
+        books.add(new Book("1334567890078","c","c", "bla"));
 
         purchases=new PurchaseFileRepository(directory,"PurchasesTest.csv");
         purchases.add(new Purchase(1,"1234567890098",1));
