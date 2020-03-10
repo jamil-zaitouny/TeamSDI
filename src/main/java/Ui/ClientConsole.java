@@ -3,6 +3,8 @@ package Ui;
 import Controller.ClientController;
 import Model.Client;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

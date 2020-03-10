@@ -2,6 +2,8 @@ package Ui;
 
 import Controller.BookController;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,6 +30,7 @@ public class BookConsole extends DefaultConsole {
                 break;
             case AddBookOption:
                 addBook();
+
                 break;
             case DeleteBookOption:
                 deleteBook();

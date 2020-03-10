@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Optional;
 
-public class Client extends BaseEntity<Integer>{
+public class Client extends BaseEntity<Integer> implements FileOperations{
     private String name;
     public static String className = "Clients";
 
@@ -27,7 +27,7 @@ public class Client extends BaseEntity<Integer>{
     @Override
     public String toString() {
         return "ClientID: " + this.getId() + "\n"
-                +"ClientName: " + name;
+                +"ClientName: " + name + "\n";
     }
 
     public String getName() {
@@ -38,4 +38,18 @@ public class Client extends BaseEntity<Integer>{
         this.name = name;
     }
 
+    @Override
+    public String[] toCSV() {
+        return new String[]{
+                String.valueOf(getId()),
+                getName()
+        };
+
+    }
+
+
+    @Override
+    public String toXML() {
+        return null;
+    }
 }

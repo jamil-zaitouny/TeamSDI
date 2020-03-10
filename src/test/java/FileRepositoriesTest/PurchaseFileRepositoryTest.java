@@ -1,36 +1,36 @@
-package InMemoryRepositoryTests;
+package FileRepositoriesTest;
 
 import Model.Book;
 import Model.Client;
 import Model.Purchase;
-import Repository.RepositoryInMemory;
+import Repository.FileRepositories.BookFileRepository;
+import Repository.FileRepositories.ClientFileRepository;
+import Repository.FileRepositories.PurchaseFileRepository;
 import Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
-public class PurchaseInMemoryRepositoryTests {
+public class PurchaseFileRepositoryTest {
     private RepositoryInterface purchases;
     private RepositoryInterface clients;
     private RepositoryInterface books;
-
+    private String directory = ".\\src\\main\\java\\Files\\";
     @Before
-    public void setUp() throws IOException {
-        clients=new RepositoryInMemory();
+    public void setUp() throws Exception {
+        clients=new ClientFileRepository(directory,"ClientTest.csv");
         clients.add(new Client(1,"a"));
         clients.add(new Client(2,"a"));
 
-        books=new RepositoryInMemory();
-        books.add(new Book("1234567890098","a","a", "A"));
-        books.add(new Book("1234567890078","b","b", "a"));
-        books.add(new Book("1334567890078","c","c", "b"));
+        books=new BookFileRepository(directory,"BookTest.csv");
+        books.add(new Book("1234567890098","a","a"));
+        books.add(new Book("1234567890078","b","b"));
+        books.add(new Book("1334567890078","c","c"));
 
-        purchases=new RepositoryInMemory();
+        purchases=new PurchaseFileRepository(directory,"PurchasesTest.csv");
         purchases.add(new Purchase(1,"1234567890098",1));
         purchases.add(new Purchase(2,"1234567890078",2));
         purchases.add(new Purchase(3,"1334567890078",1));

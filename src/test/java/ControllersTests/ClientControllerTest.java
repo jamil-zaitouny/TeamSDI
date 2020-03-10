@@ -9,13 +9,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class ClientControllerTest {
     private ClientController clientController;
 
     @Before
-    public void setUp()  {
+    public void setUp() throws IOException {
         clientController=new ClientController(new RepositoryInMemory<>());
         clientController.addClient(1,"a");
         clientController.addClient(2,"a");
@@ -30,12 +31,12 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void addClientPositiveTest() {
+    public void addClientPositiveTest() throws IOException {
         this.clientController.addClient(10, "abc");
     }
 
     @Test(expected = ValidatorException.class)
-    public void addClientNegativeTest()  {
+    public void addClientNegativeTest() throws IOException {
         this.clientController.addClient(7, "");
         this.clientController.addClient(-1, "abc");
     }
@@ -54,8 +55,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void updateBookPositiveTest()
-    {
+    public void updateBookPositiveTest() throws IOException {
         int id = 10;
         String name = "b";
         String newName = "c";

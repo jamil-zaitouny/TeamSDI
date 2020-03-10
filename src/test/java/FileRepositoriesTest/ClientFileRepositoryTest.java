@@ -1,7 +1,6 @@
-package InMemoryRepositoryTests;
+package FileRepositoriesTest;
 
 import Model.Client;
-import Repository.RepositoryInMemory;
 import Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
@@ -10,17 +9,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ClientsInMemoryRepositoryTests {
+public class ClientFileRepositoryTest {
     private RepositoryInterface clients;
 
     @Before
     public void setUp() throws Exception {
-        clients=new RepositoryInMemory();
-        clients.add(new Client(1,"a"));
-        clients.add(new Client(2,"a"));
-        clients.add(new Client(3,"a"));
-        clients.add(new Client(4,"a"));
-        clients.add(new Client(5,"a"));
+        clients=new Repository.FileRepositories.ClientFileRepository(".\\src\\main\\java\\Files\\","ClientTest.csv");
     }
 
     @After

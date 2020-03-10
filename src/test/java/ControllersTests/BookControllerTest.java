@@ -3,12 +3,15 @@ package ControllersTests;
 import Controller.BookController;
 import Model.Book;
 import Model.Exceptions.ValidatorException;
+import Model.Validators.BookValidator;
+import Repository.FileRepositories.BookFileRepository;
 import Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class BookControllerTest {
@@ -16,7 +19,7 @@ public class BookControllerTest {
     private BookController bookController;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         bookController=new BookController(new RepositoryInMemory<>());
         bookController.addBook("9781234567897","a","a", "a");
         bookController.addBook("9781234567898","b","b", "b");
@@ -31,14 +34,12 @@ public class BookControllerTest {
     }
 
     @Test
-    public void addBookPositiveTest()
-    {
+    public void addBookPositiveTest() throws IOException {
         bookController.addBook("9781234567812","x", "y", "a");
     }
 
     @Test(expected = ValidatorException.class)
-    public void addBookNegativeTest()
-    {
+    public void addBookNegativeTest() throws IOException {
         bookController.addBook("", "", "", "");
     }
 
@@ -57,8 +58,7 @@ public class BookControllerTest {
 
 
     @Test
-    public void updateBookPositiveTest()
-    {
+    public void updateBookPositiveTest() throws IOException {
         String ibsn = "9781234569999";
         String author = "b";
         String title = "b";

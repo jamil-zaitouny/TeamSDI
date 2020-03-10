@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class PurchaseControllerTest
@@ -21,7 +22,7 @@ public class PurchaseControllerTest
     private BookController bookController;
 
     @Before
-    public void setUp()  {
+    public void setUp() throws IOException {
         RepositoryInMemory<Integer, Client> clientRepo = new RepositoryInMemory<>();
         RepositoryInMemory<String, Book> bookRepo = new RepositoryInMemory<>();
         RepositoryInMemory<Integer, Purchase> purchaseRepo = new RepositoryInMemory<>();
@@ -48,7 +49,7 @@ public class PurchaseControllerTest
     }
 
     @Test
-    public void addPurchaseTest() {
+    public void addPurchaseTest() throws IOException {
         this.purchaseController.addPurchase(new Purchase(3,"2781234567897",2));
     }
 
