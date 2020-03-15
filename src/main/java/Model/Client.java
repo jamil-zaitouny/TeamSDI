@@ -1,6 +1,8 @@
 package Model;
 
-public class Client extends BaseEntity<Integer>{
+import java.util.Optional;
+
+public class Client extends BaseEntity<Integer> implements FileOperations{
     private String name;
     public static String className = "Clients";
 
@@ -16,16 +18,16 @@ public class Client extends BaseEntity<Integer>{
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Client){
-            return ((Client) obj).getId() == this.getId();
-        }
-        return false;
+        Optional<Object> objectOptional = Optional.ofNullable(obj).filter(v -> v instanceof Client);
+        return objectOptional
+                .filter(v->((Client) v).getId().equals(this.getId()))
+                .isPresent();
     }
 
     @Override
     public String toString() {
         return "ClientID: " + this.getId() + "\n"
-                +"ClientName" + name;
+                +"ClientName: " + name + "\n";
     }
 
     public String getName() {
@@ -34,5 +36,20 @@ public class Client extends BaseEntity<Integer>{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String[] toCSV() {
+        return new String[]{
+                String.valueOf(getId()),
+                getName()
+        };
+
+    }
+
+
+    @Override
+    public String toXML() {
+        return null;
     }
 }

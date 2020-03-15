@@ -1,29 +1,34 @@
 package Model;
 
-public class Book extends BaseEntity<String> {
+import java.util.Optional;
+
+public class Book extends BaseEntity<String> implements FileOperations {
     private String title;
     private String authorName;
+    private String genre;
 
-    public Book(String IBAN, String title, String authorName) {
-        super(IBAN);
+    public Book(String ISBN, String title, String authorName, String genre) {
+        super(ISBN);
         this.title = title;
         this.authorName = authorName;
+        this.genre = genre;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Book){
-            return ((Book) obj).getId().equals(this.getId());
-        }
-        return false;
+        Optional<Object> optionalO = Optional.ofNullable(obj).filter(v -> v instanceof Book);
+        return optionalO.filter(v -> ((Book) v).getId().equals(this.getId())).isPresent();
     }
 
     @Override
     public String toString() {
-        return "IBAN: " + this.getId() + "\n"
-                +"Title: " + this.title + "\n"
-                +"Author: " + this.authorName + "\n";
+        return "ISBN: " + this.getId() + "\n"
+                + "Title: " + this.title + "\n"
+                + "Author: " + this.authorName + "\n"
+                + "Genre: " + this.getGenre() + "\n";
     }
+
+
 
     public String getTitle() {
         return title;
@@ -33,5 +38,25 @@ public class Book extends BaseEntity<String> {
         this.title = title;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
 
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    @Override
+    public String[] toCSV() {
+        return (getId() + "," + getTitle() + "," + getAuthorName()+ "," + getGenre()).split(",") ;
+    }
+
+    @Override
+    public String toXML() {
+        return null;
+    }
 }
