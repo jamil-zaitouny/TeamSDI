@@ -6,11 +6,8 @@ import Model.Purchase;
 import Model.Validators.PurchaseValidator;
 import Repository.RepositoryInterface;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.IOException;
-import java.util.Optional;
-import java.util.Set;
+import javax.print.DocFlavor;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,6 +17,7 @@ public class PurchaseController
     private ClientController clients;
     private BookController books;
     private PurchaseValidator validator;
+
     public PurchaseController(RepositoryInterface<Integer, Purchase> repository,ClientController clients,  BookController books) {
         this.repository = repository;
         this.clients = clients;
@@ -55,4 +53,77 @@ public class PurchaseController
         return repository.findOne(purchaseID);
     }
 
+
+    public List<String> getTopThreeBooksBought()
+    {
+        List<String> topThree;
+        SortedSet<Map.Entry<String, Integer>> report = new TreeSet<>(((o1, o2) -> {
+            if(o1.getValue().compareTo(o2.getValue())==0)
+            {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+            return o2.getValue().compareTo(o1.getValue());
+        }));
+        Map<String, Integer> bookSold = getBooksBought();
+        report.addAll(bookSold.entrySet());
+        topThree = report.stream().map(entry -> this.books.findOne(entry.getKey()).get() + "Sold: " + entry.getValue())
+                .collect(Collectors.toList());
+        return topThree.subList(0,3);
+    }
+
+
+    public List<String> getTopThreeClientsMostBooks()
+    {
+        List<String> topThree;
+        SortedSet<Map.Entry<Integer, Integer>> report = new TreeSet<>(((o1, o2) -> {
+            if(o1.getValue().compareTo(o2.getValue())==0)
+            {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+            return o2.getValue().compareTo(o1.getValue());
+        }));
+        Map<Integer, Integer> clientsWithNumberBooks = getClientsWithNumberOfBoughtBooks();
+        report.addAll(clientsWithNumberBooks.entrySet());
+        topThree = report.stream().map(entry -> this.clients.searchById(entry.getKey()).getName() + ": " + entry.getValue())
+                                  .collect(Collectors.toList());
+        return topThree.subList(0,3);
+    }
+
+
+    private Map<String, Integer> getBooksBought()
+    {
+        Set<Purchase> purchases = getAllPurchases();
+        Map<String, Integer> report = new TreeMap<>();
+        purchases.forEach((purchase)->{
+            String key = purchase.getBookId();
+            report.putIfAbsent(key, 0);
+            report.replace(key, report.get(key)+1);
+        });
+        return report;
+    }
+    public List<String> getBooksBoughtPerGenre()
+    {
+        Set<Purchase> purchases = getAllPurchases();
+        Map<String, Integer> genreNoBooks = new TreeMap<>();
+        purchases.forEach((purchase)->{
+            String id = purchase.getBookId();
+            Book book = this.books.searchByIbsn(id);
+            String key = book.getGenre();
+            genreNoBooks.putIfAbsent(key, 0);
+            genreNoBooks.replace(key, genreNoBooks.get(key)+1);
+        });
+        return genreNoBooks.entrySet().stream().map(entry->entry.getKey()+": "+ entry.getValue()).collect(Collectors.toList());
+    }
+
+    private Map<Integer, Integer> getClientsWithNumberOfBoughtBooks()
+    {
+        Set<Purchase> purchases = getAllPurchases();
+        Map<Integer, Integer> report = new TreeMap<>();
+        purchases.forEach((purchase)->{
+            int key = purchase.getClientId();
+            report.putIfAbsent(key, 0);
+            report.replace(key, report.get(key)+1);
+        });
+        return report;
+    }
 }

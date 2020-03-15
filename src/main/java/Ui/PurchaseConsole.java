@@ -7,16 +7,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class PurchaseConsole extends DefaultConsole
-{
+public class PurchaseConsole extends DefaultConsole {
     private PurchaseController purchaseController;
 
     private static final int PrintPurchasesOption = 1;
     private static final int AddPurchaseOption = 2;
     private static final int DeletePurchaseOption = 3;
     private static final int UpdatePurchaseOption = 4;
+    private static final int TopThreeClientsOption = 5;
+    private static final int TopThreeBooksOption = 6;
+    private static final int BooksPerGenreOption = 7;
 
-    public PurchaseConsole(PurchaseController purchaseController) {
+    PurchaseConsole(PurchaseController purchaseController) {
         this.purchaseController = purchaseController;
     }
 
@@ -39,6 +41,12 @@ public class PurchaseConsole extends DefaultConsole
             case UpdatePurchaseOption:
                 updatePurchase();
                 break;
+            case TopThreeClientsOption:
+                printTopThreeClients();
+                break;
+            case TopThreeBooksOption:
+                printTopThreeBooks();
+                break;
             case BooksPerGenreOption:
                 printBookPerGenre();
                 break;
@@ -55,6 +63,14 @@ public class PurchaseConsole extends DefaultConsole
         this.purchaseController.getBooksBoughtPerGenre().forEach(System.out::println);
     }
 
+    private void printTopThreeBooks() {
+        this.purchaseController.getTopThreeBooksBought().forEach(System.out::println);
+    }
+
+    private void printTopThreeClients() {
+        this.purchaseController.getTopThreeClientsMostBooks().forEach(System.out::println);
+    }
+
     private void addPurchase() throws Throwable {
 
         this.purchaseController.addPurchase(readPurchase());
@@ -65,7 +81,7 @@ public class PurchaseConsole extends DefaultConsole
         this.purchaseController.getAllPurchases().forEach(System.out::println);
     }
 
-    private void updatePurchase() throws IOException{
+    private void updatePurchase() throws IOException {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Id: ");
@@ -73,7 +89,7 @@ public class PurchaseConsole extends DefaultConsole
         System.out.println("New description: ");
         String description = bufferRead.readLine();
 
-        this.purchaseController.updatePurchase(id,description);
+        this.purchaseController.updatePurchase(id, description);
     }
 
     private void deletePurchase() throws IOException {
@@ -87,18 +103,18 @@ public class PurchaseConsole extends DefaultConsole
 
 
     private Purchase readPurchase() {
-        System.out.println("Read Purchase {Id, Book ISBN, CLient Id, Purchase details}");
+        System.out.println("Read Purchase {Id, Book ISBN, Client Id, Purchase details}");
 
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
         try {
             int id = Integer.parseInt(bufferRead.readLine());
             String book = bufferRead.readLine();
-            int client=Integer.parseInt(bufferRead.readLine());
+            int client = Integer.parseInt(bufferRead.readLine());
             String details = bufferRead.readLine();
 
-            return new Purchase(id,book,client,details);
+            return new Purchase(id, book, client, details);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
         }
         return null;
     }
@@ -110,6 +126,9 @@ public class PurchaseConsole extends DefaultConsole
         System.out.println("\t2.Add purchase");
         System.out.println("\t3.Delete purchase");
         System.out.println("\t4.Update purchase");
+        System.out.println("\t5.Top three clients that bought the most books");
+        System.out.println("\t6.Top three books that were bought the most");
+        System.out.println("\t7.Books sold for every genre");
         System.out.println("\t0.Go back");
     }
 }
