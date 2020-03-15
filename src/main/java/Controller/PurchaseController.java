@@ -1,14 +1,9 @@
 package Controller;
 
 import Model.Book;
-import Model.Client;
-import Model.Exceptions.InvalidClientDetailsException;
 import Model.Exceptions.ValidatorException;
 import Model.Purchase;
 import Model.Validators.PurchaseValidator;
-import Repository.FileRepositories.BookFileRepository;
-import Repository.FileRepositories.ClientFileRepository;
-import Repository.FileRepositories.PurchaseFileRepository;
 import Repository.RepositoryInterface;
 
 import javax.xml.parsers.ParserConfigurationException;

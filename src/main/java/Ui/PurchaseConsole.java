@@ -3,8 +3,6 @@ package Ui;
 import Controller.PurchaseController;
 import Model.Purchase;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,6 +39,9 @@ public class PurchaseConsole extends DefaultConsole
             case UpdatePurchaseOption:
                 updatePurchase();
                 break;
+            case BooksPerGenreOption:
+                printBookPerGenre();
+                break;
             case ExitOption:
                 return -1;
             default:
@@ -48,6 +49,10 @@ public class PurchaseConsole extends DefaultConsole
                 break;
         }
         return 0;
+    }
+
+    private void printBookPerGenre() {
+        this.purchaseController.getBooksBoughtPerGenre().forEach(System.out::println);
     }
 
     private void addPurchase() throws Throwable {
