@@ -39,7 +39,7 @@ public class PurchaseFileRepository extends RepositoryInMemory<Integer, Purchase
                     .readAll()
                     .forEach(v -> {
                         try {
-                            this.add(new Purchase(Integer.parseInt(v[0]), v[1], Integer.parseInt(v[2])));
+                            this.add(new Purchase(Integer.parseInt(v[0]), v[1], Integer.parseInt(v[2]),v[3]));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

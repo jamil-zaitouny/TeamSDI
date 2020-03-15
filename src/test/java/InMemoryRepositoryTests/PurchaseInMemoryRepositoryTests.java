@@ -31,9 +31,9 @@ public class PurchaseInMemoryRepositoryTests {
         books.add(new Book("1334567890078","c","c", "b"));
 
         purchases=new RepositoryInMemory();
-        purchases.add(new Purchase(1,"1234567890098",1));
-        purchases.add(new Purchase(2,"1234567890078",2));
-        purchases.add(new Purchase(3,"1334567890078",1));
+        purchases.add(new Purchase(1,"1234567890098",1,"a"));
+        purchases.add(new Purchase(2,"1234567890078",2,"a"));
+        purchases.add(new Purchase(3,"1334567890078",1,"a"));
     }
 
     @After
@@ -46,12 +46,12 @@ public class PurchaseInMemoryRepositoryTests {
     @Test
     public void testFindOne() throws Exception {
 
-        assertEquals("Failed",new Purchase(1,"1234567890098",1),purchases.findOne(1).get());
+        assertEquals("Failed",new Purchase(1,"1234567890098",1,"a"),purchases.findOne(1).get());
     }
 
     @Test
     public void testAdd() throws Exception {
-        assertNotNull(purchases.add(new Purchase(7,"1234567890798",2)));
+        assertNotNull(purchases.add(new Purchase(7,"1234567890798",2,"a")));
     }
 
     @Test

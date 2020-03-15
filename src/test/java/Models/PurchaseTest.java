@@ -10,12 +10,13 @@ public class PurchaseTest {
     private final static int id=1;
     private final static int clientId=1;
     private final static String bookID="9781234567897";
+    private final static String details="nice";
 
     private Purchase purchase;
 
     @Before
     public void setup()throws Exception{
-        purchase=new Purchase(id,bookID,clientId);
+        purchase=new Purchase(id,bookID,clientId,details);
     }
 
     @After
