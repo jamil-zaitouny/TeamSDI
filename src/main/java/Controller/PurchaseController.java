@@ -14,6 +14,7 @@ import Repository.RepositoryInterface;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -42,4 +43,21 @@ public class PurchaseController
     {
         return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
     }
+
+    public void deletePurchase(Integer id)
+    {
+        this.repository.delete(id);
+    }
+
+    public void updatePurchase(Integer id, String newDetails)
+    {
+        Purchase newPurchase = new Purchase(id,this.repository.findOne(id).get().getBookId(),this.repository.findOne(id).get().getClientId(),newDetails);
+        this.validator.validate(newPurchase);
+        this.repository.update(newPurchase);
+    }
+
+    public Optional findOne(int purchaseID){
+        return repository.findOne(purchaseID);
+    }
+
 }

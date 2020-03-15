@@ -37,8 +37,8 @@ public class PurchaseControllerTest
         bookController.addBook("9781234567897","a","a", "a");
         bookController.addBook("2781234567897","b","b", "b");
 
-        purchaseController.addPurchase(new Purchase(1,"9781234567897",1));
-        purchaseController.addPurchase(new Purchase(2,"2781234567897",2));
+        purchaseController.addPurchase(new Purchase(1,"9781234567897",1,"a"));
+        purchaseController.addPurchase(new Purchase(2,"2781234567897",2,"a"));
     }
 
     @After
@@ -50,7 +50,7 @@ public class PurchaseControllerTest
 
     @Test
     public void addPurchaseTest() throws Throwable {
-        this.purchaseController.addPurchase(new Purchase(3,"2781234567897",2));
+        this.purchaseController.addPurchase(new Purchase(3,"2781234567897",2,"a"));
     }
 
     @Test

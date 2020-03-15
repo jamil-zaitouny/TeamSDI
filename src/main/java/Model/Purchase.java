@@ -6,11 +6,13 @@ public class Purchase extends BaseEntity<Integer> implements FileOperations
 {
     private String bookId;
     private int clientId;
+    private String purcahseDetails;
 
-    public Purchase(int purchaseID, String bookId, int clientId) {
+    public Purchase(int purchaseID, String bookId, int clientId,String purcahseDetails) {
         super(purchaseID);
         this.bookId = bookId;
         this.clientId = clientId;
+        this.purcahseDetails=purcahseDetails;
     }
 
     public String getBookId() {
@@ -29,11 +31,20 @@ public class Purchase extends BaseEntity<Integer> implements FileOperations
         this.clientId = clientId;
     }
 
+    public String getPurcahseDetails() {
+        return purcahseDetails;
+    }
+
+    public void setPurcahseDetails(String purcahseDetails) {
+        this.purcahseDetails = purcahseDetails;
+    }
+
     @Override
     public String toString() {
         return "PurchaseID: "+ this.getId() + "\n" +
                 "Book: " + bookId + "\n"+
-                "Client: " + clientId + "\n";
+                "Client: " + clientId + "\n"+
+                "PurchaseDetails: "+purcahseDetails+"\n" ;
     }
 
     @Override
@@ -46,7 +57,7 @@ public class Purchase extends BaseEntity<Integer> implements FileOperations
 
     @Override
     public String[] toCSV() {
-        return (getId() + "," + getBookId() + "," + getClientId()).split(",");
+        return (getId() + "," + getBookId() + "," + getClientId()+","+getPurcahseDetails()).split(",");
     }
 
 
