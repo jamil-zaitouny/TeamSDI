@@ -17,6 +17,7 @@ public class ClientConsole extends DefaultConsole {
     private static final int DeleteClientOption = 3;
     private static final int UpdateClientOption = 4;
     private static final int SearchByIdClientOption = 5;
+    private static final int FilterByName = 6;
 
     ClientConsole(ClientController clientController) {
         this.clientController = clientController;
@@ -40,6 +41,9 @@ public class ClientConsole extends DefaultConsole {
             case SearchByIdClientOption:
                 searchByIdClient();
                 break;
+            case FilterByName:
+                filterByName();
+                break;
             case ExitOption:
                 return -1;
             default:
@@ -47,6 +51,15 @@ public class ClientConsole extends DefaultConsole {
                 break;
         }
         return 0;
+    }
+
+    private void filterByName() throws IOException{
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Name: ");
+        String name = bufferRead.readLine();
+
+        this.clientController.filterByName(name).forEach(System.out::println);
     }
 
     private void searchByIdClient() throws IOException{
@@ -99,6 +112,7 @@ public class ClientConsole extends DefaultConsole {
         System.out.println("\t3.Delete client");
         System.out.println("\t4.Update client");
         System.out.println("\t5.Search by Id");
+        System.out.println("\t6.Filter by name");
         System.out.println("\t0.Go back");
     }
 }

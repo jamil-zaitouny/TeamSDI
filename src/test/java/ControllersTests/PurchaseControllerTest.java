@@ -22,14 +22,14 @@ public class PurchaseControllerTest
     private BookController bookController;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws Throwable {
         RepositoryInMemory<Integer, Client> clientRepo = new RepositoryInMemory<>();
         RepositoryInMemory<String, Book> bookRepo = new RepositoryInMemory<>();
         RepositoryInMemory<Integer, Purchase> purchaseRepo = new RepositoryInMemory<>();
 
         clientController = new ClientController(clientRepo);
         bookController = new BookController(bookRepo);
-        purchaseController=new PurchaseController(purchaseRepo,clientRepo,bookRepo);
+        purchaseController=new PurchaseController(purchaseRepo,clientController,bookController);
 
         clientController.addClient(1,"a");
         clientController.addClient(2,"a");
@@ -49,7 +49,7 @@ public class PurchaseControllerTest
     }
 
     @Test
-    public void addPurchaseTest() throws IOException {
+    public void addPurchaseTest() throws Throwable {
         this.purchaseController.addPurchase(new Purchase(3,"2781234567897",2));
     }
 

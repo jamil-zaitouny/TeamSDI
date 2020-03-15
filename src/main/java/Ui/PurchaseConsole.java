@@ -21,13 +21,17 @@ public class PurchaseConsole extends DefaultConsole
     }
 
     @Override
-    protected int dealChoice(int choice) throws IOException {
+    protected int dealChoice(int choice) {
         switch (choice) {
             case PrintPurchasesOption:
                 printPurchases();
                 break;
             case AddPurchaseOption:
-                addPurchase();
+                try {
+                    addPurchase();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
                 break;
             case ExitOption:
                 return -1;
@@ -38,7 +42,7 @@ public class PurchaseConsole extends DefaultConsole
         return 0;
     }
 
-    private void addPurchase() throws IOException {
+    private void addPurchase() throws Throwable {
 
         this.purchaseController.addPurchase(readPurchase());
 

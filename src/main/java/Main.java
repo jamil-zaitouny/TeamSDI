@@ -31,7 +31,7 @@ public class Main {
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
-        PurchaseController purchaseController=new PurchaseController(purchaseRepo,clientRepo,bookRepo);
+        PurchaseController purchaseController=new PurchaseController(purchaseRepo,clientController,bookController);
 
         bookController.addBook(isbn, title, author, genre);
 

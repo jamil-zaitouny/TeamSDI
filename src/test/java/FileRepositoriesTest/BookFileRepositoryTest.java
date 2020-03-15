@@ -17,7 +17,7 @@ public class BookFileRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        books=new BookFileRepository(".\\src\\main\\java\\Files\\","BookTest.csv");
+        books=new BookFileRepository(".\\src\\main\\java\\Files\\","books.csv");
         books.add(new Book("9781234567810","d","d","bla"));
         books.add(new Book("9781234567821","e","e","bla"));
 
@@ -51,6 +51,6 @@ public class BookFileRepositoryTest {
     public void testSize() throws Exception{
         AtomicInteger accumulator = new AtomicInteger();
         books.findAll().forEach(v-> accumulator.addAndGet(1));
-        assertEquals(accumulator.get(), 5);
+        assertEquals(accumulator.get(), 3);
     }
 }

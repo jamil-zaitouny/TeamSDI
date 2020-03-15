@@ -25,7 +25,7 @@ public class Book extends BaseEntity<String> implements FileOperations {
         return "ISBN: " + this.getId() + "\n"
                 + "Title: " + this.title + "\n"
                 + "Author: " + this.authorName + "\n"
-                + "Genre" + this.getGenre() + "\n";
+                + "Genre: " + this.getGenre() + "\n";
     }
 
 

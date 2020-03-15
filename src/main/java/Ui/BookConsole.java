@@ -16,6 +16,7 @@ public class BookConsole extends DefaultConsole {
     private static final int DeleteBookOption = 3;
     private static final int UpdateBookOption = 4;
     private static final int SearchByIbsnOption = 5;
+    private static final int FilterByGenre = 6;
 
 
     public BookConsole(BookController controller) {
@@ -30,7 +31,6 @@ public class BookConsole extends DefaultConsole {
                 break;
             case AddBookOption:
                 addBook();
-
                 break;
             case DeleteBookOption:
                 deleteBook();
@@ -40,6 +40,8 @@ public class BookConsole extends DefaultConsole {
                 break;
             case SearchByIbsnOption:
                 searchByIbsnBook();
+            case FilterByGenre:
+                filterByGenre();
             case ExitOption:
                 return -1;
             default:
@@ -47,6 +49,15 @@ public class BookConsole extends DefaultConsole {
                 break;
         }
         return 0;
+    }
+
+    private void filterByGenre() throws IOException {
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.println("Genre: ");
+        String genre= bufferRead.readLine();
+
+        this.controller.filterByGenre(genre).forEach(System.out::println);
     }
 
     private void searchByIbsnBook() throws IOException {
@@ -107,6 +118,7 @@ public class BookConsole extends DefaultConsole {
         System.out.println("\t3.Delete book");
         System.out.println("\t4.Update book");
         System.out.println("\t5.Search by ibsn");
+        System.out.println("\t6.Filter by genre");
         System.out.println("\t0.Go back");
     }
 }

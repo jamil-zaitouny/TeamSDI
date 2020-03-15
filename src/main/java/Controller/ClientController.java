@@ -10,6 +10,7 @@ import Repository.RepositoryInterface;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -45,9 +46,17 @@ public class ClientController {
         return this.repository.findOne(id).get();
     }
 
+    public Optional findOne(int ClientID){
+        return repository.findOne(ClientID);
+    }
 
     public Set<Client> getAllClients()
     {
         return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
+    }
+
+    public Set<Client> filterByName(String name) {
+        Set<Client> clients = getAllClients();
+        return clients.stream().filter(v->v.getName().contains(name)).collect(Collectors.toSet());
     }
 }

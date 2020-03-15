@@ -10,6 +10,7 @@ import Repository.RepositoryInterface;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -44,7 +45,16 @@ public class BookController {
         return this.repository.findOne(ibsn).get();
     }
 
+    public Optional findOne(String  ISBN){
+        return repository.findOne(ISBN);
+    }
+
     public Set<Book> getAllBooks() {
         return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
+    }
+
+    public Set<Book> filterByGenre(String genre){
+        Set<Book> filteredBooks = getAllBooks();
+        return filteredBooks.stream().filter(v->v.getGenre().equals(genre)).collect(Collectors.toSet());
     }
 }
