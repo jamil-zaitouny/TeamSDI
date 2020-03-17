@@ -65,6 +65,9 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
                     }
                 });
     }
+    public void resetXML(){
+
+    }
     public void saveBook(Book book) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = DocumentBuilderFactory
                 .newInstance()
@@ -79,7 +82,7 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
                 .newInstance()
                 .newTransformer();
         transformer.transform(new DOMSource(document),
-                new StreamResult(new File(directory)));
+                new StreamResult(new FileWriter(new File(directory))));
     }
 
 

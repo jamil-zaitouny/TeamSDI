@@ -31,7 +31,7 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
     public ClientXMLRepository(String directory) throws IOException, SAXException, ParserConfigurationException {
         super();
         this.directory = directory;
-        this.fileName = "client.xml";
+        this.fileName = "clients.xml";
         this.directory += this.fileName;
         loadXML();
     }
@@ -51,12 +51,17 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
 
         Element root = documnet.getDocumentElement();
         NodeList children = root.getChildNodes();
-        List<Client> books = IntStream
+        IntStream
                 .range(0, children.getLength())
                 .mapToObj(index -> children.item(index))
                 .filter(node -> node instanceof Element)
-                .map(node -> new Client((Element) node))
-                .collect(Collectors.toList());
+                .forEach(node -> {
+                    try {
+                        add(new Client((Element) node));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
     public void saveBook(Client book) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = DocumentBuilderFactory

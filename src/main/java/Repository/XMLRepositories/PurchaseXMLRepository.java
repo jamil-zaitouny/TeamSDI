@@ -31,7 +31,7 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
     public PurchaseXMLRepository(String directory) throws IOException, SAXException, ParserConfigurationException {
         super();
         this.directory = directory;
-        this.fileName = "client.xml";
+        this.fileName = "purchases.xml";
         this.directory += this.fileName;
         loadXML();
     }
@@ -51,12 +51,17 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
 
         Element root = documnet.getDocumentElement();
         NodeList children = root.getChildNodes();
-        List<Purchase> books = IntStream
+        IntStream
                 .range(0, children.getLength())
                 .mapToObj(index -> children.item(index))
                 .filter(node -> node instanceof Element)
-                .map(node -> new Purchase((Element) node))
-                .collect(Collectors.toList());
+                .forEach(node -> {
+                    try {
+                        add(new Purchase((Element) node));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
     public void saveBook(Purchase purchase) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = DocumentBuilderFactory
