@@ -82,6 +82,7 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
 
     @Override
     public Optional<Client> add(Client entity) throws ValidatorException, IOException {
+        XMLUtilities.resetXML(directory);
         Optional optional = super.add(entity);
         this.findAll().forEach(book -> {
             try {
@@ -101,6 +102,7 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
 
     @Override
     public Optional<Client> delete(Integer id) {
+        XMLUtilities.resetXML(directory);
         Optional optional = super.delete(id);
         this.findAll().forEach(book ->
         {
@@ -121,6 +123,7 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
 
     @Override
     public Optional<Client> update(Client entity) throws ValidatorException {
+        XMLUtilities.resetXML(directory);
         Optional optional = super.update(entity);
         this.findAll().forEach(book ->
         {

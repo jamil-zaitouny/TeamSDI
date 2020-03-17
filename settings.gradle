@@ -1,2 +1,3 @@
 rootProject.name = 'lab2-4'
+include 'XMLRepositoryTest'
 

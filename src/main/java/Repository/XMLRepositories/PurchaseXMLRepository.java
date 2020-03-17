@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -80,8 +81,10 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
                 new StreamResult(new File(directory)));
     }
 
+
     @Override
     public Optional<Purchase> add(Purchase entity) throws ValidatorException, IOException {
+        XMLUtilities.resetXML(this.directory);
         Optional optional = super.add(entity);
         this.findAll().forEach(book -> {
             try {
@@ -101,6 +104,7 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
 
     @Override
     public Optional<Purchase> delete(Integer id) {
+        XMLUtilities.resetXML(this.directory);
         Optional optional = super.delete(id);
         this.findAll().forEach(book ->
         {
@@ -121,6 +125,7 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
 
     @Override
     public Optional<Purchase> update(Purchase entity) throws ValidatorException {
+        XMLUtilities.resetXML(this.directory);
         Optional optional = super.update(entity);
         this.findAll().forEach(book ->
         {

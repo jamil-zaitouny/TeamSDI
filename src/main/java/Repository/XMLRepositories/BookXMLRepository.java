@@ -17,9 +17,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,9 +63,7 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
                     }
                 });
     }
-    public void resetXML(){
 
-    }
     public void saveBook(Book book) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = DocumentBuilderFactory
                 .newInstance()
@@ -88,6 +84,7 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
 
     @Override
     public Optional<Book> add(Book entity) throws ValidatorException, IOException {
+        XMLUtilities.resetXML(directory);
         Optional optional = super.add(entity);
             this.findAll().forEach(book -> {
                 try {
@@ -107,6 +104,7 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
 
     @Override
     public Optional<Book> delete(String s) {
+        XMLUtilities.resetXML(directory);
         Optional optional = super.delete(s);
         this.findAll().forEach(book ->
         {
@@ -127,6 +125,7 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
 
     @Override
     public Optional<Book> update(Book entity) throws ValidatorException {
+        XMLUtilities.resetXML(this.directory);
         Optional optional = super.update(entity);
         this.findAll().forEach(book ->
         {
