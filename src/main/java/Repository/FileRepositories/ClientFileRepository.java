@@ -31,7 +31,12 @@ public class ClientFileRepository extends RepositoryInMemory<Integer, Client> {
         this.directory += this.fileName;
         loadCSV();
     }
-
+    public String[] toCSV(Client client) {
+        return new String[]{
+                String.valueOf(client.getId()),
+                client.getName()
+        };
+    }
     public void loadCSV(){
         try {
             CSVReader reader = getCSVReader(directory);
@@ -58,7 +63,7 @@ public class ClientFileRepository extends RepositoryInMemory<Integer, Client> {
         try {
             CSVWriter writer = getCSVWriter(directory);
             findAll()
-                    .forEach(v -> writer.writeNext(v.toCSV()));
+                    .forEach(v -> writer.writeNext(toCSV(v)));
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

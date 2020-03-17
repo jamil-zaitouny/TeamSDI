@@ -24,6 +24,9 @@ public class PurchaseFileRepository extends RepositoryInMemory<Integer, Purchase
         this.directory += this.fileName;
         loadCSV();
     }
+    public String[] toCSV(Purchase purchase) {
+        return (purchase.getId() + "," +purchase.getBookId() + "," +purchase.getClientId()+","+purchase.getPurcahseDetails()).split(",");
+    }
     public PurchaseFileRepository(String directory, String fileName){
         super();
         this.directory = directory;
@@ -58,7 +61,7 @@ public class PurchaseFileRepository extends RepositoryInMemory<Integer, Purchase
         try {
             CSVWriter writer = getCSVWriter(directory);
             findAll()
-                    .forEach(v -> writer.writeNext(v.toCSV()));
+                    .forEach(v -> writer.writeNext(toCSV(v)));
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();

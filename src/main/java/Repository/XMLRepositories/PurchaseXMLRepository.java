@@ -64,14 +64,21 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
                     }
                 });
     }
-    public void saveBook(Purchase purchase) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+    public Node toXML(Document document, Purchase purchase) {
+        Element purchasedElement = document.createElement("purchase");
+        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "id", String.valueOf(purchase.getId()));
+        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "clientid", String.valueOf(purchase.getClientId()));
+        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "bookid", purchase.getBookId());
+        return purchasedElement;
+    }
+    public void savePurchase(Purchase purchase) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = DocumentBuilderFactory
                 .newInstance()
                 .newDocumentBuilder()
                 .parse(directory);
 
         Element root = document.getDocumentElement();
-        Node bookNode = purchase.toXML(document);
+        Node bookNode = toXML(document, purchase);
         root.appendChild(bookNode);
 
         Transformer transformer = TransformerFactory
@@ -86,9 +93,9 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
     public Optional<Purchase> add(Purchase entity) throws ValidatorException, IOException {
         XMLUtilities.resetXML(this.directory);
         Optional optional = super.add(entity);
-        this.findAll().forEach(book -> {
+        this.findAll().forEach(purchase -> {
             try {
-                saveBook(book);
+                savePurchase(purchase);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -109,7 +116,7 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
         this.findAll().forEach(book ->
         {
             try {
-                saveBook(book);
+                savePurchase(book);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -130,7 +137,7 @@ public class PurchaseXMLRepository extends RepositoryInMemory<Integer, Purchase>
         this.findAll().forEach(book ->
         {
             try {
-                saveBook(book);
+                savePurchase(book);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             } catch (IOException e) {

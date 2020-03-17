@@ -42,7 +42,14 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
         this.directory += this.fileName;
         loadXML();
     }
-
+    public Node toXML(Document document, Book book) {
+        Element bookElement = document.createElement("book");
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "isbn", book.getId());
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "title", book.getTitle());
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "author", book.getAuthorName());
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "genre", book.getGenre());
+        return bookElement;
+    }
     private void loadXML() throws ParserConfigurationException, IOException, SAXException {
         Document documnet = DocumentBuilderFactory
                 .newInstance()
@@ -71,7 +78,7 @@ public class BookXMLRepository extends RepositoryInMemory<String, Book> {
                 .parse(directory);
 
         Element root = document.getDocumentElement();
-        Node bookNode = book.toXML(document);
+        Node bookNode = toXML(document, book);
         root.appendChild(bookNode);
 
         Transformer transformer = TransformerFactory

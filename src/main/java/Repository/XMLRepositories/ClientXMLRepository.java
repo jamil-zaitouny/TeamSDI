@@ -63,14 +63,14 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
                     }
                 });
     }
-    public void saveBook(Client book) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+    public void saveClient(Client client) throws ParserConfigurationException, IOException, SAXException, TransformerException {
         Document document = DocumentBuilderFactory
                 .newInstance()
                 .newDocumentBuilder()
                 .parse(directory);
 
         Element root = document.getDocumentElement();
-        Node bookNode = book.toXML(document);
+        Node bookNode = toXML(document, client);
         root.appendChild(bookNode);
 
         Transformer transformer = TransformerFactory
@@ -84,9 +84,9 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
     public Optional<Client> add(Client entity) throws ValidatorException, IOException {
         XMLUtilities.resetXML(directory);
         Optional optional = super.add(entity);
-        this.findAll().forEach(book -> {
+        this.findAll().forEach(client -> {
             try {
-                saveBook(book);
+                saveClient(client);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -107,7 +107,7 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
         this.findAll().forEach(book ->
         {
             try {
-                saveBook(book);
+                saveClient(book);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -128,7 +128,7 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
         this.findAll().forEach(book ->
         {
             try {
-                saveBook(book);
+                saveClient(book);
             } catch (ParserConfigurationException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -140,5 +140,11 @@ public class ClientXMLRepository extends RepositoryInMemory<Integer, Client> {
             }
         });
         return optional;
+    }
+    public Node toXML(Document document, Client client) {
+        Element clientElement = document.createElement("client");
+        XMLUtilities.appendChildWithTextToNode(document, clientElement, "id", String.valueOf(client.getId()));
+        XMLUtilities.appendChildWithTextToNode(document, clientElement, "name", client.getName());
+        return clientElement;
     }
 }

@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 import javax.sql.rowset.spi.XmlReader;
 import java.util.Optional;
 
-public class Book extends BaseEntity<String> implements FileOperations {
+public class Book extends BaseEntity<String> {
     private String title;
     private String authorName;
     private String genre;
@@ -63,18 +63,4 @@ public class Book extends BaseEntity<String> implements FileOperations {
         return genre;
     }
 
-    @Override
-    public String[] toCSV() {
-        return (getId() + "," + getTitle() + "," + getAuthorName()+ "," + getGenre()).split(",") ;
-    }
-
-    @Override
-    public Node toXML(Document document) {
-        Element bookElement = document.createElement("book");
-        XMLUtilities.appendChildWithTextToNode(document, bookElement, "isbn", this.getId());
-        XMLUtilities.appendChildWithTextToNode(document, bookElement, "title", this.getTitle());
-        XMLUtilities.appendChildWithTextToNode(document, bookElement, "author", this.getAuthorName());
-        XMLUtilities.appendChildWithTextToNode(document, bookElement, "genre", this.getGenre());
-        return bookElement;
-    }
 }

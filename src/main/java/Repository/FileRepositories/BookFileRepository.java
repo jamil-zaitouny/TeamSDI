@@ -51,12 +51,15 @@ public class BookFileRepository extends RepositoryInMemory<String, Book> {
             e.printStackTrace();
         }
     }
+    public String[] toCSV(Book book) {
+        return (book.getId() + "," + book.getTitle() + "," + book.getAuthorName()+ "," + book.getGenre()).split(",") ;
+    }
 
     public void saveCSV(){
         try {
             CSVWriter writer = getCSVWriter(directory);
             findAll()
-                    .forEach(v -> writer.writeNext(v.toCSV()));
+                    .forEach(v -> writer.writeNext(toCSV(v)));
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
