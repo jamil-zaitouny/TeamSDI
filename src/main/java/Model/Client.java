@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 import java.nio.channels.ClosedByInterruptException;
 import java.util.Optional;
 
-public class Client extends BaseEntity<Integer> implements FileOperations{
+public class Client extends BaseEntity<Integer>{
     private String name;
     public static String className = "Clients";
 
@@ -47,23 +47,6 @@ public class Client extends BaseEntity<Integer> implements FileOperations{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String[] toCSV() {
-        return new String[]{
-                String.valueOf(getId()),
-                getName()
-        };
-
-    }
-
-    @Override
-    public Node toXML(Document document) {
-        Element clientElement = document.createElement("client");
-        XMLUtilities.appendChildWithTextToNode(document, clientElement, "id", String.valueOf(this.getId()));
-        XMLUtilities.appendChildWithTextToNode(document, clientElement, "name", this.getName());
-        return clientElement;
     }
 
 

@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 import javax.sql.rowset.spi.XmlReader;
 import java.util.Optional;
 
-public class Purchase extends BaseEntity<Integer> implements FileOperations
+public class Purchase extends BaseEntity<Integer>
 {
     private String bookId;
     private int clientId;
@@ -65,20 +65,5 @@ public class Purchase extends BaseEntity<Integer> implements FileOperations
                 .filter(v->((Purchase) v).getId().equals(this.getId()))
                 .isPresent();
     }
-
-    @Override
-    public String[] toCSV() {
-        return (getId() + "," + getBookId() + "," + getClientId()+","+getPurcahseDetails()).split(",");
-    }
-
-    @Override
-    public Node toXML(Document document) {
-        Element purchasedElement = document.createElement("purchase");
-        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "id", String.valueOf(this.getId()));
-        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "clientid", String.valueOf(this.getClientId()));
-        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "bookid", this.getBookId());
-        return purchasedElement;
-    }
-
 
 }
