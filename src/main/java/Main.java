@@ -7,7 +7,9 @@ import Repository.FileRepositories.BookFileRepository;
 import Repository.FileRepositories.ClientFileRepository;
 import Repository.FileRepositories.PurchaseFileRepository;
 import Repository.RepositoryInterface;
+import Repository.XMLRepositories.BookXMLRepository;
 import Ui.Console;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -23,10 +25,16 @@ public class Main {
         String genre = "fiction";
 
         String directory = ".\\src\\main\\java\\Files\\";
+        String xmlDirectory = ".\\src\\main\\java\\Files\\";
         Book book = new Book(isbn, title, author, genre);
 
         RepositoryInterface<Integer, Purchase> purchaseRepo = new PurchaseFileRepository(directory);
-        RepositoryInterface<String, Book> bookRepo = new BookFileRepository(directory);
+        RepositoryInterface<String, Book> bookRepo = null;
+        try {
+            bookRepo = new BookXMLRepository(xmlDirectory);
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
         RepositoryInterface<Integer, Client> clientRepo = new ClientFileRepository(directory);
 
         ClientController clientController = new ClientController(clientRepo);

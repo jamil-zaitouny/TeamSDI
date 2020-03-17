@@ -1,5 +1,11 @@
 package Model;
 
+import Repository.XMLRepositories.XMLUtilities;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import javax.sql.rowset.spi.XmlReader;
 import java.util.Optional;
 
 public class Purchase extends BaseEntity<Integer> implements FileOperations
@@ -11,6 +17,11 @@ public class Purchase extends BaseEntity<Integer> implements FileOperations
         super(purchaseID);
         this.bookId = bookId;
         this.clientId = clientId;
+    }
+    public Purchase(Element purchaseElement){
+        super(Integer.parseInt(XMLUtilities.getTextFromTagName(purchaseElement, "id")));
+        this.bookId = XMLUtilities.getTextFromTagName(purchaseElement, "bookid");
+        this.clientId = Integer.parseInt(XMLUtilities.getTextFromTagName(purchaseElement, "clientid"));
     }
 
     public String getBookId() {
@@ -49,9 +60,14 @@ public class Purchase extends BaseEntity<Integer> implements FileOperations
         return (getId() + "," + getBookId() + "," + getClientId()).split(",");
     }
 
-
     @Override
-    public String toXML() {
-        return null;
+    public Node toXML(Document document) {
+        Element purchasedElement = document.createElement("purchase");
+        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "id", String.valueOf(this.getId()));
+        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "clientid", String.valueOf(this.getClientId()));
+        XMLUtilities.appendChildWithTextToNode(document, purchasedElement, "bookid", this.getBookId());
+        return purchasedElement;
     }
+
+
 }
