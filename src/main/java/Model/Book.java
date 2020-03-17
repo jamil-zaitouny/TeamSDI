@@ -1,5 +1,11 @@
 package Model;
 
+import Repository.XMLRepositories.XMLUtilities;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import javax.sql.rowset.spi.XmlReader;
 import java.util.Optional;
 
 public class Book extends BaseEntity<String> implements FileOperations {
@@ -12,6 +18,13 @@ public class Book extends BaseEntity<String> implements FileOperations {
         this.title = title;
         this.authorName = authorName;
         this.genre = genre;
+    }
+    public Book(Element bookElement){
+            super(XMLUtilities.getTextFromTagName(bookElement, "isbn"));
+            this.authorName = XMLUtilities.getTextFromTagName(bookElement, "author");
+            this.title = XMLUtilities.getTextFromTagName(bookElement, "title");
+            this.genre = XMLUtilities.getTextFromTagName(bookElement, "genre");
+
     }
 
     @Override
@@ -56,7 +69,12 @@ public class Book extends BaseEntity<String> implements FileOperations {
     }
 
     @Override
-    public String toXML() {
-        return null;
+    public Node toXML(Document document) {
+        Element bookElement = document.createElement("book");
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "isbn", this.getId());
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "title", this.getTitle());
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "author", this.getAuthorName());
+        XMLUtilities.appendChildWithTextToNode(document, bookElement, "genre", this.getGenre());
+        return bookElement;
     }
 }

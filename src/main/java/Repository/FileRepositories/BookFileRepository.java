@@ -22,7 +22,7 @@ public class BookFileRepository extends RepositoryInMemory<String, Book> {
     public BookFileRepository(String directory){
         super();
         this.directory = directory;
-        this.fileName = "books.csv";
+        this.fileName = "books.xml";
         this.directory += this.fileName;
         loadCSV();
     }

@@ -1,5 +1,11 @@
 package Model;
 
+import Repository.XMLRepositories.XMLUtilities;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import java.nio.channels.ClosedByInterruptException;
 import java.util.Optional;
 
 public class Client extends BaseEntity<Integer> implements FileOperations{
@@ -14,6 +20,11 @@ public class Client extends BaseEntity<Integer> implements FileOperations{
     public Client(Client copyClient){
         super(copyClient.getId());
         this.name = copyClient.getName();
+    }
+
+    public Client(Element clientElement){
+        super(Integer.parseInt(XMLUtilities.getTextFromTagName(clientElement, "id")));
+        this.name = XMLUtilities.getTextFromTagName(clientElement, "name");
     }
 
     @Override
@@ -47,9 +58,13 @@ public class Client extends BaseEntity<Integer> implements FileOperations{
 
     }
 
-
     @Override
-    public String toXML() {
-        return null;
+    public Node toXML(Document document) {
+        Element clientElement = document.createElement("client");
+        XMLUtilities.appendChildWithTextToNode(document, clientElement, "id", String.valueOf(this.getId()));
+        XMLUtilities.appendChildWithTextToNode(document, clientElement, "name", this.getName());
+        return clientElement;
     }
+
+
 }
