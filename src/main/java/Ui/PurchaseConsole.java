@@ -17,6 +17,7 @@ public class PurchaseConsole extends DefaultConsole {
     private static final int TopThreeClientsOption = 5;
     private static final int TopThreeBooksOption = 6;
     private static final int BooksPerGenreOption = 7;
+    private static final int BestClientOption = 8;
 
     PurchaseConsole(PurchaseController purchaseController) {
         this.purchaseController = purchaseController;
@@ -50,6 +51,9 @@ public class PurchaseConsole extends DefaultConsole {
             case BooksPerGenreOption:
                 printBookPerGenre();
                 break;
+                case BestClientOption:
+                printBestClient();
+                break;
             case ExitOption:
                 return -1;
             default:
@@ -57,6 +61,13 @@ public class PurchaseConsole extends DefaultConsole {
                 break;
         }
         return 0;
+    }
+
+    private void printBestClient() throws IOException{
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("genre: ");
+        String description = bufferRead.readLine();
+        System.out.println(this.purchaseController.getClientMostBooksGenre(description));
     }
 
     private void printBookPerGenre() {
@@ -74,7 +85,6 @@ public class PurchaseConsole extends DefaultConsole {
     private void addPurchase() throws Throwable {
 
         this.purchaseController.addPurchase(readPurchase());
-
     }
 
     private void printPurchases() {
@@ -129,6 +139,7 @@ public class PurchaseConsole extends DefaultConsole {
         System.out.println("\t5.Top three clients that bought the most books");
         System.out.println("\t6.Top three books that were bought the most");
         System.out.println("\t7.Books sold for every genre");
+        System.out.println("\t8.The client that bought the most books with the same genre");
         System.out.println("\t0.Go back");
     }
 }

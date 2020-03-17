@@ -105,6 +105,21 @@ public class PurchaseController
         return topThree.subList(0,3);
     }
 
+    public String getClientMostBooksGenre(String genre)
+    {
+        List<String> topThree;
+        SortedSet<Map.Entry<Integer, Integer>> report = new TreeSet<>(((o1, o2) -> {
+            if(o1.getValue().compareTo(o2.getValue())==0)
+            {
+                return o1.getKey().compareTo(o2.getKey());
+            }
+            return o2.getValue().compareTo(o1.getValue());
+        }));
+        Map<Integer, Integer> clientsWithNumberBooks = getClientsWithNumberOfBoughtBooksWithGenre(genre);
+        report.addAll(clientsWithNumberBooks.entrySet());
+        return report.stream().map(entry -> this.clients.searchById(entry.getKey()).getName() + ": " + entry.getValue())
+                .collect(Collectors.toList()).get(0);
+    }
 
     private Map<String, Integer> getBooksBought()
     {
@@ -137,6 +152,23 @@ public class PurchaseController
         Map<Integer, Integer> report = new TreeMap<>();
         purchases.forEach((purchase)->{
             int key = purchase.getClientId();
+            report.putIfAbsent(key, 0);
+            report.replace(key, report.get(key)+1);
+        });
+        return report;
+    }
+
+    private Map<Integer, Integer> getClientsWithNumberOfBoughtBooksWithGenre(String genre)
+    {
+        Set<Purchase> purchases = getAllPurchases();
+        Map<Integer, Integer> report = new TreeMap<>();
+        purchases.stream().filter(v->{
+            String bookid = v.getBookId();
+            String bookGenre = ((Book)this.books.findOne(bookid).get()).getGenre();
+            return genre.equals(bookGenre);
+        }).forEach((purchase)->{
+            int key = purchase.getClientId();
+
             report.putIfAbsent(key, 0);
             report.replace(key, report.get(key)+1);
         });
