@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Book;
 import Model.Exceptions.ValidatorException;
+import Model.Purchase;
 import Model.Validators.BookValidator;
 import Model.Validators.IValidator;
 import Repository.RepositoryInMemory;
@@ -30,7 +31,8 @@ public class BookController {
         this.repository.add(book);
     }
 
-    public void deleteBook(String ibsn) {
+    public void deleteBook(String ibsn)
+    {
         this.repository.delete(ibsn);
     }
 

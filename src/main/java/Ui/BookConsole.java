@@ -1,6 +1,7 @@
 package Ui;
 
 import Controller.BookController;
+import Controller.PurchaseController;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -10,6 +11,7 @@ import java.io.InputStreamReader;
 
 public class BookConsole extends DefaultConsole {
     public BookController controller;
+    public PurchaseController purchaseControllercontroller;
 
     private static final int PrintBooksOption = 1;
     private static final int AddBookOption = 2;
@@ -19,8 +21,9 @@ public class BookConsole extends DefaultConsole {
     private static final int FilterByGenre = 6;
 
 
-    public BookConsole(BookController controller) {
+    public BookConsole(BookController controller,PurchaseController purchaseControllercontroller) {
         this.controller = controller;
+        this.purchaseControllercontroller=purchaseControllercontroller;
     }
 
     @Override
@@ -104,6 +107,7 @@ public class BookConsole extends DefaultConsole {
         String ibsn = bufferedReader.readLine();
 
         this.controller.deleteBook(ibsn);
+        this.purchaseControllercontroller.deleteAllPurchasesForBook(ibsn);
     }
 
     private void printBooks() {

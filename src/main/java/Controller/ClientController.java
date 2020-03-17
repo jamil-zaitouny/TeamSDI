@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Client;
 import Model.Exceptions.ValidatorException;
+import Model.Purchase;
 import Model.Validators.ClientValidator;
 import Model.Validators.IValidator;
 import Repository.RepositoryInterface;
@@ -14,6 +15,7 @@ import java.util.stream.StreamSupport;
 
 public class ClientController {
     private RepositoryInterface<Integer, Client> repository;
+
     private IValidator<Client> validator;
     public ClientController(RepositoryInterface<Integer, Client> repository) {
         this.validator = new ClientValidator();

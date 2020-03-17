@@ -38,12 +38,12 @@ public class Console extends DefaultConsole{
     }
 
     private void dealClients() {
-        ClientConsole clientConsole = new ClientConsole(clientController);
+        ClientConsole clientConsole = new ClientConsole(clientController,purchaseController);
         clientConsole.run();
     }
 
     private void dealBooks() {
-        BookConsole bookConsole = new BookConsole(bookController);
+        BookConsole bookConsole = new BookConsole(bookController,purchaseController);
         bookConsole.run();
     }
 

@@ -42,6 +42,22 @@ public class PurchaseController
         this.repository.delete(id);
     }
 
+    public void deleteAllPurchasesForClient(Integer id)
+    {
+        Iterable<Purchase> purchases=repository.findAll();
+        StreamSupport.stream(purchases.spliterator(),false)
+                .filter(purchase-> purchase.getClientId()==id)
+                .forEach(purchase-> deletePurchase(purchase.getId()));
+    }
+
+    public void deleteAllPurchasesForBook(String id)
+    {
+        Iterable<Purchase> purchases=repository.findAll();
+        StreamSupport.stream(purchases.spliterator(),false)
+                .filter(purchase-> purchase.getBookId().equals(id))
+                .forEach(purchase-> deletePurchase(purchase.getId()));
+    }
+
     public void updatePurchase(Integer id, String newDetails)
     {
         Purchase newPurchase = new Purchase(id,this.repository.findOne(id).get().getBookId(),this.repository.findOne(id).get().getClientId(),newDetails);

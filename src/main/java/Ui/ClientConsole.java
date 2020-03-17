@@ -1,6 +1,7 @@
 package Ui;
 
 import Controller.ClientController;
+import Controller.PurchaseController;
 import Model.Client;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,6 +12,7 @@ import java.io.InputStreamReader;
 
 public class ClientConsole extends DefaultConsole {
     private ClientController clientController;
+    private PurchaseController purchaseControllercontroller;
 
     private static final int PrintClientsOption = 1;
     private static final int AddClientOption = 2;
@@ -19,8 +21,9 @@ public class ClientConsole extends DefaultConsole {
     private static final int SearchByIdClientOption = 5;
     private static final int FilterByName = 6;
 
-    ClientConsole(ClientController clientController) {
+    ClientConsole(ClientController clientController,PurchaseController purchaseControllercontrollerr) {
         this.clientController = clientController;
+        this.purchaseControllercontroller=purchaseControllercontrollerr;
     }
 
     @Override
@@ -89,6 +92,7 @@ public class ClientConsole extends DefaultConsole {
         int id = Integer.parseInt(bufferedReader.readLine());
 
         this.clientController.deleteClient(id);
+        this.purchaseControllercontroller.deleteAllPurchasesForClient(id);
     }
 
     private void addClient() throws IOException {
