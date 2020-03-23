@@ -91,8 +91,8 @@ public class ClientConsole extends DefaultConsole {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int id = Integer.parseInt(bufferedReader.readLine());
 
-        this.clientController.deleteClient(id);
         this.purchaseControllercontroller.deleteAllPurchasesForClient(id);
+        this.clientController.deleteClient(id);
     }
 
     private void addClient() throws IOException {

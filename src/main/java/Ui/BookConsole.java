@@ -106,8 +106,8 @@ public class BookConsole extends DefaultConsole {
 
         String ibsn = bufferedReader.readLine();
 
-        this.controller.deleteBook(ibsn);
         this.purchaseControllercontroller.deleteAllPurchasesForBook(ibsn);
+        this.controller.deleteBook(ibsn);
     }
 
     private void printBooks() {

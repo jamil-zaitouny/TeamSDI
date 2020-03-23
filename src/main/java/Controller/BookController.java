@@ -7,6 +7,8 @@ import Model.Validators.BookValidator;
 import Model.Validators.IValidator;
 import Repository.RepositoryInMemory;
 import Repository.RepositoryInterface;
+import Repository.SortRepository.Sort;
+import Repository.SortRepository.SortingRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -17,10 +19,10 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class BookController {
-    private RepositoryInterface<String, Book> repository;
+    private SortingRepository<String, Book> repository;
     private IValidator<Book> validator;
 
-    public BookController(RepositoryInterface<String, Book> repository) {
+    public BookController(SortingRepository<String, Book> repository) {
         validator = new BookValidator();
         this.repository = repository;
     }
@@ -52,11 +54,16 @@ public class BookController {
     }
 
     public Set<Book> getAllBooks() {
-        return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
+        return StreamSupport.stream(sortBooksByTitleAuthor().spliterator(), false).collect(Collectors.toSet());
     }
 
     public Set<Book> filterByGenre(String genre){
         Set<Book> filteredBooks = getAllBooks();
         return filteredBooks.stream().filter(v->v.getGenre().equals(genre)).collect(Collectors.toSet());
+    }
+
+    public Iterable<Book> sortBooksByTitleAuthor() {
+        Sort sort=new Sort(Sort.Direction.ASC,"authorName").and(new Sort("title"));
+        return repository.findAll(sort);
     }
 }

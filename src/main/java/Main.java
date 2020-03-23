@@ -3,10 +3,14 @@ import Model.Book;
 import Model.Client;
 import Model.Purchase;
 
+import Repository.DBRepository.BookDBRepository;
+import Repository.DBRepository.ClientDBRepository;
+import Repository.DBRepository.PurchaseDBRepository;
 import Repository.FileRepositories.BookFileRepository;
 import Repository.FileRepositories.ClientFileRepository;
 import Repository.FileRepositories.PurchaseFileRepository;
 import Repository.RepositoryInterface;
+import Repository.SortRepository.SortingRepository;
 import Repository.XMLRepositories.BookXMLRepository;
 import Repository.XMLRepositories.ClientXMLRepository;
 import Repository.XMLRepositories.PurchaseXMLRepository;
@@ -30,30 +34,13 @@ public class Main {
         String xmlDirectory = ".\\src\\main\\java\\Files\\";
         Book book = new Book(isbn, title, author, genre);
 
-        RepositoryInterface<Integer, Purchase> purchaseRepo = null;
-        try {
-            purchaseRepo = new PurchaseXMLRepository(directory);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-        RepositoryInterface<String, Book> bookRepo = null;
-        try {
-            bookRepo = new BookXMLRepository(xmlDirectory);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-        RepositoryInterface<Integer, Client> clientRepo = null;
-        try {
-            clientRepo = new ClientXMLRepository(directory);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
+        SortingRepository<Integer, Purchase> purchaseRepo = new PurchaseDBRepository();
+        SortingRepository<String, Book> bookRepo = new BookDBRepository();
+        SortingRepository<Integer, Client> clientRepo = new ClientDBRepository();
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
         PurchaseController purchaseController=new PurchaseController(purchaseRepo,clientController,bookController);
-
-        bookController.addBook(isbn, title, author, genre);
 
         Console console = new Console(clientController, bookController,purchaseController);
         console.run();

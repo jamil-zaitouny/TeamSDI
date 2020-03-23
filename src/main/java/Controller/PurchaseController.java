@@ -5,6 +5,8 @@ import Model.Exceptions.ValidatorException;
 import Model.Purchase;
 import Model.Validators.PurchaseValidator;
 import Repository.RepositoryInterface;
+import Repository.SortRepository.Sort;
+import Repository.SortRepository.SortingRepository;
 
 import javax.print.DocFlavor;
 import java.util.*;
@@ -13,12 +15,12 @@ import java.util.stream.StreamSupport;
 
 public class PurchaseController
 {
-    private RepositoryInterface<Integer, Purchase> repository;
+    private SortingRepository<Integer, Purchase> repository;
     private ClientController clients;
     private BookController books;
     private PurchaseValidator validator;
 
-    public PurchaseController(RepositoryInterface<Integer, Purchase> repository,ClientController clients,  BookController books) {
+    public PurchaseController(SortingRepository<Integer, Purchase> repository,ClientController clients,  BookController books) {
         this.repository = repository;
         this.clients = clients;
         this.books = books;
@@ -34,7 +36,7 @@ public class PurchaseController
 
     public Set<Purchase> getAllPurchases()
     {
-        return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
+        return StreamSupport.stream(sortPurchasesByDescription().spliterator(), false).collect(Collectors.toSet());
     }
 
     public void deletePurchase(Integer id)
@@ -173,5 +175,9 @@ public class PurchaseController
             report.replace(key, report.get(key)+1);
         });
         return report;
+    }
+    public Iterable<Purchase> sortPurchasesByDescription() {
+        Sort sort=new Sort(Sort.Direction.ASC,"purcahseDetails");
+        return repository.findAll(sort);
     }
 }
