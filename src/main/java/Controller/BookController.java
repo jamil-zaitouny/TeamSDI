@@ -54,7 +54,7 @@ public class BookController {
     }
 
     public Set<Book> getAllBooks() {
-        return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
+        return StreamSupport.stream(sortBooksByTitleAuthor().spliterator(), false).collect(Collectors.toSet());
     }
 
     public Set<Book> filterByGenre(String genre){

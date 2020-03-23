@@ -36,7 +36,7 @@ public class PurchaseController
 
     public Set<Purchase> getAllPurchases()
     {
-        return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
+        return StreamSupport.stream(sortPurchasesByDescription().spliterator(), false).collect(Collectors.toSet());
     }
 
     public void deletePurchase(Integer id)

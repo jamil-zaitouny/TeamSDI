@@ -1,9 +1,6 @@
 package Repository.SortRepository;
-
+import org.apache.commons.math3.util.Pair;
 import Model.Exceptions.FileException;
-import jdk.internal.net.http.common.Pair;
-
-
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -37,8 +34,8 @@ public class Sort {
         Collections.reverse(reversed);
         reversed.stream()
                 .forEach(pair -> {
-                    Direction direction=pair.first;
-                    String field=pair.second;
+                    Direction direction=pair.getFirst();
+                    String field=pair.getSecond();
                     int sign;
                     if (direction.equals(Direction.DESC)) {
                         sign=-1;

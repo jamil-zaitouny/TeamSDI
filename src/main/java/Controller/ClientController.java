@@ -53,7 +53,7 @@ public class ClientController {
 
     public Set<Client> getAllClients()
     {
-        return StreamSupport.stream(this.repository.findAll().spliterator(), false).collect(Collectors.toSet());
+        return StreamSupport.stream(sortClientsByName().spliterator(), false).collect(Collectors.toSet());
     }
 
     public Set<Client> filterByName(String name) {

@@ -3,6 +3,9 @@ import Model.Book;
 import Model.Client;
 import Model.Purchase;
 
+import Repository.DBRepository.BookDBRepository;
+import Repository.DBRepository.ClientDBRepository;
+import Repository.DBRepository.PurchaseDBRepository;
 import Repository.FileRepositories.BookFileRepository;
 import Repository.FileRepositories.ClientFileRepository;
 import Repository.FileRepositories.PurchaseFileRepository;
@@ -31,24 +34,9 @@ public class Main {
         String xmlDirectory = ".\\src\\main\\java\\Files\\";
         Book book = new Book(isbn, title, author, genre);
 
-        SortingRepository<Integer, Purchase> purchaseRepo = null;
-        try {
-            purchaseRepo = new PurchaseDBRepository(directory);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-        SortingRepository<String, Book> bookRepo = null;
-        try {
-            bookRepo = new BookDBRepository(xmlDirectory);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-        SortingRepository<Integer, Client> clientRepo = null;
-        try {
-            clientRepo = new ClientDBRepository(directory);
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
+        SortingRepository<Integer, Purchase> purchaseRepo = new PurchaseDBRepository();
+        SortingRepository<String, Book> bookRepo = new BookDBRepository();
+        SortingRepository<Integer, Client> clientRepo = new ClientDBRepository();
 
         ClientController clientController = new ClientController(clientRepo);
         BookController bookController = new BookController(bookRepo);
