@@ -177,7 +177,7 @@ public class PurchaseController
         return report;
     }
     public Iterable<Purchase> sortPurchasesByDescription() {
-        Sort sort=new Sort(Sort.Direction.ASC,"description");
+        Sort sort=new Sort(Sort.Direction.ASC,"purcahseDetails");
         return repository.findAll(sort);
     }
 }
