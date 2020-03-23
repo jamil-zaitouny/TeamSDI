@@ -42,8 +42,6 @@ public class Main {
         BookController bookController = new BookController(bookRepo);
         PurchaseController purchaseController=new PurchaseController(purchaseRepo,clientController,bookController);
 
-        bookController.addBook(isbn, title, author, genre);
-
         Console console = new Console(clientController, bookController,purchaseController);
         console.run();
     }
