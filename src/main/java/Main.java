@@ -7,6 +7,7 @@ import Repository.FileRepositories.BookFileRepository;
 import Repository.FileRepositories.ClientFileRepository;
 import Repository.FileRepositories.PurchaseFileRepository;
 import Repository.RepositoryInterface;
+import Repository.SortRepository.SortingRepository;
 import Repository.XMLRepositories.BookXMLRepository;
 import Repository.XMLRepositories.ClientXMLRepository;
 import Repository.XMLRepositories.PurchaseXMLRepository;
@@ -30,21 +31,21 @@ public class Main {
         String xmlDirectory = ".\\src\\main\\java\\Files\\";
         Book book = new Book(isbn, title, author, genre);
 
-        RepositoryInterface<Integer, Purchase> purchaseRepo = null;
+        SortingRepository<Integer, Purchase> purchaseRepo = null;
         try {
-            purchaseRepo = new PurchaseXMLRepository(directory);
+            purchaseRepo = new PurchaseDBRepository(directory);
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        RepositoryInterface<String, Book> bookRepo = null;
+        SortingRepository<String, Book> bookRepo = null;
         try {
-            bookRepo = new BookXMLRepository(xmlDirectory);
+            bookRepo = new BookDBRepository(xmlDirectory);
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        RepositoryInterface<Integer, Client> clientRepo = null;
+        SortingRepository<Integer, Client> clientRepo = null;
         try {
-            clientRepo = new ClientXMLRepository(directory);
+            clientRepo = new ClientDBRepository(directory);
         } catch (SAXException e) {
             e.printStackTrace();
         }

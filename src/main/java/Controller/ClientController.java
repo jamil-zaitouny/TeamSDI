@@ -6,6 +6,8 @@ import Model.Purchase;
 import Model.Validators.ClientValidator;
 import Model.Validators.IValidator;
 import Repository.RepositoryInterface;
+import Repository.SortRepository.Sort;
+import Repository.SortRepository.SortingRepository;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -14,10 +16,10 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class ClientController {
-    private RepositoryInterface<Integer, Client> repository;
+    private SortingRepository<Integer, Client> repository;
 
     private IValidator<Client> validator;
-    public ClientController(RepositoryInterface<Integer, Client> repository) {
+    public ClientController(SortingRepository<Integer, Client> repository) {
         this.validator = new ClientValidator();
         this.repository = repository;
     }
@@ -57,5 +59,9 @@ public class ClientController {
     public Set<Client> filterByName(String name) {
         Set<Client> clients = getAllClients();
         return clients.stream().filter(v->v.getName().contains(name)).collect(Collectors.toSet());
+    }
+    public Iterable<Client> sortClientsByName() {
+        Sort sort=new Sort(Sort.Direction.ASC,"name");
+        return repository.findAll(sort);
     }
 }
