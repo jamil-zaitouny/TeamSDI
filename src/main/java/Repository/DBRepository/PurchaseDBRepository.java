@@ -7,6 +7,7 @@ import Repository.SortRepository.SortingRepository;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +16,12 @@ public class PurchaseDBRepository implements SortingRepository<Integer, Purchase
 {
     HashMap<Integer,Purchase> purchases;
     Connection connection;
+
+
+    @Override
+    public Optional<Purchase> findOne(Integer id) {
+        return Optional.ofNullable(purchases.get(id));
+    }
 
     private void loadPurchases() throws FileException {
         try {
@@ -60,13 +67,24 @@ public class PurchaseDBRepository implements SortingRepository<Integer, Purchase
     }
 
     @Override
-    public Optional<Purchase> findOne(Integer id) {
-        return Optional.ofNullable(purchases.get(id));
-    }
-
-    @Override
     public Iterable<Purchase> findAll() {
-        Set<Purchase> allEntities = purchases.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet());
+        Set<Purchase> allEntities = new HashSet<>();
+
+        try {
+            String selectPurchases="select * from purchases";
+            PreparedStatement selectPurchasesStatement=connection.prepareStatement(selectPurchases);
+            ResultSet purchasesSet=selectPurchasesStatement.executeQuery();
+            System.out.println(purchasesSet);
+            while(purchasesSet.next()) {
+                int id=purchasesSet.getInt("purchaseid");
+                String bookid=purchasesSet.getString("bookid");
+                int clientid=purchasesSet.getInt("clientid");
+                String purchasedetails=purchasesSet.getString("purchasedetails");
+                allEntities.add(new Purchase(id,bookid,clientid,purchasedetails));
+            }
+        } catch (SQLException e) {
+            throw new FileException("There was some problem with the database!");
+        }
         return allEntities;
     }
 

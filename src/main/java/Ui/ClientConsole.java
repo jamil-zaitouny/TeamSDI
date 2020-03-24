@@ -105,7 +105,7 @@ public class ClientConsole extends DefaultConsole {
     }
 
     private void printClients() {
-        this.clientController.getAllClients().forEach(System.out::println);
+        this.clientController.sortClientsByName().forEach(System.out::println);
     }
 
     @Override

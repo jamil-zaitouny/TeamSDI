@@ -7,6 +7,7 @@ import Repository.SortRepository.SortingRepository;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,17 +16,23 @@ public class BookDBRepository implements SortingRepository<String, Book> {
     HashMap<String, Book> books;
     Connection connection;
 
+
+    @Override
+    public Optional<Book> findOne(String isbn) {
+        return Optional.ofNullable(books.get(isbn));
+    }
+
     private void loadBooks() throws FileException {
         try {
-            String selectClients="select * from books";
-            PreparedStatement selectClientsStatement=connection.prepareStatement(selectClients);
-            ResultSet clientsSet=selectClientsStatement.executeQuery();
-            System.out.println(clientsSet);
-            while(clientsSet.next()) {
-                String isbn=clientsSet.getString("isbn");
-                String title=clientsSet.getString("title");
-                String authorName=clientsSet.getString("authorName");
-                String genre=clientsSet.getString("genre");
+            String selectBooks="select * from books";
+            PreparedStatement selectBooksStatement=connection.prepareStatement(selectBooks);
+            ResultSet booksSet=selectBooksStatement.executeQuery();
+            System.out.println(booksSet);
+            while(booksSet.next()) {
+                String isbn=booksSet.getString("isbn");
+                String title=booksSet.getString("title");
+                String authorName=booksSet.getString("authorName");
+                String genre=booksSet.getString("genre");
                 books.put(isbn,new Book(isbn,title, authorName,genre));
             }
         } catch (SQLException e) {
@@ -57,13 +64,24 @@ public class BookDBRepository implements SortingRepository<String, Book> {
     }
 
     @Override
-    public Optional<Book> findOne(String isbn) {
-        return Optional.ofNullable(books.get(isbn));
-    }
-
-    @Override
     public Iterable<Book> findAll() {
-        Set<Book> allEntities = books.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet());
+        Set<Book> allEntities = new HashSet<>();
+
+        try {
+            String selectBooks="select * from books";
+            PreparedStatement selectBooksStatement=connection.prepareStatement(selectBooks);
+            ResultSet booksSet=selectBooksStatement.executeQuery();
+            System.out.println(booksSet);
+            while(booksSet.next()) {
+                String isbn=booksSet.getString("isbn");
+                String title=booksSet.getString("title");
+                String authorName=booksSet.getString("authorName");
+                String genre=booksSet.getString("genre");
+                allEntities.add(new Book(isbn,title, authorName,genre));
+            }
+        } catch (SQLException e) {
+            throw new FileException("There was some problem with the database!");
+        }
         return allEntities;
     }
 

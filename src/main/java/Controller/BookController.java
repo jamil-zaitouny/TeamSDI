@@ -63,7 +63,7 @@ public class BookController {
     }
 
     public Iterable<Book> sortBooksByTitleAuthor() {
-        Sort sort=new Sort(Sort.Direction.ASC,"authorName").and(new Sort("title"));
+        Sort sort=new Sort(Sort.Direction.DESC,"title");
         return repository.findAll(sort);
     }
 }

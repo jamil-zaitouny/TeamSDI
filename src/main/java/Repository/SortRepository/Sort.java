@@ -72,21 +72,3 @@ public class Sort {
         return sorted.get();
     }
 }
-
-/*
-    public List<Student> getAllStudents() {
-        throw new RuntimeException("not yet implemented");
-//        Sort sort = new Sort("name"); //sort asc by name
-
-//        Sort sort = new Sort("group"); //sort asc by group
-
-        //sort desc by group and desc by name (should work with any number of fields)
-//        Sort sort = new Sort(Sort.Direction.DESC, "group", "name");
-
-        //sort desc by group and asc by name
-//        Sort sort = new Sort(Sort.Direction.DESC, "group")
-//                .and(new Sort("name"));
-
-//        return StreamSupport.stream(repository.findAll(sort).spliterator(), false)
-//
- */

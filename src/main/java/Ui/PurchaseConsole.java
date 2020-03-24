@@ -88,7 +88,7 @@ public class PurchaseConsole extends DefaultConsole {
     }
 
     private void printPurchases() {
-        this.purchaseController.getAllPurchases().forEach(System.out::println);
+        this.purchaseController.sortPurchasesByDescription().forEach(System.out::println);
     }
 
     private void updatePurchase() throws IOException {

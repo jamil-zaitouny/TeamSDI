@@ -7,6 +7,7 @@ import Repository.SortRepository.SortingRepository;
 
 import java.sql.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +16,12 @@ public class ClientDBRepository implements SortingRepository<Integer, Client>
 {
     HashMap<Integer,Client> clients;
     Connection connection;
+
+
+    @Override
+    public Optional<Client> findOne(Integer id) {
+        return Optional.ofNullable(clients.get(id));
+    }
 
     private void loadClients() throws FileException {
         try {
@@ -58,13 +65,22 @@ public class ClientDBRepository implements SortingRepository<Integer, Client>
     }
 
     @Override
-    public Optional<Client> findOne(Integer id) {
-        return Optional.ofNullable(clients.get(id));
-    }
-
-    @Override
     public Iterable<Client> findAll() {
-        Set<Client> allEntities = clients.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toSet());
+        Set<Client> allEntities = new HashSet<>();
+
+        try {
+            String selectClients="select * from clients";
+            PreparedStatement selectClientsStatement=connection.prepareStatement(selectClients);
+            ResultSet clientsSet=selectClientsStatement.executeQuery();
+            System.out.println(clientsSet);
+            while(clientsSet.next()) {
+                int id=clientsSet.getInt("id");
+                String name=clientsSet.getString("name");
+                allEntities.add(new Client(id,name));
+            }
+        } catch (SQLException e) {
+            throw new FileException("There was some problem with the database!");
+        }
         return allEntities;
     }
 

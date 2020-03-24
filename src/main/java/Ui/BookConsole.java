@@ -111,7 +111,7 @@ public class BookConsole extends DefaultConsole {
     }
 
     private void printBooks() {
-        this.controller.getAllBooks().forEach(System.out::println);
+        this.controller.sortBooksByTitleAuthor().forEach(System.out::println);
     }
 
     @Override
