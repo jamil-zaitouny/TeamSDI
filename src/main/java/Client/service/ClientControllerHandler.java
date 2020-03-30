@@ -21,26 +21,26 @@ public class ClientControllerHandler implements ClientControllerService {
 
     @Override
     public Future<Set<Client>> print_clients() {
-        /*return executorService.submit(() -> {
+        return executorService.submit(() -> {
             Message request = new Message(ClientControllerService.PRINT_CLIENTS, "");
             Message response = tcpClient.sendAndReceive(request);
 
             Set<Client> clients = new HashSet<>();
             String[] stringClients = response.getBody().split("\n");
             for(String stringClient: stringClients){
-
+                String[] attributes = stringClient.split(" ");
+                Client client = new Client(Integer.parseInt(attributes[0]), attributes[1]);
+                clients.add(client);
             }
-
+            return clients;
         });
-         */
-        return null;
     }
 
     @Override
     public Future<Void> addClient(int ID, String name) {
         return executorService.submit(() -> {
             Message request = new Message(ClientControllerService.ADD_CLIENT, ID + " " + name);
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }
@@ -49,7 +49,7 @@ public class ClientControllerHandler implements ClientControllerService {
     public Future<Void> deleteClient(int ID) {
         return executorService.submit(() -> {
             Message request = new Message(ClientControllerService.DELETE_CLIENT, String.valueOf(ID));
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }
@@ -58,17 +58,35 @@ public class ClientControllerHandler implements ClientControllerService {
     public Future<Void> updateClient(int ID, String name) {
         return executorService.submit(() -> {
             Message request = new Message(ClientControllerService.UPDATE_CLIENT, ID + " " + name);
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });    }
 
     @Override
-    public Future<Client> searchById(int ID) {
-        return null;
+    public Future<Client> searchById(int ID){
+        return executorService.submit(() -> {
+            Message request = new Message(ClientControllerService.SEARCH_BY_ID, String.valueOf(ID));
+            Message response = tcpClient.sendAndReceive(request);
+
+            String[] stringClient = response.getBody().split(" ");
+            return new Client(Integer.parseInt(stringClient[0]), stringClient[1]);
+        });
     }
 
     @Override
     public Future<Set<Client>> filterByName(String name) {
-        return null;
+        return executorService.submit(() -> {
+            Message request = new Message(ClientControllerService.FILTER_BY_Name, name);
+            Message response = tcpClient.sendAndReceive(request);
+
+            Set<Client> clients = new HashSet<>();
+            String[] stringClients = response.getBody().split("\n");
+            for(String stringClient: stringClients){
+                String[] attributes = stringClient.split(" ");
+                Client client = new Client(Integer.parseInt(attributes[0]), attributes[1]);
+                clients.add(client);
+            }
+            return clients;
+        });
     }
 }

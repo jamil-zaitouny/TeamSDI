@@ -4,8 +4,10 @@ import Client.TCP.TCPClient;
 import Common.Communication.Message;
 import Common.HandlerServices.ClientControllerService;
 import Common.HandlerServices.PurchaseControllerService;
+import Model.Book;
 import Model.Purchase;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -22,14 +24,26 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
 
     @Override
     public Future<Set<Purchase>> printPurchases() {
-        return null;
+        return executorService.submit(() -> {
+            Message request = new Message(PurchaseControllerService.PRINT_PURCHASES, "");
+            Message response = tcpClient.sendAndReceive(request);
+
+            Set<Purchase> purchases = new HashSet<>();
+            String[] stringPurchases = response.getBody().split("\n");
+            for(String stringPurchase: stringPurchases){
+                String[] attributes = stringPurchase.split(" ");
+                Purchase purchase = new Purchase(Integer.parseInt(attributes[0]), attributes[1], Integer.parseInt(attributes[2]), attributes[3]);
+                purchases.add(purchase);
+            }
+            return purchases;
+        });
     }
 
     @Override
     public Future<Void> addPurchase(int ID, String ISBN, int clientID, String purchaseDetails) {
         return executorService.submit(() -> {
             Message request = new Message(PurchaseControllerService.ADD_PURCHASE, ID + " " + ISBN + " " + clientID + " " + purchaseDetails);
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }
@@ -38,7 +52,7 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     public Future<Void> deletePurchase(int ID) {
         return executorService.submit(() -> {
             Message request = new Message(PurchaseControllerService.DELETE_PURCHASE, String.valueOf(ID));
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }
@@ -47,7 +61,7 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     public Future<Void> updatePurchase(int ID, String purchaseDetails) {
         return executorService.submit(() -> {
             Message request = new Message(PurchaseControllerService.ADD_PURCHASE, ID + " " + purchaseDetails);
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }

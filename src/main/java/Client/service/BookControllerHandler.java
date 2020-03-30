@@ -3,9 +3,10 @@ package Client.service;
 import Client.TCP.TCPClient;
 import Common.Communication.Message;
 import Common.HandlerServices.BookControllerService;
-import Common.HandlerServices.PurchaseControllerService;
+import Common.HandlerServices.ClientControllerService;
 import Model.Book;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -21,14 +22,26 @@ public class BookControllerHandler implements BookControllerService {
 
     @Override
     public Future<Set<Book>> print_books() {
-        return null;
+        return executorService.submit(() -> {
+            Message request = new Message(BookControllerService.PRINT_BOOKS, "");
+            Message response = tcpClient.sendAndReceive(request);
+
+            Set<Book> books = new HashSet<>();
+            String[] stringBooks = response.getBody().split("\n");
+            for(String stringClient: stringBooks){
+                String[] attributes = stringClient.split(" ");
+                Book book = new Book(attributes[0], attributes[1], attributes[2], attributes[3]);
+                books.add(book);
+            }
+            return books;
+        });
     }
 
     @Override
     public Future<Void> addBook(String ISBN, String newTitle, String newAuthor, String genre) {
         return executorService.submit(() -> {
             Message request = new Message(BookControllerService.ADD_BOOK, ISBN + " " + newTitle + " " + newAuthor + " " + genre);
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }
@@ -37,7 +50,7 @@ public class BookControllerHandler implements BookControllerService {
     public Future<Void> deleteBook(String ISBN) {
         return executorService.submit(() -> {
             Message request = new Message(BookControllerService.DELETE_BOOK, String.valueOf(ISBN));
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }
@@ -46,18 +59,36 @@ public class BookControllerHandler implements BookControllerService {
     public Future<Void> updateBook(String ISBN, String newTitle, String newAuthor, String genre) {
         return executorService.submit(() -> {
             Message request = new Message(BookControllerService.UPDATE_BOOK, ISBN + " " + newTitle + " " + newAuthor + " " + genre);
-            Message response = tcpClient.sendAndReceive(request);
+            tcpClient.sendAndReceive(request);
             return null;
         });
     }
 
     @Override
     public Future<Book> searchByIsbn(String ISBN) {
-        return null;
+        return executorService.submit(() -> {
+            Message request = new Message(BookControllerService.SEARCH_BY_ISBN, "");
+            Message response = tcpClient.sendAndReceive(request);
+
+            String[] stringBooks = response.getBody().split("\n");
+            return new Book(stringBooks[0], stringBooks[1], stringBooks[2], stringBooks[3]);
+        });
     }
 
     @Override
     public Future<Set<Book>> filterByGenre() {
-        return null;
+        return executorService.submit(() -> {
+            Message request = new Message(BookControllerService.FILTER_BY_GENRE, "");
+            Message response = tcpClient.sendAndReceive(request);
+
+            Set<Book> books = new HashSet<>();
+            String[] stringBooks = response.getBody().split("\n");
+            for(String stringClient: stringBooks){
+                String[] attributes = stringClient.split(" ");
+                Book book = new Book(attributes[0], attributes[1], attributes[2], attributes[3]);
+                books.add(book);
+            }
+            return books;
+        });
     }
 }
