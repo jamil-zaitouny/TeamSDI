@@ -52,10 +52,10 @@ public class Purchase extends BaseEntity<Integer>
 
     @Override
     public String toString() {
-        return "PurchaseID: "+ this.getId() + "\n" +
+        return "<PurchaseID: "+ this.getId() + "\n" +
                 "Book: " + bookId + "\n"+
                 "Client: " + clientId + "\n"+
-                "PurchaseDetails: "+purcahseDetails+"\n" ;
+                "PurchaseDetails: "+purcahseDetails+">" ;
     }
 
     @Override

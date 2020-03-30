@@ -1,17 +1,17 @@
 package Ui;
 
+import Common.HandlerServices.BookControllerService;
+import Common.HandlerServices.PurchaseControllerService;
 import Controller.BookController;
 import Controller.PurchaseController;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class BookConsole extends DefaultConsole {
-    public BookController controller;
-    public PurchaseController purchaseControllercontroller;
+    public BookControllerService controller;
+    public PurchaseControllerService purchaseController;
 
     private static final int PrintBooksOption = 1;
     private static final int AddBookOption = 2;
@@ -21,9 +21,9 @@ public class BookConsole extends DefaultConsole {
     private static final int FilterByGenre = 6;
 
 
-    public BookConsole(BookController controller,PurchaseController purchaseControllercontroller) {
+    public BookConsole(BookControllerService controller,PurchaseControllerService purchaseControllercontroller) {
         this.controller = controller;
-        this.purchaseControllercontroller=purchaseControllercontroller;
+        this.purchaseController =purchaseControllercontroller;
     }
 
     @Override
@@ -106,7 +106,7 @@ public class BookConsole extends DefaultConsole {
 
         String ibsn = bufferedReader.readLine();
 
-        this.purchaseControllercontroller.deleteAllPurchasesForBook(ibsn);
+        this.purchaseController.deleteAllPurchasesForBook(ibsn);
         this.controller.deleteBook(ibsn);
     }
 

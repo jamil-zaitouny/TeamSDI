@@ -1,0 +1,74 @@
+package Client.service;
+
+import Client.TCP.TCPClient;
+import Common.Communication.Message;
+import Common.HandlerServices.ClientControllerService;
+import Model.Client;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+
+public class ClientControllerHandler implements ClientControllerService {
+    private ExecutorService executorService;
+    private TCPClient tcpClient;
+
+    public ClientControllerHandler(ExecutorService executorService, TCPClient tcpClient) {
+        this.executorService = executorService;
+        this.tcpClient = tcpClient;
+    }
+
+    @Override
+    public Future<Set<Client>> print_clients() {
+        /*return executorService.submit(() -> {
+            Message request = new Message(ClientControllerService.PRINT_CLIENTS, "");
+            Message response = tcpClient.sendAndReceive(request);
+
+            Set<Client> clients = new HashSet<>();
+            String[] stringClients = response.getBody().split("\n");
+            for(String stringClient: stringClients){
+
+            }
+
+        });
+         */
+        return null;
+    }
+
+    @Override
+    public Future<Void> addClient(int ID, String name) {
+        return executorService.submit(() -> {
+            Message request = new Message(ClientControllerService.ADD_CLIENT, ID + " " + name);
+            Message response = tcpClient.sendAndReceive(request);
+            return null;
+        });
+    }
+
+    @Override
+    public Future<Void> deleteClient(int ID) {
+        return executorService.submit(() -> {
+            Message request = new Message(ClientControllerService.DELETE_CLIENT, String.valueOf(ID));
+            Message response = tcpClient.sendAndReceive(request);
+            return null;
+        });
+    }
+
+    @Override
+    public Future<Void> updateClient(int ID, String name) {
+        return executorService.submit(() -> {
+            Message request = new Message(ClientControllerService.UPDATE_CLIENT, ID + " " + name);
+            Message response = tcpClient.sendAndReceive(request);
+            return null;
+        });    }
+
+    @Override
+    public Future<Client> searchById(int ID) {
+        return null;
+    }
+
+    @Override
+    public Future<Set<Client>> filterByName(String name) {
+        return null;
+    }
+}

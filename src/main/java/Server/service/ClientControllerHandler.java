@@ -22,7 +22,7 @@ public class ClientControllerHandler implements ClientControllerService {
     }
 
     @Override
-    public Future<Void> add_client(int ID, String name) {
+    public Future<Void> addClient(int ID, String name) {
         return executorService.submit(()->{
             clientController.addClient(ID, name);
             return null;
@@ -30,7 +30,7 @@ public class ClientControllerHandler implements ClientControllerService {
     }
 
     @Override
-    public Future<Void> delete_client(int ID) {
+    public Future<Void> deleteClient(int ID) {
         return executorService.submit(()->{
             clientController.deleteClient(ID);
             return null;
@@ -38,7 +38,7 @@ public class ClientControllerHandler implements ClientControllerService {
     }
 
     @Override
-    public Future<Void> update_client(int ID, String name) {
+    public Future<Void> updateClient(int ID, String name) {
         return executorService.submit(()->{
             clientController.updateClient(ID, name);
             return null;
@@ -46,12 +46,12 @@ public class ClientControllerHandler implements ClientControllerService {
     }
 
     @Override
-    public Future<Client> search_by_id(int ID) {
+    public Future<Client> searchById(int ID) {
         return executorService.submit(()->clientController.searchById(ID));
     }
 
     @Override
-    public Future<Set<Client>> filter_by_name(String name) {
+    public Future<Set<Client>> filterByName(String name) {
         return executorService.submit(()->clientController.filterByName(name));
     }
 }

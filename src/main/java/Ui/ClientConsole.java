@@ -1,18 +1,17 @@
 package Ui;
 
-import Controller.ClientController;
-import Controller.PurchaseController;
-import Model.Client;
+import Common.HandlerServices.ClientControllerService;
+import Common.HandlerServices.PurchaseControllerService;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class ClientConsole extends DefaultConsole {
-    private ClientController clientController;
-    private PurchaseController purchaseControllercontroller;
+    private ClientControllerService clientController;
+    private PurchaseControllerService purchaseController;
 
     private static final int PrintClientsOption = 1;
     private static final int AddClientOption = 2;
@@ -21,9 +20,9 @@ public class ClientConsole extends DefaultConsole {
     private static final int SearchByIdClientOption = 5;
     private static final int FilterByName = 6;
 
-    ClientConsole(ClientController clientController,PurchaseController purchaseControllercontrollerr) {
+    ClientConsole(ClientControllerService clientController,PurchaseControllerService purchaseControllercontrollerr) {
         this.clientController = clientController;
-        this.purchaseControllercontroller=purchaseControllercontrollerr;
+        this.purchaseController =purchaseControllercontrollerr;
     }
 
     @Override
@@ -56,22 +55,22 @@ public class ClientConsole extends DefaultConsole {
         return 0;
     }
 
-    private void filterByName() throws IOException{
+    private void filterByName() throws IOException, ExecutionException, InterruptedException {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Name: ");
         String name = bufferRead.readLine();
 
-        this.clientController.filterByName(name).forEach(System.out::println);
+       this.clientController.filterByName(name).get().forEach(System.out::println);
     }
 
-    private void searchByIdClient() throws IOException{
+    private void searchByIdClient() throws IOException, ExecutionException, InterruptedException {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Id: ");
         int id = Integer.parseInt(bufferRead.readLine());
 
-        System.out.println(this.clientController.searchById(id));
+        System.out.println(this.clientController.searchById(id).get());
     }
 
     private void updateClient() throws IOException{
@@ -91,7 +90,7 @@ public class ClientConsole extends DefaultConsole {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int id = Integer.parseInt(bufferedReader.readLine());
 
-        this.purchaseControllercontroller.deleteAllPurchasesForClient(id);
+        this.purchaseController.deleteAllPurchasesForClient(id);
         this.clientController.deleteClient(id);
     }
 

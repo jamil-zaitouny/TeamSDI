@@ -35,10 +35,10 @@ public class Book extends BaseEntity<String> {
 
     @Override
     public String toString() {
-        return "ISBN: " + this.getId() + "\n"
+        return "<ISBN: " + this.getId() + "\n"
                 + "Title: " + this.title + "\n"
                 + "Author: " + this.authorName + "\n"
-                + "Genre: " + this.getGenre() + "\n";
+                + "Genre: " + this.getGenre() + ">";
     }
 
 

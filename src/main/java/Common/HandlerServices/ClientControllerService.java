@@ -14,9 +14,9 @@ public interface ClientControllerService {
     String FILTER_BY_Name = "filterByName";
 
     Future<Set<Client>> print_clients();
-    Future<Void> add_client(int ID, String name);
-    Future<Void> delete_client(int ID);
-    Future<Void> update_client(int ID, String name);
-    Future<Client> search_by_id(int ID);
-    Future<Set<Client>> filter_by_name(String name);
+    Future<Void> addClient(int ID, String name);
+    Future<Void> deleteClient(int ID);
+    Future<Void> updateClient(int ID, String name);
+    Future<Client> searchById(int ID);
+    Future<Set<Client>> filterByName(String name);
 }

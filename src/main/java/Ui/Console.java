@@ -1,17 +1,20 @@
 package Ui;
 
+import Common.HandlerServices.BookControllerService;
+import Common.HandlerServices.ClientControllerService;
+import Common.HandlerServices.PurchaseControllerService;
 import Controller.*;
 
 public class Console extends DefaultConsole{
-    private ClientController clientController;
-    private BookController bookController;
-    private PurchaseController purchaseController;
+    private ClientControllerService clientController;
+    private BookControllerService bookController;
+    private PurchaseControllerService purchaseController;
 
     private static final int BooksOption = 1;
     private static final int ClientsOption = 2;
     private static final int PurchasesOption = 3;
 
-    public Console(ClientController clientController, BookController bookController,PurchaseController purchaseController) {
+    public Console(ClientControllerService clientController, BookControllerService bookController, PurchaseControllerService purchaseController) {
         this.clientController = clientController;
         this.bookController = bookController;
         this.purchaseController=purchaseController;

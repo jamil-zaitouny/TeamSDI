@@ -20,7 +20,7 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Void> delete_book(String ISBN) {
+    public Future<Void> deleteBook(String ISBN) {
         return executorService.submit(() -> {
             bookController.deleteBook(ISBN);
             return null;
@@ -28,7 +28,7 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Void> update_book(String ISBN, String newTitle, String newAuthor, String genre) {
+    public Future<Void> updateBook(String ISBN, String newTitle, String newAuthor, String genre) {
         return executorService.submit(() -> {
             bookController.updateBook(ISBN, newTitle, newAuthor, genre);
             return null;
@@ -36,17 +36,17 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Model.Book> search_by_isbn(String ISBN) {
+    public Future<Model.Book> searchByIsbn(String ISBN) {
         return executorService.submit(() -> bookController.searchByIbsn(ISBN));
     }
 
     @Override
-    public Future<Set<Model.Book>> filter_by_genre() {
+    public Future<Set<Model.Book>> filterByGenre() {
         return null;
     }
 
     @Override
-    public Future<Void> add_book(String ISBN, String newTitle, String newAuthor, String genre) {
+    public Future<Void> addBook(String ISBN, String newTitle, String newAuthor, String genre) {
         return executorService.submit(() -> {
             bookController.addBook(ISBN, newTitle, newAuthor, genre);
             return null;

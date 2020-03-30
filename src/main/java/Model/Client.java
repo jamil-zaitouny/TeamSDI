@@ -37,8 +37,8 @@ public class Client extends BaseEntity<Integer>{
 
     @Override
     public String toString() {
-        return "ClientID: " + this.getId() + "\n"
-                +"ClientName: " + name + "\n";
+        return "<ClientID: " + this.getId() + "\n"
+                +"ClientName: " + name + "\n>";
     }
 
     public String getName() {

@@ -18,12 +18,12 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
         this.executorService = executorService;
     }
     @Override
-    public Future<Set<Purchase>> print_purchases() {
+    public Future<Set<Purchase>> printPurchases() {
         return executorService.submit(()->purchaseController.getAllPurchases());
     }
 
     @Override
-    public Future<Void> add_purchase(int ID, String ISBN, int clientID, String purchaseDetails) {
+    public Future<Void> addPurchase(int ID, String ISBN, int clientID, String purchaseDetails) {
         return executorService.submit(()->{
             try {
                 purchaseController.addPurchase(new Purchase(ID, ISBN, clientID, purchaseDetails));
@@ -35,7 +35,7 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Void> delete_purchase(int ID) {
+    public Future<Void> deletePurchase(int ID) {
         return executorService.submit(()->{
             purchaseController.deletePurchase(ID);
             return null;
@@ -43,7 +43,7 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Void> update_purchase(int ID, String purchaseDetails) {
+    public Future<Void> updatePurchase(int ID, String purchaseDetails) {
         return executorService.submit(()->{
             try {
                 purchaseController.updatePurchase(ID,  purchaseDetails);
@@ -55,17 +55,17 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<List<String>> clients_with_most_purchases() {
+    public Future<List<String>> clientsWithMostPurchases() {
         return executorService.submit(()->purchaseController.getTopThreeClientsMostBooks());
     }
 
     @Override
-    public Future<List<String>> books_with_highest_purchase_count() {
+    public Future<List<String>> booksWithHighestPurchaseCount() {
         return executorService.submit(()->purchaseController.getTopThreeBooksBought());
     }
 
     @Override
-    public Future<List<String>> books_with_highest_purchase_count_per_genre() {
+    public Future<List<String>> booksWithHighestPurchaseCountPerGenre() {
         return executorService.submit(()->purchaseController.getBooksBoughtPerGenre());
     }
 }

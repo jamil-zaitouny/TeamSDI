@@ -25,23 +25,23 @@ public class FillMethodHandler {
         TCPServer currentServer = server;
         currentServer.addHandler(BookControllerService.ADD_BOOK, (request) -> {
             String[] params = request.getBody().split(" ");
-            Future<Void> future = bookControllerHandler.add_book(params[0], params[1], params[2], params[3]);
+            Future<Void> future = bookControllerHandler.addBook(params[0], params[1], params[2], params[3]);
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(BookControllerService.DELETE_BOOK, (request) -> {
-            Future<Void> future = bookControllerHandler.delete_book(request.getBody());
+            Future<Void> future = bookControllerHandler.deleteBook(request.getBody());
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(BookControllerService.UPDATE_BOOK, (request) -> {
             String[] params = request.getBody().split(" ");
-            Future<Void> future = bookControllerHandler.update_book(params[0], params[1], params[2], params[3]);
+            Future<Void> future = bookControllerHandler.updateBook(params[0], params[1], params[2], params[3]);
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(BookControllerService.FILTER_BY_GENRE, (request) -> {
-            Future<Set<Book>> future = bookControllerHandler.filter_by_genre();
+            Future<Set<Book>> future = bookControllerHandler.filterByGenre();
             future.isDone();
             try {
                 Set<Book> filteredBooks = future.get();
@@ -71,7 +71,7 @@ public class FillMethodHandler {
             }
         });
         currentServer.addHandler(BookControllerService.SEARCH_BY_ISBN, (request) -> {
-            Future<Book> future = bookControllerHandler.search_by_isbn(request.getBody());
+            Future<Book> future = bookControllerHandler.searchByIsbn(request.getBody());
             future.isDone();
             try {
                 return new Message("ok", future.get().toString()); //fixme: hardcoded str
@@ -87,23 +87,23 @@ public class FillMethodHandler {
         TCPServer currentServer = server;
         currentServer.addHandler(ClientControllerService.ADD_CLIENT, (request) -> {
             String[] params = request.getBody().split(" ");
-            Future<Void> future = clientControllerHandler.add_client(Integer.parseInt(params[0]), params[1]);
+            Future<Void> future = clientControllerHandler.addClient(Integer.parseInt(params[0]), params[1]);
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(ClientControllerService.DELETE_CLIENT, (request) -> {
-            Future<Void> future = clientControllerHandler.delete_client(Integer.parseInt(request.getBody()));
+            Future<Void> future = clientControllerHandler.deleteClient(Integer.parseInt(request.getBody()));
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(ClientControllerService.UPDATE_CLIENT, (request) -> {
             String[] params = request.getBody().split(" ");
-            Future<Void> future = clientControllerHandler.update_client(Integer.parseInt(params[0]), params[1]);
+            Future<Void> future = clientControllerHandler.updateClient(Integer.parseInt(params[0]), params[1]);
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(ClientControllerService.FILTER_BY_Name, (request) -> {
-            Future<Set<Client>> future = clientControllerHandler.filter_by_name(request.getBody());
+            Future<Set<Client>> future = clientControllerHandler.filterByName(request.getBody());
             future.isDone();
             try {
                 Set<Client> filteredClients = future.get();
@@ -133,7 +133,7 @@ public class FillMethodHandler {
             }
         });
         currentServer.addHandler(ClientControllerService.SEARCH_BY_ID, (request) -> {
-            Future<Client> future = clientControllerHandler.search_by_id(Integer.parseInt(request.getBody()));
+            Future<Client> future = clientControllerHandler.searchById(Integer.parseInt(request.getBody()));
             future.isDone();
             try {
                 return new Message("ok", future.get().toString()); //fixme: hardcoded str
@@ -149,23 +149,23 @@ public class FillMethodHandler {
         TCPServer currentServer = server;
         currentServer.addHandler(PurchaseControllerService.ADD_PURCHASE, (request) -> {
             String[] params = request.getBody().split(" ");
-            Future<Void> future = purchaseControllerHandler.add_purchase(Integer.parseInt(params[0]),params[1],Integer.parseInt(params[2]), params[3]);
+            Future<Void> future = purchaseControllerHandler.addPurchase(Integer.parseInt(params[0]),params[1],Integer.parseInt(params[2]), params[3]);
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(PurchaseControllerService.DELETE_PURCHASE, (request) -> {
-            Future<Void> future = purchaseControllerHandler.delete_purchase(Integer.parseInt(request.getBody()));
+            Future<Void> future = purchaseControllerHandler.deletePurchase(Integer.parseInt(request.getBody()));
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(PurchaseControllerService.UPDATE_PURCHASE, (request) -> {
             String[] params = request.getBody().split(" ");
-            Future<Void> future = purchaseControllerHandler.update_purchase(Integer.parseInt(params[0]), params[3]);
+            Future<Void> future = purchaseControllerHandler.updatePurchase(Integer.parseInt(params[0]), params[3]);
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(PurchaseControllerService.BOOKS_WITH_HIGHEST_PURCHASE_COUNT, (request) -> {
-            Future<List<String>> future = purchaseControllerHandler.books_with_highest_purchase_count();
+            Future<List<String>> future = purchaseControllerHandler.booksWithHighestPurchaseCount();
             future.isDone();
             try {
                 List<String> filteredBooks = future.get();
@@ -180,7 +180,7 @@ public class FillMethodHandler {
             }
         });
         currentServer.addHandler(PurchaseControllerService.BOOKS_WITH_HIGHEST_PURCHASE_COUNT_PER_GENRE, (request) -> {
-            Future<List<String>> future = purchaseControllerHandler.books_with_highest_purchase_count_per_genre();
+            Future<List<String>> future = purchaseControllerHandler.booksWithHighestPurchaseCountPerGenre();
             future.isDone();
             try {
                 List<String> books = future.get();
@@ -195,7 +195,7 @@ public class FillMethodHandler {
             }
         });
         currentServer.addHandler(PurchaseControllerService.CLIENTS_WITH_MOST_PURCHASES, (request) -> {
-            Future<List<String>> future = purchaseControllerHandler.clients_with_most_purchases();
+            Future<List<String>> future = purchaseControllerHandler.clientsWithMostPurchases();
             future.isDone();
             try {
                 List<String> books = future.get();

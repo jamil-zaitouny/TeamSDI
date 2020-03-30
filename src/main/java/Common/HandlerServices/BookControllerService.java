@@ -13,9 +13,9 @@ public interface BookControllerService{
     String FILTER_BY_GENRE = "filterByGenre";
 
     Future<Set<Book>> print_books();
-    Future<Void> add_book(String ISBN, String newTitle, String newAuthor, String genre);
-    Future<Void> delete_book(String ISBN);
-    Future<Void> update_book(String ISBN, String newTitle, String newAuthor, String genre);
-    Future<Book> search_by_isbn(String ISBN);
-    Future<Set<Book>> filter_by_genre();
+    Future<Void> addBook(String ISBN, String newTitle, String newAuthor, String genre);
+    Future<Void> deleteBook(String ISBN);
+    Future<Void> updateBook(String ISBN, String newTitle, String newAuthor, String genre);
+    Future<Book> searchByIsbn(String ISBN);
+    Future<Set<Book>> filterByGenre();
 }
