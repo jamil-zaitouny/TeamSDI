@@ -6,6 +6,7 @@ import Common.HandlerServices.ClientControllerService;
 import Common.HandlerServices.PurchaseControllerService;
 import Model.Book;
 import Model.Client;
+import Model.Purchase;
 import Server.service.BookControllerHandler;
 import Server.service.ClientControllerHandler;
 import Server.service.PurchaseControllerHandler;
@@ -152,7 +153,7 @@ public class FillMethodHandler {
         TCPServer currentServer = server;
         currentServer.addHandler(PurchaseControllerService.ADD_PURCHASE, (request) -> {
             String[] params = request.getBody().split(" ");
-            Future<Void> future = purchaseControllerHandler.addPurchase(Integer.parseInt(params[0]),params[1],Integer.parseInt(params[2]), params[3]);
+            Future<Void> future = purchaseControllerHandler.addPurchase(new Purchase(Integer.parseInt(params[0]),params[1],Integer.parseInt(params[2]), params[3]));
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
