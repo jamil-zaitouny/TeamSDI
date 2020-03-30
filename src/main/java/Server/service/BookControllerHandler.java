@@ -1,6 +1,7 @@
 package Server.service;
 import Controller.BookController;
 import Common.HandlerServices.BookControllerService;
+import Model.Book;
 
 import java.util.Set;
 import java.util.concurrent.Future;
@@ -41,7 +42,12 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Set<Model.Book>> filterByGenre() {
+    public Future<Set<Book>> filterByGenre(String genre) {
+        return null;
+    }
+
+    @Override
+    public Future<Iterable<Book>> sortBooksByTitleAuthor() {
         return null;
     }
 

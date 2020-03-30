@@ -54,4 +54,9 @@ public class ClientControllerHandler implements ClientControllerService {
     public Future<Set<Client>> filterByName(String name) {
         return executorService.submit(()->clientController.filterByName(name));
     }
+
+    @Override
+    public Future<Iterable<Client>> sortClientsByName() {
+        return null;
+    }
 }

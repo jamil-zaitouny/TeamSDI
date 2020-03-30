@@ -23,16 +23,17 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Void> addPurchase(int ID, String ISBN, int clientID, String purchaseDetails) {
+    public Future<Void> addPurchase(Purchase purchase) {
         return executorService.submit(()->{
             try {
-                purchaseController.addPurchase(new Purchase(ID, ISBN, clientID, purchaseDetails));
+                purchaseController.addPurchase(purchase);
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
             }
             return null;
         });
     }
+
 
     @Override
     public Future<Void> deletePurchase(int ID) {
@@ -67,5 +68,20 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     @Override
     public Future<List<String>> booksWithHighestPurchaseCountPerGenre() {
         return executorService.submit(()->purchaseController.getBooksBoughtPerGenre());
+    }
+
+    @Override
+    public Future<Void> deleteAllPurchasesForBook(String ibsn) {
+        return null;
+    }
+
+    @Override
+    public Future<Void> deleteAllPurchasesForClient(int id) {
+        return null;
+    }
+
+    @Override
+    public Future<Iterable<Purchase>> sortPurchasesByDescription() {
+        return null;
     }
 }
