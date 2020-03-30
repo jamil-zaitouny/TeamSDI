@@ -41,7 +41,8 @@ public class FillMethodHandler {
             return new Message("ok", ""); //fixme: hardcoded str
         });
         currentServer.addHandler(BookControllerService.FILTER_BY_GENRE, (request) -> {
-            Future<Set<Book>> future = bookControllerHandler.filterByGenre();
+            String[] params = request.getBody().split(" ");
+            Future<Set<Book>> future = bookControllerHandler.filterByGenre(params[0]);
             future.isDone();
             try {
                 Set<Book> filteredBooks = future.get();
