@@ -19,4 +19,5 @@ public interface ClientControllerService {
     Future<Void> updateClient(int ID, String name);
     Future<Client> searchById(int ID);
     Future<Set<Client>> filterByName(String name);
+    Future<Iterable<Client>> sortClientsByName();
 }

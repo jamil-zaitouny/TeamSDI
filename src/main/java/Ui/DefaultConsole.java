@@ -2,6 +2,7 @@ package Ui;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 public abstract class DefaultConsole {
 
@@ -35,6 +36,6 @@ public abstract class DefaultConsole {
         }
     }
 
-    protected abstract int dealChoice(int choice) throws IOException;
+    protected abstract int dealChoice(int choice) throws IOException, ExecutionException, InterruptedException;
     protected abstract void displayMenu();
 }

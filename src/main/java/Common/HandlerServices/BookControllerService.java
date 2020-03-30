@@ -17,5 +17,6 @@ public interface BookControllerService{
     Future<Void> deleteBook(String ISBN);
     Future<Void> updateBook(String ISBN, String newTitle, String newAuthor, String genre);
     Future<Book> searchByIsbn(String ISBN);
-    Future<Set<Book>> filterByGenre();
+    Future<Set<Book>> filterByGenre(String genre);
+   Future<Iterable<Book>> sortBooksByTitleAuthor();
 }

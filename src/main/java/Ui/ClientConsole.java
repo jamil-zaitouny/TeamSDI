@@ -26,7 +26,7 @@ public class ClientConsole extends DefaultConsole {
     }
 
     @Override
-    protected int dealChoice(int choice) throws IOException {
+    protected int dealChoice(int choice) throws IOException, ExecutionException, InterruptedException {
         switch (choice) {
             case PrintClientsOption:
                 printClients();
@@ -103,8 +103,8 @@ public class ClientConsole extends DefaultConsole {
         this.clientController.addClient(id, name);
     }
 
-    private void printClients() {
-        this.clientController.sortClientsByName().forEach(System.out::println);
+    private void printClients() throws ExecutionException, InterruptedException {
+        this.clientController.sortClientsByName().get().forEach(System.out::println);
     }
 
     @Override

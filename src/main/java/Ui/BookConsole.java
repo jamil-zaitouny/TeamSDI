@@ -8,6 +8,7 @@ import Controller.PurchaseController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.ExecutionException;
 
 public class BookConsole extends DefaultConsole {
     public BookControllerService controller;
@@ -27,7 +28,7 @@ public class BookConsole extends DefaultConsole {
     }
 
     @Override
-    public int dealChoice(int choice) throws IOException {
+    public int dealChoice(int choice) throws IOException, ExecutionException, InterruptedException {
         switch (choice) {
             case PrintBooksOption:
                 printBooks();
@@ -54,13 +55,13 @@ public class BookConsole extends DefaultConsole {
         return 0;
     }
 
-    private void filterByGenre() throws IOException {
+    private void filterByGenre() throws IOException, ExecutionException, InterruptedException {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Genre: ");
         String genre= bufferRead.readLine();
 
-        this.controller.filterByGenre(genre).forEach(System.out::println);
+        this.controller.filterByGenre(genre).get().forEach(System.out::println);
     }
 
     private void searchByIbsnBook() throws IOException {
@@ -69,7 +70,7 @@ public class BookConsole extends DefaultConsole {
         System.out.println("IBSN: ");
         String ibsn = bufferRead.readLine();
 
-        System.out.println(this.controller.searchByIbsn(ibsn));
+        System.out.println(this.controller.searchByIsbn(ibsn));
     }
 
     private void updateBook() throws IOException {
@@ -110,8 +111,8 @@ public class BookConsole extends DefaultConsole {
         this.controller.deleteBook(ibsn);
     }
 
-    private void printBooks() {
-        this.controller.sortBooksByTitleAuthor().forEach(System.out::println);
+    private void printBooks() throws ExecutionException, InterruptedException {
+        this.controller.sortBooksByTitleAuthor().get().forEach(System.out::println);
     }
 
     @Override

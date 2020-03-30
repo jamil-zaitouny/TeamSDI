@@ -16,10 +16,13 @@ public interface PurchaseControllerService {
     String BOOKS_WITH_HIGHEST_PURCHASE_COUNT_PER_GENRE = "booksWithHighestPurchaseCountPerGenre";
 
     Future<Set<Purchase>> printPurchases();
-    Future<Void> addPurchase(int ID, String ISBN, int clientID, String purchaseDetails);
+    Future<Void> addPurchase(Purchase purchase);
     Future<Void> deletePurchase(int ID);
     Future<Void> updatePurchase(int ID, String purchaseDetails);
     Future<List<String>> clientsWithMostPurchases();
     Future<List<String>> booksWithHighestPurchaseCount();
     Future<List<String>> booksWithHighestPurchaseCountPerGenre();
+    Future<Void>deleteAllPurchasesForBook(String ibsn);
+    Future<Void> deleteAllPurchasesForClient(int id);
+    Future<Iterable<Purchase>> sortPurchasesByDescription();
 }

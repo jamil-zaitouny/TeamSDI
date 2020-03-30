@@ -40,7 +40,11 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Void> addPurchase(int ID, String ISBN, int clientID, String purchaseDetails) {
+    public Future<Void> addPurchase(Purchase purchase) {
+        int ID=purchase.getId();
+        String ISBN=purchase.getBookId();
+        int clientID=purchase.getClientId();
+        String purchaseDetails=purchase.getPurcahseDetails();
         return executorService.submit(() -> {
             Message request = new Message(PurchaseControllerService.ADD_PURCHASE, ID + " " + ISBN + " " + clientID + " " + purchaseDetails);
             tcpClient.sendAndReceive(request);

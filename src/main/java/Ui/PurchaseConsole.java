@@ -7,6 +7,7 @@ import Model.Purchase;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.ExecutionException;
 
 public class PurchaseConsole extends DefaultConsole {
     private PurchaseControllerService purchaseController;
@@ -25,7 +26,7 @@ public class PurchaseConsole extends DefaultConsole {
     }
 
     @Override
-    protected int dealChoice(int choice) throws IOException {
+    protected int dealChoice(int choice) throws IOException, ExecutionException, InterruptedException {
         switch (choice) {
             case PrintPurchasesOption:
                 printPurchases();
@@ -64,23 +65,23 @@ public class PurchaseConsole extends DefaultConsole {
         return 0;
     }
 
-    private void printBestClient() throws IOException{
+    private void printBestClient() throws IOException, ExecutionException, InterruptedException {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("genre: ");
         String description = bufferRead.readLine();
-        System.out.println(this.purchaseController.getClientMostBooksGenre(description));
+        this.purchaseController.clientsWithMostPurchases().get().forEach(System.out::print);
     }
 
-    private void printBookPerGenre() {
-        this.purchaseController.getBooksBoughtPerGenre().forEach(System.out::println);
+    private void printBookPerGenre() throws ExecutionException, InterruptedException {
+        this.purchaseController.booksWithHighestPurchaseCountPerGenre().get().forEach(System.out::println);
     }
 
-    private void printTopThreeBooks() {
-        this.purchaseController.getTopThreeBooksBought().forEach(System.out::println);
+    private void printTopThreeBooks() throws ExecutionException, InterruptedException {
+        this.purchaseController.booksWithHighestPurchaseCount().get().forEach(System.out::println);
     }
 
-    private void printTopThreeClients() {
-        this.purchaseController.getTopThreeClientsMostBooks().forEach(System.out::println);
+    private void printTopThreeClients() throws ExecutionException, InterruptedException {
+        this.purchaseController.clientsWithMostPurchases().get().forEach(System.out::println);
     }
 
     private void addPurchase() throws Throwable {
@@ -88,8 +89,8 @@ public class PurchaseConsole extends DefaultConsole {
         this.purchaseController.addPurchase(readPurchase());
     }
 
-    private void printPurchases() {
-        this.purchaseController.sortPurchasesByDescription().forEach(System.out::println);
+    private void printPurchases() throws ExecutionException, InterruptedException {
+        this.purchaseController.sortPurchasesByDescription().get().forEach(System.out::println);
     }
 
     private void updatePurchase() throws IOException {
