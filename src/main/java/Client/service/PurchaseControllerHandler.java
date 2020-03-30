@@ -84,4 +84,19 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     public Future<List<String>> booksWithHighestPurchaseCountPerGenre() {
         return null;
     }
+
+    @Override
+    public Future<Void> deleteAllPurchasesForBook(String ibsn) {
+        return null;
+    }
+
+    @Override
+    public Future<Void> deleteAllPurchasesForClient(int id) {
+        return null;
+    }
+
+    @Override
+    public Future<Iterable<Purchase>> sortPurchasesByDescription() {
+        return null;
+    }
 }

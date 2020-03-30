@@ -89,4 +89,9 @@ public class ClientControllerHandler implements ClientControllerService {
             return clients;
         });
     }
+
+    @Override
+    public Future<Iterable<Client>> sortClientsByName() {
+        return null;
+    }
 }

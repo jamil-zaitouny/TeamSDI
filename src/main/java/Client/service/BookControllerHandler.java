@@ -3,7 +3,7 @@ package Client.service;
 import Client.TCP.TCPClient;
 import Common.Communication.Message;
 import Common.HandlerServices.BookControllerService;
-import Common.HandlerServices.ClientControllerService;
+
 import Model.Book;
 
 import java.util.HashSet;
@@ -76,7 +76,7 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Set<Book>> filterByGenre() {
+    public Future<Set<Book>> filterByGenre(String genre) {
         return executorService.submit(() -> {
             Message request = new Message(BookControllerService.FILTER_BY_GENRE, "");
             Message response = tcpClient.sendAndReceive(request);
@@ -91,4 +91,10 @@ public class BookControllerHandler implements BookControllerService {
             return books;
         });
     }
+
+    @Override
+    public Future<Iterable<Book>> sortBooksByTitleAuthor() {
+        return null;
+    }
+
 }
