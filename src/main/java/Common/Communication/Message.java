@@ -48,10 +48,9 @@ public class Message {
     public void readFrom(InputStream is) throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(is);
         ArrayList<Serializable> params = (ArrayList<Serializable>) in.readObject();
+        System.out.println(params);
         header = (String) params.get(0);
         body = (Serializable) params.get(1);
-
-
     }
 
     @Override

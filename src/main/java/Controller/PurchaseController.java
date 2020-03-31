@@ -72,7 +72,7 @@ public class PurchaseController
     }
 
 
-    public List<String> getTopThreeBooksBought()
+    public Set<String> getTopThreeBooksBought()
     {
         List<String> topThree;
         SortedSet<Map.Entry<String, Integer>> report = new TreeSet<>(((o1, o2) -> {
@@ -86,11 +86,11 @@ public class PurchaseController
         report.addAll(bookSold.entrySet());
         topThree = report.stream().map(entry -> this.books.findOne(entry.getKey()).get() + "Sold: " + entry.getValue())
                 .collect(Collectors.toList());
-        return topThree.subList(0,3);
+        return topThree.subList(0,3).stream().collect(Collectors.toSet());
     }
 
 
-    public List<String> getTopThreeClientsMostBooks()
+    public Set<String> getTopThreeClientsMostBooks()
     {
         List<String> topThree;
         SortedSet<Map.Entry<Integer, Integer>> report = new TreeSet<>(((o1, o2) -> {
@@ -104,7 +104,7 @@ public class PurchaseController
         report.addAll(clientsWithNumberBooks.entrySet());
         topThree = report.stream().map(entry -> this.clients.searchById(entry.getKey()).getName() + ": " + entry.getValue())
                                   .collect(Collectors.toList());
-        return topThree.subList(0,3);
+        return topThree.subList(0,3).stream().collect(Collectors.toSet());
     }
 
     public String getClientMostBooksGenre(String genre)

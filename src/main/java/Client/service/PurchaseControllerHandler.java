@@ -67,25 +67,26 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<List<String>> clientsWithMostPurchases() {
+    public Future<Set<String>> clientsWithMostPurchases() {
         return executorService.submit(() -> {
             Message request = new Message(PurchaseControllerService.CLIENTS_WITH_MOST_PURCHASES, "");
             Message response = tcpClient.sendAndReceive(request);
 
-            List<String> purchases ;
-            purchases = (List<String>)response.getBody();
+            Set<String> purchases ;
+            purchases = (Set<String>)response.getBody();
+            System.out.println(purchases);
             return purchases;
         });
     }
 
     @Override
-    public Future<List<String>> booksWithHighestPurchaseCount() {
+    public Future<Set<String>> booksWithHighestPurchaseCount() {
         return executorService.submit(() -> {
             Message request = new Message(PurchaseControllerService.BOOKS_WITH_HIGHEST_PURCHASE_COUNT, "");
             Message response = tcpClient.sendAndReceive(request);
 
-            List<String> purchases ;
-            purchases = (List<String>)response.getBody();
+            Set<String> purchases ;
+            purchases = (Set<String>)response.getBody();
             return purchases;
         });
     }

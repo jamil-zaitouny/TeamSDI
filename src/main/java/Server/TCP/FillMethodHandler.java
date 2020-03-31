@@ -169,10 +169,10 @@ public class FillMethodHandler {
             }
         });
         currentServer.addHandler(PurchaseControllerService.BOOKS_WITH_HIGHEST_PURCHASE_COUNT, (request) -> {
-            Future<List<String>> future = purchaseControllerHandler.booksWithHighestPurchaseCount();
+            Future<Set<String>> future = purchaseControllerHandler.booksWithHighestPurchaseCount();
             future.isDone();
             try {
-                List<String> filteredBooks = future.get();
+                Set<String> filteredBooks = future.get();
                 //String response = "";
                 //for(String string: filteredBooks){
                     //response += string + "\n";
@@ -199,10 +199,10 @@ public class FillMethodHandler {
             }
         });
         currentServer.addHandler(PurchaseControllerService.CLIENTS_WITH_MOST_PURCHASES, (request) -> {
-            Future<List<String>> future = purchaseControllerHandler.clientsWithMostPurchases();
+            Future<Set<String>> future = purchaseControllerHandler.clientsWithMostPurchases();
             future.isDone();
             try {
-                List<String> books = future.get();
+                Set<String> books = future.get();
                 //String response = "";
                // for(String string: books){
                 //    response += string + "\n";

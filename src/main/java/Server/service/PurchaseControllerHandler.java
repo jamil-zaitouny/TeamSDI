@@ -56,12 +56,15 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<List<String>> clientsWithMostPurchases() {
-        return executorService.submit(()->purchaseController.getTopThreeClientsMostBooks());
+    public Future<Set<String>> clientsWithMostPurchases() {
+        return executorService.submit(()->{
+            Set<String> clients = purchaseController.getTopThreeClientsMostBooks();
+            return clients;
+        });
     }
 
     @Override
-    public Future<List<String>> booksWithHighestPurchaseCount() {
+    public Future<Set<String>> booksWithHighestPurchaseCount() {
         return executorService.submit(()->purchaseController.getTopThreeBooksBought());
     }
 

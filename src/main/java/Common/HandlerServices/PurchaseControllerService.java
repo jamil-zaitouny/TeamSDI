@@ -19,8 +19,8 @@ public interface PurchaseControllerService {
     Future<Void> addPurchase(Purchase purchase);
     Future<Void> deletePurchase(int ID);
     Future<Void> updatePurchase(int ID, String purchaseDetails);
-    Future<List<String>> clientsWithMostPurchases();
-    Future<List<String>> booksWithHighestPurchaseCount();
+    Future<Set<String>> clientsWithMostPurchases();
+    Future<Set<String>> booksWithHighestPurchaseCount();
     Future<List<String>> booksWithHighestPurchaseCountPerGenre();
     Future<Void>deleteAllPurchasesForBook(String ibsn);
     Future<Void> deleteAllPurchasesForClient(int id);
