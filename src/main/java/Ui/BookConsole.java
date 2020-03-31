@@ -47,8 +47,10 @@ public class BookConsole extends DefaultConsole {
                 break;
             case SearchByIbsnOption:
                 searchByIbsnBook();
+                break;
             case FilterByGenre:
                 filterByGenre();
+                break;
             case ExitOption:
                 return -1;
             default:
