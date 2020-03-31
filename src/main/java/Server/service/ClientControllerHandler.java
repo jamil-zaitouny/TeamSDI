@@ -57,6 +57,6 @@ public class ClientControllerHandler implements ClientControllerService {
 
     @Override
     public Future<Iterable<Client>> sortClientsByName() {
-        return null;
+        return executorService.submit(()-> clientController.sortClientsByName());
     }
 }

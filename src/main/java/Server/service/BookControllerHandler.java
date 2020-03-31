@@ -46,7 +46,7 @@ public class BookControllerHandler implements BookControllerService {
 
     @Override
     public Future<Set<Book>> filterByGenre(String genre) {
-        return null;
+        return executorService.submit(()-> bookController.filterByGenre(genre));
     }
 
     @Override

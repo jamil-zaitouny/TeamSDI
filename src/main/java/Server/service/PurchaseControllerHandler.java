@@ -72,16 +72,23 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
 
     @Override
     public Future<Void> deleteAllPurchasesForBook(String ibsn) {
-        return null;
+        return executorService.submit(()->{
+                    purchaseController.deleteAllPurchasesForBook(ibsn);
+                    return null;
+                }
+                );
     }
 
     @Override
     public Future<Void> deleteAllPurchasesForClient(int id) {
-        return null;
+        return executorService.submit(()->{
+            purchaseController.deleteAllPurchasesForClient(id);
+            return null;
+        });
     }
 
     @Override
     public Future<Iterable<Purchase>> sortPurchasesByDescription() {
-        return null;
+        return executorService.submit(()-> purchaseController.sortPurchasesByDescription());
     }
 }
