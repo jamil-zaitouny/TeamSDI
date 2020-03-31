@@ -157,6 +157,17 @@ public class FillMethodHandler {
             future.isDone();
             return new Message("ok", ""); //fixme: hardcoded str
         });
+        currentServer.addHandler(PurchaseControllerHandler.PRINT_PURCHASES, (request) -> {
+            Future<Set<Purchase>> future = purchaseControllerHandler.printPurchases();
+            future.isDone();
+            try {
+                Set<Purchase> purchases = future.get();
+                return new Message("ok", (Serializable) purchases); //fixme: hardcoded str
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+                return new Message("error", ""); //fixme: hardcoded str
+            }
+        });
 //        currentServer.addHandler(PurchaseControllerService.BOOKS_WITH_HIGHEST_PURCHASE_COUNT, (request) -> {
 //            Future<List<String>> future = purchaseControllerHandler.booksWithHighestPurchaseCount();
 //            future.isDone();
