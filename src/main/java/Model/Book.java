@@ -6,12 +6,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import javax.sql.rowset.spi.XmlReader;
+import java.io.Serializable;
 import java.util.Optional;
 
-public class Book extends BaseEntity<String> {
+public class Book extends BaseEntity<String> implements Serializable {
     private String title;
     private String authorName;
     private String genre;
+
+    public Book(){
+        super("2");
+    }
 
     public Book(String ISBN, String title, String authorName, String genre) {
         super(ISBN);

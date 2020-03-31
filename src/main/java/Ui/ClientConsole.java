@@ -104,7 +104,7 @@ public class ClientConsole extends DefaultConsole {
     }
 
     private void printClients() throws ExecutionException, InterruptedException {
-        this.clientController.sortClientsByName().get().forEach(System.out::println);
+        this.clientController.print_clients().get().forEach(System.out::println);
     }
 
     @Override

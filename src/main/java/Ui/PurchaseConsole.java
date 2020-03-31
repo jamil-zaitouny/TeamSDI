@@ -90,7 +90,7 @@ public class PurchaseConsole extends DefaultConsole {
     }
 
     private void printPurchases() throws ExecutionException, InterruptedException {
-        this.purchaseController.sortPurchasesByDescription().get().forEach(System.out::println);
+        this.purchaseController.printPurchases().get().forEach(System.out::println);
     }
 
     private void updatePurchase() throws IOException {

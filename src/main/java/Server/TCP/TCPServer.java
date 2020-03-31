@@ -1,11 +1,14 @@
 package Server.TCP;
 import Common.Communication.Message;
+import Model.Book;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -49,10 +52,10 @@ public class TCPServer {
         public void run() {
             try (InputStream is = socket.getInputStream();
                  OutputStream os = socket.getOutputStream()) {
-                Message request = new Message();
-                request.readFrom(is);
-                System.out.println("received request: " + request);
 
+               Message request = new Message();
+               request.readFrom(is);
+               System.out.println("received request: " + request);
 //                System.out.println(request.getHeader());
 //                System.out.println(request.getBody());
                 //efvpsekojg
@@ -65,7 +68,8 @@ public class TCPServer {
 //                Common.Communication.Message response = new Common.Communication.Message();
                 response.writeTo(os);
 
-            } catch (IOException e) {
+
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException("error processing client", e);
             }
         }

@@ -5,8 +5,10 @@ import Common.Exceptions.ConnectionException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class TCPClient {
     public TCPClient() {
@@ -17,15 +19,13 @@ public class TCPClient {
              InputStream is = socket.getInputStream();
              OutputStream os = socket.getOutputStream()
         ) {
-            request.writeTo(os);
 
-            //System.out.println("sendAndReceive - received response: ");
+            request.writeTo(os);
+            System.out.println("sendAndReceive - received response: ");
             Message response = new Message();
             response.readFrom(is);
-            //System.out.println(response);
-
             return response;
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             throw new ConnectionException("error connection to server " + e.getMessage(), e);
         }
     }

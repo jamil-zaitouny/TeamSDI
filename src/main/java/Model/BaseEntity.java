@@ -1,6 +1,8 @@
 package Model;
 
-public class BaseEntity<IDType> {
+import java.io.Serializable;
+
+public class BaseEntity<IDType> implements Serializable {
     private IDType id;
 
     BaseEntity(IDType id){

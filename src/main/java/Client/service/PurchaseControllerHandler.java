@@ -28,15 +28,11 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
             Message request = new Message(PurchaseControllerService.PRINT_PURCHASES, "");
             Message response = tcpClient.sendAndReceive(request);
 
-            Set<Purchase> purchases = new HashSet<>();
-            String[] stringPurchases = response.getBody().split("\n");
-            for(String stringPurchase: stringPurchases){
-                String[] attributes = stringPurchase.split(" ");
-                Purchase purchase = new Purchase(Integer.parseInt(attributes[0]), attributes[1], Integer.parseInt(attributes[2]), attributes[3]);
-                purchases.add(purchase);
-            }
+            Set<Purchase> purchases ;
+            purchases = (Set<Purchase>)response.getBody();
             return purchases;
         });
+
     }
 
     @Override

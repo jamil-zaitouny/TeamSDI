@@ -6,21 +6,22 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import javax.sql.rowset.spi.XmlReader;
+import java.io.Serializable;
 import java.util.Optional;
 
-public class Purchase extends BaseEntity<Integer>
-{
+public class Purchase extends BaseEntity<Integer> implements Serializable{
     private String bookId;
     private int clientId;
     private String purcahseDetails;
 
-    public Purchase(int purchaseID, String bookId, int clientId,String purcahseDetails) {
+    public Purchase(int purchaseID, String bookId, int clientId, String purcahseDetails) {
         super(purchaseID);
         this.bookId = bookId;
         this.clientId = clientId;
-        this.purcahseDetails=purcahseDetails;
+        this.purcahseDetails = purcahseDetails;
     }
-    public Purchase(Element purchaseElement){
+
+    public Purchase(Element purchaseElement) {
         super(Integer.parseInt(XMLUtilities.getTextFromTagName(purchaseElement, "id")));
         this.bookId = XMLUtilities.getTextFromTagName(purchaseElement, "bookid");
         this.clientId = Integer.parseInt(XMLUtilities.getTextFromTagName(purchaseElement, "clientid"));
@@ -52,17 +53,17 @@ public class Purchase extends BaseEntity<Integer>
 
     @Override
     public String toString() {
-        return "<PurchaseID: "+ this.getId() + "\n" +
-                "Book: " + bookId + "\n"+
-                "Client: " + clientId + "\n"+
-                "PurchaseDetails: "+purcahseDetails+">" ;
+        return "<PurchaseID: " + this.getId() + "\n" +
+                "Book: " + bookId + "\n" +
+                "Client: " + clientId + "\n" +
+                "PurchaseDetails: " + purcahseDetails + ">";
     }
 
     @Override
     public boolean equals(Object obj) {
         Optional<Object> objectOptional = Optional.ofNullable(obj).filter(v -> v instanceof Purchase);
         return objectOptional
-                .filter(v->((Purchase) v).getId().equals(this.getId()))
+                .filter(v -> ((Purchase) v).getId().equals(this.getId()))
                 .isPresent();
     }
 

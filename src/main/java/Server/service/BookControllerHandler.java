@@ -17,7 +17,7 @@ public class BookControllerHandler implements BookControllerService {
     }
     @Override
     public Future<Set<Model.Book>> print_books() {
-        return executorService.submit(()->bookController.getAllBooks());
+        return executorService.submit(()-> bookController.getAllBooks());
     }
 
     @Override
@@ -38,7 +38,10 @@ public class BookControllerHandler implements BookControllerService {
 
     @Override
     public Future<Model.Book> searchByIsbn(String ISBN) {
-        return executorService.submit(() -> bookController.searchByIbsn(ISBN));
+        return executorService.submit(() ->{
+            Book book = bookController.searchByIbsn(ISBN);
+            return book;
+        } );
     }
 
     @Override

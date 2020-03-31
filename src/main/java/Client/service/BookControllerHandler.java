@@ -25,14 +25,8 @@ public class BookControllerHandler implements BookControllerService {
         return executorService.submit(() -> {
             Message request = new Message(BookControllerService.PRINT_BOOKS, "");
             Message response = tcpClient.sendAndReceive(request);
-
-            Set<Book> books = new HashSet<>();
-            String[] stringBooks = response.getBody().split("\n");
-            for(String stringClient: stringBooks){
-                String[] attributes = stringClient.split(" ");
-                Book book = new Book(attributes[0], attributes[1], attributes[2], attributes[3]);
-                books.add(book);
-            }
+            Set<Book> books;
+            books = (Set<Book>) response.getBody();
             return books;
         });
     }
@@ -67,29 +61,23 @@ public class BookControllerHandler implements BookControllerService {
     @Override
     public Future<Book> searchByIsbn(String ISBN) {
         return executorService.submit(() -> {
-            Message request = new Message(BookControllerService.SEARCH_BY_ISBN, "");
+            Message request = new Message(BookControllerService.SEARCH_BY_ISBN, ISBN);
             Message response = tcpClient.sendAndReceive(request);
-
-            String[] stringBooks = response.getBody().split("\n");
-            return new Book(stringBooks[0], stringBooks[1], stringBooks[2], stringBooks[3]);
+            System.out.println("Here: " + response.getBody());
+            return (Book)response.getBody();
         });
     }
 
     @Override
     public Future<Set<Book>> filterByGenre(String genre) {
         return executorService.submit(() -> {
-            Message request = new Message(BookControllerService.FILTER_BY_GENRE, "");
+            Message request = new Message(BookControllerService.FILTER_BY_GENRE, genre);
             Message response = tcpClient.sendAndReceive(request);
-
-            Set<Book> books = new HashSet<>();
-            String[] stringBooks = response.getBody().split("\n");
-            for(String stringClient: stringBooks){
-                String[] attributes = stringClient.split(" ");
-                Book book = new Book(attributes[0], attributes[1], attributes[2], attributes[3]);
-                books.add(book);
-            }
+            Set<Book> books;
+            books = (Set<Book>) response.getBody();
             return books;
         });
+
     }
 
     @Override

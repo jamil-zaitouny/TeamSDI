@@ -4,11 +4,14 @@ import Common.HandlerServices.BookControllerService;
 import Common.HandlerServices.PurchaseControllerService;
 import Controller.BookController;
 import Controller.PurchaseController;
+import Model.Book;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class BookConsole extends DefaultConsole {
     public BookControllerService controller;
@@ -61,16 +64,20 @@ public class BookConsole extends DefaultConsole {
         System.out.println("Genre: ");
         String genre= bufferRead.readLine();
 
-        this.controller.filterByGenre(genre).get().forEach(System.out::println);
+        Future<Set<Book>> books = this.controller.filterByGenre(genre);
+        books.isDone();
+        books.get().forEach(System.out::println);
     }
 
-    private void searchByIbsnBook() throws IOException {
+    private void searchByIbsnBook() throws IOException, ExecutionException, InterruptedException {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("IBSN: ");
         String ibsn = bufferRead.readLine();
 
-        System.out.println(this.controller.searchByIsbn(ibsn));
+        Future<Book> bookFuture =  this.controller.searchByIsbn(ibsn);
+        bookFuture.isDone();
+        System.out.println(bookFuture.get());
     }
 
     private void updateBook() throws IOException {
@@ -112,7 +119,10 @@ public class BookConsole extends DefaultConsole {
     }
 
     private void printBooks() throws ExecutionException, InterruptedException {
-        this.controller.sortBooksByTitleAuthor().get().forEach(System.out::println);
+
+        Future<Set<Book>> books = this.controller.print_books();
+        books.isDone();
+        books.get().forEach(System.out::println);
     }
 
     @Override
