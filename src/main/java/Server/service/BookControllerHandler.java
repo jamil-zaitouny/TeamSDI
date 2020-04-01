@@ -1,4 +1,5 @@
 package Server.service;
+import Common.HandlerServices.BookControllerServiceServer;
 import Controller.BookController;
 import Common.HandlerServices.BookControllerService;
 import Model.Book;
@@ -7,7 +8,7 @@ import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.ExecutorService;
 
-public class BookControllerHandler implements BookControllerService {
+public class BookControllerHandler implements BookControllerServiceServer {
     ExecutorService executorService;
     BookController bookController;
 

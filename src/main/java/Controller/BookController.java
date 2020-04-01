@@ -54,6 +54,12 @@ public class BookController {
     }
 
     public Set<Book> getAllBooks() {
+        try{
+            Thread.sleep(10000);
+        }
+        catch (Exception e)
+        {
+        }
         return StreamSupport.stream(sortBooksByTitleAuthor().spliterator(), false).collect(Collectors.toSet());
     }
 

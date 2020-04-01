@@ -2,11 +2,15 @@ package Ui;
 
 import Common.HandlerServices.PurchaseControllerService;
 import Controller.PurchaseController;
+import Model.Client;
 import Model.Purchase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class PurchaseConsole extends DefaultConsole {
@@ -69,19 +73,32 @@ public class PurchaseConsole extends DefaultConsole {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("genre: ");
         String description = bufferRead.readLine();
-        this.purchaseController.clientsWithMostPurchases().get().forEach(System.out::print);
+        CompletableFuture<Set<String>> purchases = this.purchaseController.clientsWithMostPurchases();
+        purchases.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     private void printBookPerGenre() throws ExecutionException, InterruptedException {
         this.purchaseController.booksWithHighestPurchaseCountPerGenre().get().forEach(System.out::println);
+        CompletableFuture<List<String>> purchases = this.purchaseController.booksWithHighestPurchaseCountPerGenre();
+        purchases.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     private void printTopThreeBooks() throws ExecutionException, InterruptedException {
-        this.purchaseController.booksWithHighestPurchaseCount().get().forEach(System.out::println);
+        CompletableFuture<Set<String>> purchases = this.purchaseController.booksWithHighestPurchaseCount();
+        purchases.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     private void printTopThreeClients() throws ExecutionException, InterruptedException {
-        this.purchaseController.clientsWithMostPurchases().get().forEach(System.out::println);
+        CompletableFuture<Set<String>> purchases = this.purchaseController.clientsWithMostPurchases();
+        purchases.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     private void addPurchase() throws Throwable {
@@ -90,7 +107,10 @@ public class PurchaseConsole extends DefaultConsole {
     }
 
     private void printPurchases() throws ExecutionException, InterruptedException {
-        this.purchaseController.printPurchases().get().forEach(System.out::println);
+        CompletableFuture<Set<Purchase>> purchases = this.purchaseController.printPurchases();
+        purchases.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     private void updatePurchase() throws IOException {

@@ -2,10 +2,14 @@ package Ui;
 
 import Common.HandlerServices.ClientControllerService;
 import Common.HandlerServices.PurchaseControllerService;
+import Model.Book;
+import Model.Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -61,7 +65,10 @@ public class ClientConsole extends DefaultConsole {
         System.out.println("Name: ");
         String name = bufferRead.readLine();
 
-       this.clientController.filterByName(name).get().forEach(System.out::println);
+        CompletableFuture<Set<Client>> clients = this.clientController.filterByName(name);
+        clients.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     private void searchByIdClient() throws IOException, ExecutionException, InterruptedException {
@@ -69,8 +76,10 @@ public class ClientConsole extends DefaultConsole {
 
         System.out.println("Id: ");
         int id = Integer.parseInt(bufferRead.readLine());
-
-        System.out.println(this.clientController.searchById(id).get());
+        CompletableFuture<Client> clients = this.clientController.searchById(id);
+        clients.thenAcceptAsync((b)->{
+            System.out.println(b);
+        });
     }
 
     private void updateClient() throws IOException{
@@ -104,7 +113,10 @@ public class ClientConsole extends DefaultConsole {
     }
 
     private void printClients() throws ExecutionException, InterruptedException {
-        this.clientController.print_clients().get().forEach(System.out::println);
+        CompletableFuture<Set<Client>> clients = this.clientController.print_clients();
+        clients.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     @Override

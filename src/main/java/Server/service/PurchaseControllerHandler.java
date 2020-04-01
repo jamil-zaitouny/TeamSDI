@@ -1,5 +1,6 @@
 package Server.service;
 
+import Common.HandlerServices.PurchaseControllerServiceServer;
 import Controller.PurchaseController;
 import Common.HandlerServices.PurchaseControllerService;
 import Model.Purchase;
@@ -9,7 +10,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class PurchaseControllerHandler implements PurchaseControllerService {
+public class PurchaseControllerHandler implements PurchaseControllerServiceServer {
     private ExecutorService executorService;
     private PurchaseController purchaseController;
 

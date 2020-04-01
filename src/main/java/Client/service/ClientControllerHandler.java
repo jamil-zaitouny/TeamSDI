@@ -9,7 +9,7 @@ import Model.Client;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 public class ClientControllerHandler implements ClientControllerService {
     private ExecutorService executorService;
@@ -21,68 +21,68 @@ public class ClientControllerHandler implements ClientControllerService {
     }
 
     @Override
-    public Future<Set<Client>> print_clients() {
-        return executorService.submit(() -> {
+    public CompletableFuture<Set<Client>> print_clients() {
+        return CompletableFuture.supplyAsync(() ->  {
             Message request = new Message(ClientControllerService.PRINT_CLIENTS, "");
             Message response = tcpClient.sendAndReceive(request);
 
             Set<Client> clients;
             clients = (Set<Client>) response.getBody();
-            return clients;
+            return  clients;
         });
 
     }
 
     @Override
-    public Future<Void> addClient(int ID, String name) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> addClient(int ID, String name) {
+        return CompletableFuture.supplyAsync(() ->    {
             Message request = new Message(ClientControllerService.ADD_CLIENT, ID + " " + name);
             tcpClient.sendAndReceive(request);
-            return null;
+            return  null;
         });
     }
 
     @Override
-    public Future<Void> deleteClient(int ID) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> deleteClient(int ID) {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(ClientControllerService.DELETE_CLIENT, String.valueOf(ID));
             tcpClient.sendAndReceive(request);
-            return null;
+            return  null;
         });
     }
 
     @Override
-    public Future<Void> updateClient(int ID, String name) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> updateClient(int ID, String name) {
+        return CompletableFuture.supplyAsync(() ->   {
             Message request = new Message(ClientControllerService.UPDATE_CLIENT, ID + " " + name);
             tcpClient.sendAndReceive(request);
-            return null;
+            return   null;
         });
     }
 
     @Override
-    public Future<Client> searchById(int ID){
-        return executorService.submit(() -> {
+    public CompletableFuture<Client> searchById(int ID){
+        return CompletableFuture.supplyAsync(() ->  {
             Message request = new Message(ClientControllerService.SEARCH_BY_ID, String.valueOf(ID));
             Message response = tcpClient.sendAndReceive(request);
-            return (Client)response.getBody();
+            return  (Client)response.getBody();
         });
     }
 
     @Override
-    public Future<Set<Client>> filterByName(String name) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Set<Client>> filterByName(String name) {
+        return CompletableFuture.supplyAsync(() ->   {
             Message request = new Message(ClientControllerService.FILTER_BY_Name, name);
             Message response = tcpClient.sendAndReceive(request);
 
             Set<Client> clients;
             clients = (Set<Client>) response.getBody();
-            return clients;
+            return  clients;
         });
     }
 
     @Override
-    public Future<Iterable<Client>> sortClientsByName() {
+    public CompletableFuture<Iterable<Client>> sortClientsByName() {
         return null;
     }
 }

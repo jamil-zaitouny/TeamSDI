@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 public class PurchaseControllerHandler implements PurchaseControllerService {
     private ExecutorService executorService;
@@ -23,25 +23,25 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Set<Purchase>> printPurchases() {
-        return executorService.submit(() -> {
+    public CompletableFuture<Set<Purchase>> printPurchases() {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(PurchaseControllerService.PRINT_PURCHASES, "");
             Message response = tcpClient.sendAndReceive(request);
 
-            Set<Purchase> purchases ;
-            purchases = (Set<Purchase>)response.getBody();
+            Set<Purchase> purchases;
+            purchases = (Set<Purchase>) response.getBody();
             return purchases;
         });
 
     }
 
     @Override
-    public Future<Void> addPurchase(Purchase purchase) {
-        int ID=purchase.getId();
-        String ISBN=purchase.getBookId();
-        int clientID=purchase.getClientId();
-        String purchaseDetails=purchase.getPurcahseDetails();
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> addPurchase(Purchase purchase) {
+        int ID = purchase.getId();
+        String ISBN = purchase.getBookId();
+        int clientID = purchase.getClientId();
+        String purchaseDetails = purchase.getPurcahseDetails();
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(PurchaseControllerService.ADD_PURCHASE, ID + " " + ISBN + " " + clientID + " " + purchaseDetails);
             tcpClient.sendAndReceive(request);
             return null;
@@ -49,8 +49,8 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Void> deletePurchase(int ID) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> deletePurchase(int ID) {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(PurchaseControllerService.DELETE_PURCHASE, String.valueOf(ID));
             tcpClient.sendAndReceive(request);
             return null;
@@ -58,8 +58,8 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Void> updatePurchase(int ID, String purchaseDetails) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> updatePurchase(int ID, String purchaseDetails) {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(PurchaseControllerService.ADD_PURCHASE, ID + " " + purchaseDetails);
             tcpClient.sendAndReceive(request);
             return null;
@@ -67,54 +67,54 @@ public class PurchaseControllerHandler implements PurchaseControllerService {
     }
 
     @Override
-    public Future<Set<String>> clientsWithMostPurchases() {
-        return executorService.submit(() -> {
+    public CompletableFuture<Set<String>> clientsWithMostPurchases() {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(PurchaseControllerService.CLIENTS_WITH_MOST_PURCHASES, "");
             Message response = tcpClient.sendAndReceive(request);
 
-            Set<String> purchases ;
-            purchases = (Set<String>)response.getBody();
+            Set<String> purchases;
+            purchases = (Set<String>) response.getBody();
             System.out.println(purchases);
             return purchases;
         });
     }
 
     @Override
-    public Future<Set<String>> booksWithHighestPurchaseCount() {
-        return executorService.submit(() -> {
+    public CompletableFuture<Set<String>> booksWithHighestPurchaseCount() {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(PurchaseControllerService.BOOKS_WITH_HIGHEST_PURCHASE_COUNT, "");
             Message response = tcpClient.sendAndReceive(request);
 
-            Set<String> purchases ;
-            purchases = (Set<String>)response.getBody();
+            Set<String> purchases;
+            purchases = (Set<String>) response.getBody();
             return purchases;
         });
     }
 
     @Override
-    public Future<List<String>> booksWithHighestPurchaseCountPerGenre() {
-        return executorService.submit(() -> {
+    public CompletableFuture<List<String>> booksWithHighestPurchaseCountPerGenre() {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(PurchaseControllerService.BOOKS_WITH_HIGHEST_PURCHASE_COUNT_PER_GENRE, "");
             Message response = tcpClient.sendAndReceive(request);
 
-            List<String> purchases ;
-            purchases = (List<String>)response.getBody();
+            List<String> purchases;
+            purchases = (List<String>) response.getBody();
             return purchases;
         });
     }
 
     @Override
-    public Future<Void> deleteAllPurchasesForBook(String ibsn) {
+    public CompletableFuture<Void> deleteAllPurchasesForBook(String ibsn) {
         return null;
     }
 
     @Override
-    public Future<Void> deleteAllPurchasesForClient(int id) {
+    public CompletableFuture<Void> deleteAllPurchasesForClient(int id) {
         return null;
     }
 
     @Override
-    public Future<Iterable<Purchase>> sortPurchasesByDescription() {
+    public CompletableFuture<Iterable<Purchase>> sortPurchasesByDescription() {
         return null;
     }
 }

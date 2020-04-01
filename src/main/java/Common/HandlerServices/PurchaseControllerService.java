@@ -4,7 +4,8 @@ import Model.Purchase;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletableFuture;
 
 public interface PurchaseControllerService {
     String PRINT_PURCHASES = "printPurchases";
@@ -15,14 +16,14 @@ public interface PurchaseControllerService {
     String BOOKS_WITH_HIGHEST_PURCHASE_COUNT = "booksWithHighestPurchaseCount";
     String BOOKS_WITH_HIGHEST_PURCHASE_COUNT_PER_GENRE = "booksWithHighestPurchaseCountPerGenre";
 
-    Future<Set<Purchase>> printPurchases();
-    Future<Void> addPurchase(Purchase purchase);
-    Future<Void> deletePurchase(int ID);
-    Future<Void> updatePurchase(int ID, String purchaseDetails);
-    Future<Set<String>> clientsWithMostPurchases();
-    Future<Set<String>> booksWithHighestPurchaseCount();
-    Future<List<String>> booksWithHighestPurchaseCountPerGenre();
-    Future<Void>deleteAllPurchasesForBook(String ibsn);
-    Future<Void> deleteAllPurchasesForClient(int id);
-    Future<Iterable<Purchase>> sortPurchasesByDescription();
+    CompletableFuture<Set<Purchase>> printPurchases();
+    CompletableFuture<Void> addPurchase(Purchase purchase);
+    CompletableFuture<Void> deletePurchase(int ID);
+    CompletableFuture<Void> updatePurchase(int ID, String purchaseDetails);
+    CompletableFuture<Set<String>> clientsWithMostPurchases();
+    CompletableFuture<Set<String>> booksWithHighestPurchaseCount();
+    CompletableFuture<List<String>> booksWithHighestPurchaseCountPerGenre();
+    CompletableFuture<Void>deleteAllPurchasesForBook(String ibsn);
+    CompletableFuture<Void> deleteAllPurchasesForClient(int id);
+    CompletableFuture<Iterable<Purchase>> sortPurchasesByDescription();
 }

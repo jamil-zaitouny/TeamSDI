@@ -8,6 +8,7 @@ import Model.Book;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -21,8 +22,8 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Set<Book>> print_books() {
-        return executorService.submit(() -> {
+    public CompletableFuture<Set<Book>> print_books() {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(BookControllerService.PRINT_BOOKS, "");
             Message response = tcpClient.sendAndReceive(request);
             Set<Book> books;
@@ -32,8 +33,8 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Void> addBook(String ISBN, String newTitle, String newAuthor, String genre) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> addBook(String ISBN, String newTitle, String newAuthor, String genre) {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(BookControllerService.ADD_BOOK, ISBN + " " + newTitle + " " + newAuthor + " " + genre);
             tcpClient.sendAndReceive(request);
             return null;
@@ -41,8 +42,8 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Void> deleteBook(String ISBN) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> deleteBook(String ISBN) {
+        return CompletableFuture.supplyAsync(() -> {
             Message request = new Message(BookControllerService.DELETE_BOOK, String.valueOf(ISBN));
             tcpClient.sendAndReceive(request);
             return null;
@@ -50,8 +51,8 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Void> updateBook(String ISBN, String newTitle, String newAuthor, String genre) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Void> updateBook(String ISBN, String newTitle, String newAuthor, String genre) {
+        return CompletableFuture.supplyAsync(() ->  {
             Message request = new Message(BookControllerService.UPDATE_BOOK, ISBN + " " + newTitle + " " + newAuthor + " " + genre);
             tcpClient.sendAndReceive(request);
             return null;
@@ -59,8 +60,8 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Book> searchByIsbn(String ISBN) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Book> searchByIsbn(String ISBN) {
+        return CompletableFuture.supplyAsync(() ->  {
             Message request = new Message(BookControllerService.SEARCH_BY_ISBN, ISBN);
             Message response = tcpClient.sendAndReceive(request);
             System.out.println("Here: " + response.getBody());
@@ -69,8 +70,8 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Set<Book>> filterByGenre(String genre) {
-        return executorService.submit(() -> {
+    public CompletableFuture<Set<Book>> filterByGenre(String genre) {
+        return CompletableFuture.supplyAsync(() ->  {
             Message request = new Message(BookControllerService.FILTER_BY_GENRE, genre);
             Message response = tcpClient.sendAndReceive(request);
             Set<Book> books;
@@ -81,7 +82,7 @@ public class BookControllerHandler implements BookControllerService {
     }
 
     @Override
-    public Future<Iterable<Book>> sortBooksByTitleAuthor() {
+    public CompletableFuture<Iterable<Book>> sortBooksByTitleAuthor() {
         return null;
     }
 

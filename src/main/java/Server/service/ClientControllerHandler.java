@@ -1,5 +1,6 @@
 package Server.service;
 
+import Common.HandlerServices.ClientControllerServiceServer;
 import Controller.ClientController;
 import Common.HandlerServices.ClientControllerService;
 import Model.Client;
@@ -8,7 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-public class ClientControllerHandler implements ClientControllerService {
+public class ClientControllerHandler implements ClientControllerServiceServer {
     private ExecutorService executorService;
     private ClientController clientController;
     public ClientControllerHandler( ExecutorService executorService,ClientController clientController){

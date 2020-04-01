@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -25,9 +26,9 @@ public class BookConsole extends DefaultConsole {
     private static final int FilterByGenre = 6;
 
 
-    public BookConsole(BookControllerService controller,PurchaseControllerService purchaseControllercontroller) {
+    public BookConsole(BookControllerService controller, PurchaseControllerService purchaseControllercontroller) {
         this.controller = controller;
-        this.purchaseController =purchaseControllercontroller;
+        this.purchaseController = purchaseControllercontroller;
     }
 
     @Override
@@ -64,11 +65,12 @@ public class BookConsole extends DefaultConsole {
         BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Genre: ");
-        String genre= bufferRead.readLine();
+        String genre = bufferRead.readLine();
 
-        Future<Set<Book>> books = this.controller.filterByGenre(genre);
-        books.isDone();
-        books.get().forEach(System.out::println);
+        CompletableFuture<Set<Book>> books = this.controller.filterByGenre(genre);
+        books.thenAcceptAsync((b)->{
+            b.forEach(System.out::println);
+        });
     }
 
     private void searchByIbsnBook() throws IOException, ExecutionException, InterruptedException {
@@ -76,10 +78,10 @@ public class BookConsole extends DefaultConsole {
 
         System.out.println("IBSN: ");
         String ibsn = bufferRead.readLine();
-
-        Future<Book> bookFuture =  this.controller.searchByIsbn(ibsn);
-        bookFuture.isDone();
-        System.out.println(bookFuture.get());
+        CompletableFuture<Book> books = this.controller.searchByIsbn(ibsn);
+        books.thenAcceptAsync((b) -> {
+            System.out.println(b);
+        });
     }
 
     private void updateBook() throws IOException {
@@ -122,9 +124,10 @@ public class BookConsole extends DefaultConsole {
 
     private void printBooks() throws ExecutionException, InterruptedException {
 
-        Future<Set<Book>> books = this.controller.print_books();
-        books.isDone();
-        books.get().forEach(System.out::println);
+        CompletableFuture<Set<Book>> books = this.controller.print_books();
+        books.thenAcceptAsync((b) -> {
+            b.forEach(System.out::println);
+        });
     }
 
     @Override
