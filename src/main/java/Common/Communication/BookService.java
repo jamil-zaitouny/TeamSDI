@@ -1,11 +1,12 @@
 package Common.Communication;
 
 import Model.Book;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
+@Service
 public interface BookService {
     Set<Book> print_books();
     void addBook(String ISBN, String newTitle, String newAuthor, String genre);

@@ -1,8 +1,6 @@
 package Client.service;
-import Common.Communication.ClientService;
 import Common.Communication.PurchaseService;
 import Model.Purchase;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +59,6 @@ public class PurchaseServiceClient {
     }
 
     public CompletableFuture<Set<Purchase>> getAllClients() {
-        return CompletableFuture.supplyAsync(()->purchaseService.getAllClients());
+        return CompletableFuture.supplyAsync(()->purchaseService.getAllPurchases());
     }
 }

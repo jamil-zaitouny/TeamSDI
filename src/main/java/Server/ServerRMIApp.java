@@ -1,5 +1,13 @@
 package Server;
 
-public class ServerRMIApp {
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+
+public class ServerRMIApp {
+    public static void main(String args[]){
+
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("Server.config");
+        System.out.println("Server started");
+
+    }
 }

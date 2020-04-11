@@ -1,12 +1,12 @@
 package Common.Communication;
 
 import Model.Purchase;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-
+@Service
 public interface PurchaseService {
     Set<Purchase> printPurchases();
     void addPurchase(Purchase purchase);
@@ -19,5 +19,5 @@ public interface PurchaseService {
     void deleteAllPurchasesForClient(int id);
     Iterable<Purchase> sortPurchasesByDescription();
     Optional findOne(int purchaseID);
-    Set<Purchase> getAllClients();
+    Set<Purchase> getAllPurchases();
 }
