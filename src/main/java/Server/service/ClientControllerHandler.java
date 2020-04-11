@@ -2,7 +2,6 @@ package Server.service;
 
 import Common.HandlerServices.ClientControllerServiceServer;
 import Controller.ClientController;
-import Common.HandlerServices.ClientControllerService;
 import Model.Client;
 
 import java.util.Set;

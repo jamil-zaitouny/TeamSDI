@@ -1,30 +1,21 @@
 package Client;
 
-import Client.TCP.TCPClient;
-import Client.service.BookControllerHandler;
-import Client.service.ClientControllerHandler;
-import Client.service.PurchaseControllerHandler;
-import Common.HandlerServices.BookControllerService;
-import Common.HandlerServices.ClientControllerService;
-import Common.HandlerServices.PurchaseControllerService;
+import Client.service.BookServiceClient;
+import Client.service.ClientServiceClient;
+import Client.service.PurchaseServiceClient;
+import Common.Communication.BookService;
+import Common.Communication.ClientService;
+import Common.Communication.PurchaseService;
 import Ui.Console;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class ClientApp {
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
-        TCPClient client = new TCPClient();
-
-        ClientControllerService clientControllerHandler = new ClientControllerHandler(executorService,client);
-        BookControllerService bookControllerHandler = new BookControllerHandler(executorService, client);
-        PurchaseControllerService purchaseControllerHandler = new PurchaseControllerHandler(executorService, client);
-
-        Console console = new Console(clientControllerHandler, bookControllerHandler, purchaseControllerHandler);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("config");
+        BookServiceClient bookController=new BookServiceClient(context.getBean(BookService.class));
+        ClientServiceClient clientController=new ClientServiceClient(context.getBean(ClientService.class));
+        PurchaseServiceClient purchaseController=new PurchaseServiceClient(context.getBean(PurchaseService.class));
+        Console console=new Console(clientController,bookController,purchaseController);
         console.run();
-
-        executorService.shutdown();
     }
 }
