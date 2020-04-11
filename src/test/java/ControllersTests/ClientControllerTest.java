@@ -1,6 +1,5 @@
 package ControllersTests;
 
-import Controller.ClientController;
 import Model.Client;
 import Model.Exceptions.ValidatorException;
 import Repository.RepositoryInMemory;

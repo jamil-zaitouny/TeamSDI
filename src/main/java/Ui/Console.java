@@ -1,23 +1,26 @@
 package Ui;
 
+import Client.service.BookServiceClient;
+import Client.service.ClientServiceClient;
+import Client.service.PurchaseServiceClient;
 import Common.HandlerServices.BookControllerService;
 import Common.HandlerServices.ClientControllerService;
 import Common.HandlerServices.PurchaseControllerService;
 import Controller.*;
 
 public class Console extends DefaultConsole{
-    private ClientControllerService clientController;
-    private BookControllerService bookController;
-    private PurchaseControllerService purchaseController;
+    private ClientServiceClient clientController;
+    private BookServiceClient bookController;
+    private PurchaseServiceClient purchaseController;
 
     private static final int BooksOption = 1;
     private static final int ClientsOption = 2;
     private static final int PurchasesOption = 3;
 
-    public Console(ClientControllerService clientController, BookControllerService bookController, PurchaseControllerService purchaseController) {
+    public Console(ClientServiceClient clientController, BookServiceClient bookController, PurchaseServiceClient purchaseController) {
         this.clientController = clientController;
         this.bookController = bookController;
-        this.purchaseController=purchaseController;
+        this.purchaseController = purchaseController;
     }
 
     @Override

@@ -1,11 +1,3 @@
-import Client.service.BookControllerHandler;
-import Client.service.ClientControllerHandler;
-import Client.service.PurchaseControllerHandler;
-import Common.HandlerServices.BookControllerService;
-import Common.HandlerServices.ClientControllerService;
-import Common.HandlerServices.PurchaseControllerService;
-import Ui.Console;
-
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;

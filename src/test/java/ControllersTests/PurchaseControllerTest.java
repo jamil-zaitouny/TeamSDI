@@ -1,7 +1,6 @@
 package ControllersTests;
 
 import Controller.BookController;
-import Controller.ClientController;
 import Controller.PurchaseController;
 import Model.Book;
 import Model.Client;
@@ -12,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Set;
 
 public class PurchaseControllerTest

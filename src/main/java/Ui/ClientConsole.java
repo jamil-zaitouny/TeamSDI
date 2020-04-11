@@ -1,5 +1,7 @@
 package Ui;
 
+import Client.service.ClientServiceClient;
+import Client.service.PurchaseServiceClient;
 import Common.HandlerServices.ClientControllerService;
 import Common.HandlerServices.PurchaseControllerService;
 import Model.Book;
@@ -14,8 +16,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class ClientConsole extends DefaultConsole {
-    private ClientControllerService clientController;
-    private PurchaseControllerService purchaseController;
+    private ClientServiceClient clientController;
+    private PurchaseServiceClient purchaseController;
 
     private static final int PrintClientsOption = 1;
     private static final int AddClientOption = 2;
@@ -24,9 +26,9 @@ public class ClientConsole extends DefaultConsole {
     private static final int SearchByIdClientOption = 5;
     private static final int FilterByName = 6;
 
-    ClientConsole(ClientControllerService clientController,PurchaseControllerService purchaseControllercontrollerr) {
+    public ClientConsole(ClientServiceClient clientController, PurchaseServiceClient purchaseController) {
         this.clientController = clientController;
-        this.purchaseController =purchaseControllercontrollerr;
+        this.purchaseController = purchaseController;
     }
 
     @Override

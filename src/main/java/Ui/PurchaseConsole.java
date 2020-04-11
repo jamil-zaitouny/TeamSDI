@@ -1,5 +1,6 @@
 package Ui;
 
+import Client.service.PurchaseServiceClient;
 import Common.HandlerServices.PurchaseControllerService;
 import Controller.PurchaseController;
 import Model.Client;
@@ -14,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class PurchaseConsole extends DefaultConsole {
-    private PurchaseControllerService purchaseController;
+    private PurchaseServiceClient purchaseController;
 
     private static final int PrintPurchasesOption = 1;
     private static final int AddPurchaseOption = 2;
@@ -25,7 +26,7 @@ public class PurchaseConsole extends DefaultConsole {
     private static final int BooksPerGenreOption = 7;
     private static final int BestClientOption = 8;
 
-    PurchaseConsole(PurchaseControllerService purchaseController) {
+    public PurchaseConsole(PurchaseServiceClient purchaseController) {
         this.purchaseController = purchaseController;
     }
 

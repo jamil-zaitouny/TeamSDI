@@ -1,5 +1,7 @@
 package Ui;
 
+import Client.service.BookServiceClient;
+import Client.service.PurchaseServiceClient;
 import Common.HandlerServices.BookControllerService;
 import Common.HandlerServices.PurchaseControllerService;
 import Controller.BookController;
@@ -15,8 +17,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class BookConsole extends DefaultConsole {
-    public BookControllerService controller;
-    public PurchaseControllerService purchaseController;
+    private BookServiceClient controller;
+    private PurchaseServiceClient purchaseController;
 
     private static final int PrintBooksOption = 1;
     private static final int AddBookOption = 2;
@@ -26,9 +28,9 @@ public class BookConsole extends DefaultConsole {
     private static final int FilterByGenre = 6;
 
 
-    public BookConsole(BookControllerService controller, PurchaseControllerService purchaseControllercontroller) {
+    public BookConsole(BookServiceClient controller, PurchaseServiceClient purchaseController) {
         this.controller = controller;
-        this.purchaseController = purchaseControllercontroller;
+        this.purchaseController = purchaseController;
     }
 
     @Override
