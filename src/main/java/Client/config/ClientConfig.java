@@ -1,13 +1,11 @@
 package Client.config;
 
-import Common.HandlerServices.BookControllerService;
-import Common.HandlerServices.ClientControllerService;
-import Common.HandlerServices.PurchaseControllerService;
-import Controller.BookController;
+import Common.Communication.BookService;
+import Common.Communication.ClientService;
+import Common.Communication.PurchaseService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiProxyFactoryBean;
-import Common.Communication.*;
 
 
 @Configuration

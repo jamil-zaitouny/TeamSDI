@@ -2,8 +2,6 @@ package Ui;
 
 import Client.service.ClientServiceClient;
 import Client.service.PurchaseServiceClient;
-import Common.HandlerServices.ClientControllerService;
-import Common.HandlerServices.PurchaseControllerService;
 import Model.Book;
 import Model.Client;
 

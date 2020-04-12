@@ -2,10 +2,6 @@ package Ui;
 
 import Client.service.BookServiceClient;
 import Client.service.PurchaseServiceClient;
-import Common.HandlerServices.BookControllerService;
-import Common.HandlerServices.PurchaseControllerService;
-import Controller.BookController;
-import Controller.PurchaseController;
 import Model.Book;
 
 import java.io.BufferedReader;
@@ -14,7 +10,6 @@ import java.io.InputStreamReader;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 public class BookConsole extends DefaultConsole {
     private BookServiceClient controller;
