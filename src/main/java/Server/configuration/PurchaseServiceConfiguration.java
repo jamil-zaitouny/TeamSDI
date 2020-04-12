@@ -10,21 +10,24 @@ import Repository.SortRepository.SortingRepository;
 import Server.serviceimplementation.PurchaseServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiServiceExporter;
 
 @Configuration
+@ComponentScan("Repository.DBRepository")
+@ComponentScan("Controller")
 public class PurchaseServiceConfiguration {
     @Autowired
-    SortingRepository<Integer, Purchase> purchaseRepository;
+    private SortingRepository<Integer, Purchase> purchaseRepository;
     @Autowired
-    SortingRepository<Integer, Client> clientRepository;
+    private SortingRepository<Integer, Client> clientRepository;
     @Autowired
-    SortingRepository<String, Book> bookRepository;
+    private SortingRepository<String, Book> bookRepository;
     @Autowired
-    ClientController clientController;
+    private ClientController clientController;
     @Autowired
-    BookController bookController;
+    private BookController bookController;
 
     @Bean
     RmiServiceExporter rmiPurchaseServiceExporter(){

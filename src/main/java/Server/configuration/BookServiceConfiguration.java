@@ -6,11 +6,16 @@ import Repository.SortRepository.SortingRepository;
 import Server.serviceimplementation.BookServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiServiceExporter;
 
+
 @Configuration
+@ComponentScan("Repository.DBRepository")
+@ComponentScan("Controller")
 public class BookServiceConfiguration {
+
     @Autowired
     private SortingRepository<String, Book> bookRepository;
 

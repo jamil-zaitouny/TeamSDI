@@ -4,6 +4,7 @@ import Model.Client;
 import Model.Exceptions.FileException;
 import Repository.SortRepository.Sort;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
 public class ClientDBRepository implements SortingRepository<Integer, Client>
 {
     HashMap<Integer,Client> clients;

@@ -4,15 +4,15 @@ import Model.Book;
 import Model.Exceptions.ValidatorException;
 import Model.Purchase;
 import Model.Validators.PurchaseValidator;
-import Repository.RepositoryInterface;
 import Repository.SortRepository.Sort;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.stereotype.Component;
 
-import javax.print.DocFlavor;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Component
 public class PurchaseController
 {
     private SortingRepository<Integer, Purchase> repository;

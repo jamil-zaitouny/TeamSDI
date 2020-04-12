@@ -4,6 +4,7 @@ import Model.Exceptions.FileException;
 import Model.Purchase;
 import Repository.SortRepository.Sort;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
 public class PurchaseDBRepository implements SortingRepository<Integer, Purchase>
 {
     HashMap<Integer,Purchase> purchases;

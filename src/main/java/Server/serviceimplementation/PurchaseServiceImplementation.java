@@ -6,11 +6,13 @@ import Controller.ClientController;
 import Controller.PurchaseController;
 import Model.Purchase;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Component
 public class PurchaseServiceImplementation implements PurchaseService {
 
     private SortingRepository<Integer, Purchase> purchaseSortingRepository;

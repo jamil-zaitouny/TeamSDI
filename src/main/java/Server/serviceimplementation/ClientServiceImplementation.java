@@ -4,11 +4,13 @@ import Common.Communication.ClientService;
 import Controller.ClientController;
 import Model.Client;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
+@Component
 public class ClientServiceImplementation implements ClientService {
     private SortingRepository<Integer, Client> clientRepository;
     private ClientController clientController;

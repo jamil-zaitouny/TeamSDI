@@ -6,10 +6,13 @@ import Repository.SortRepository.SortingRepository;
 import Server.serviceimplementation.ClientServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiServiceExporter;
 
 @Configuration
+@ComponentScan("Repository.DBRepository")
+@ComponentScan("Controller")
 public class ClientServiceConfiguration {
     @Autowired
     SortingRepository<Integer, Client> clientRepository;
@@ -23,6 +26,7 @@ public class ClientServiceConfiguration {
         rmiServiceExporter.setRegistryPort(1100);
         return rmiServiceExporter;
     }
+    @Bean
     public ClientService clientService(){
         SortingRepository<Integer, Client> sortingRepository = clientRepository;
         return new ClientServiceImplementation(sortingRepository);

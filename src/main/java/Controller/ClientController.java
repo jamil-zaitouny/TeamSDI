@@ -2,12 +2,11 @@ package Controller;
 
 import Model.Client;
 import Model.Exceptions.ValidatorException;
-import Model.Purchase;
 import Model.Validators.ClientValidator;
 import Model.Validators.IValidator;
-import Repository.RepositoryInterface;
 import Repository.SortRepository.Sort;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,6 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Component
 public class ClientController {
     private SortingRepository<Integer, Client> repository;
 

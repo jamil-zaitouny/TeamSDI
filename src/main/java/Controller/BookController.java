@@ -2,22 +2,19 @@ package Controller;
 
 import Model.Book;
 import Model.Exceptions.ValidatorException;
-import Model.Purchase;
 import Model.Validators.BookValidator;
 import Model.Validators.IValidator;
-import Repository.RepositoryInMemory;
-import Repository.RepositoryInterface;
 import Repository.SortRepository.Sort;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.stereotype.Component;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Component
 public class BookController {
     private SortingRepository<String, Book> repository;
     private IValidator<Book> validator;

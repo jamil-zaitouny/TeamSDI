@@ -3,10 +3,9 @@ package Repository;
 import Model.BaseEntity;
 import Model.Exceptions.ValidatorException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.Optional;
+
 
 public interface RepositoryInterface<ID, T extends BaseEntity<ID>>
 {

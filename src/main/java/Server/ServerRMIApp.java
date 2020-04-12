@@ -6,7 +6,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class ServerRMIApp {
     public static void main(String args[]){
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("Server.config");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("Server.configuration");
         System.out.println("Server started");
 
     }

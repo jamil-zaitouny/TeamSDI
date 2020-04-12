@@ -4,11 +4,13 @@ import Common.Communication.BookService;
 import Controller.BookController;
 import Model.Book;
 import Repository.SortRepository.SortingRepository;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
 
+@ComponentScan("Repository.DBRepository")
 public class BookServiceImplementation implements BookService {
     SortingRepository<String, Book> bookRepository;
     BookController bookController;
