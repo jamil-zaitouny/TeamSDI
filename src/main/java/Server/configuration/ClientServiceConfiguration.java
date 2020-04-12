@@ -25,6 +25,6 @@ public class ClientServiceConfiguration {
     }
     public ClientService clientService(){
         SortingRepository<Integer, Client> sortingRepository = clientRepository;
-        return new ClientServiceImplementation(clientRepository);
+        return new ClientServiceImplementation(sortingRepository);
     }
 }
