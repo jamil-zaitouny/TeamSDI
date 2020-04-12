@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class ClientApp {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("config");
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("Client.config");
         BookServiceClient bookController=new BookServiceClient(context.getBean(BookService.class));
         ClientServiceClient clientController=new ClientServiceClient(context.getBean(ClientService.class));
         PurchaseServiceClient purchaseController=new PurchaseServiceClient(context.getBean(PurchaseService.class));

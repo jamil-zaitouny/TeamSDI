@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;
-@Service
 public interface ClientService {
     Set<Client> print_clients();
     void addClient(int ID, String name);

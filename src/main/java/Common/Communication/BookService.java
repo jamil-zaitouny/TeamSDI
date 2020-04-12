@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.Set;
 
-@Service
 public interface BookService {
     Set<Book> print_books();
     void addBook(String ISBN, String newTitle, String newAuthor, String genre);
