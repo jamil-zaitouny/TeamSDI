@@ -2,6 +2,7 @@ package Server.configuration;
 
 import Common.Communication.BookService;
 import Model.Book;
+import Repository.DBRepository.BookDBRepository;
 import Repository.SortRepository.SortingRepository;
 import Server.serviceimplementation.BookServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.remoting.rmi.RmiServiceExporter;
 public class BookServiceConfiguration {
 
     @Autowired
-    private SortingRepository<String, Book> bookRepository;
+    private BookDBRepository bookRepository;
 
     @Bean
     RmiServiceExporter rmiBookServiceExporter(){

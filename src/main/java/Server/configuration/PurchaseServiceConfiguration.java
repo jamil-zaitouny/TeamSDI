@@ -6,6 +6,9 @@ import Controller.ClientController;
 import Model.Book;
 import Model.Client;
 import Model.Purchase;
+import Repository.DBRepository.BookDBRepository;
+import Repository.DBRepository.ClientDBRepository;
+import Repository.DBRepository.PurchaseDBRepository;
 import Repository.SortRepository.SortingRepository;
 import Server.serviceimplementation.PurchaseServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +22,11 @@ import org.springframework.remoting.rmi.RmiServiceExporter;
 @ComponentScan("Controller")
 public class PurchaseServiceConfiguration {
     @Autowired
-    private SortingRepository<Integer, Purchase> purchaseRepository;
+    private PurchaseDBRepository purchaseRepository;
     @Autowired
-    private SortingRepository<Integer, Client> clientRepository;
+    private ClientDBRepository clientRepository;
     @Autowired
-    private SortingRepository<String, Book> bookRepository;
+    private BookDBRepository bookRepository;
     @Autowired
     private ClientController clientController;
     @Autowired

@@ -1,11 +1,8 @@
 package Model;
 
 import Repository.XMLRepositories.XMLUtilities;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
-import javax.sql.rowset.spi.XmlReader;
 import java.io.Serializable;
 import java.util.Optional;
 

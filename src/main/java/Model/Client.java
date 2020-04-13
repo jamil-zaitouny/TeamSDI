@@ -1,12 +1,9 @@
 package Model;
 
 import Repository.XMLRepositories.XMLUtilities;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import java.io.Serializable;
-import java.nio.channels.ClosedByInterruptException;
 import java.util.Optional;
 
 public class Client extends BaseEntity<Integer> implements Serializable {

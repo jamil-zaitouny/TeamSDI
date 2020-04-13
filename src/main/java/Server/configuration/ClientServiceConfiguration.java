@@ -2,6 +2,7 @@ package Server.configuration;
 
 import Common.Communication.ClientService;
 import Model.Client;
+import Repository.DBRepository.ClientDBRepository;
 import Repository.SortRepository.SortingRepository;
 import Server.serviceimplementation.ClientServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.remoting.rmi.RmiServiceExporter;
 @ComponentScan("Controller")
 public class ClientServiceConfiguration {
     @Autowired
-    SortingRepository<Integer, Client> clientRepository;
+    ClientDBRepository clientRepository;
 
     @Bean
     RmiServiceExporter rmiClientServiceExporter(){

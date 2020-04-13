@@ -12,6 +12,7 @@ repositories {
 
 ext{
     springVersion = '5.2.5.RELEASE'
+    dbcpVersion='2.6.0'
 }
 
 dependencies {
@@ -22,4 +23,6 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
     compile group: 'org.springframework', name: 'spring-context', version: springVersion
     compile group: 'org.springframework', name: 'spring-jdbc', version: springVersion
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: dbcpVersion
+
 }
