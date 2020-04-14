@@ -26,7 +26,7 @@ public class BookDBRepository implements SortingRepository<String, Book> {
         return Optional.ofNullable(books.get(isbn));
     }
 
-    private void loadBooks() throws FileException {
+    public void loadBooks() throws FileException {
         String selectBooks = "select * from books";
         books = new HashMap<>();
         jdbcOperations.query(selectBooks, (rs, rowNum) -> {
@@ -42,7 +42,6 @@ public class BookDBRepository implements SortingRepository<String, Book> {
     }
 
     public BookDBRepository() throws FileException {
-        //loadBooks();
     }
 
     @Override
@@ -87,6 +86,7 @@ public class BookDBRepository implements SortingRepository<String, Book> {
     @Override
     public Optional<Book> delete(String isbn) {
         Optional<Book> previous = Optional.ofNullable(books.remove(isbn));
+        System.out.println(previous);
         previous.ifPresent(book -> {
             String sql = "delete from books where isbn=?";
             jdbcOperations.update(sql, isbn);

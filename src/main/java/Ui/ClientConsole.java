@@ -99,8 +99,8 @@ public class ClientConsole extends DefaultConsole {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         int id = Integer.parseInt(bufferedReader.readLine());
 
-        this.purchaseController.deleteAllPurchasesForClient(id);
-        this.clientController.deleteClient(id);
+        CompletableFuture<Void> future = this.purchaseController.deleteAllPurchasesForClient(id);
+        future.thenAcceptAsync((x)->this.clientController.deleteClient(id));
     }
 
     private void addClient() throws IOException {

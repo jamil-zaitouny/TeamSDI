@@ -47,7 +47,7 @@ public class PurchaseServiceImplementation implements PurchaseService {
 
     @Override
     public void updatePurchase(int ID, String purchaseDetails) {
-        this.updatePurchase(ID, purchaseDetails);
+        this.purchaseController.updatePurchase(ID, purchaseDetails);
     }
 
     @Override
@@ -67,17 +67,17 @@ public class PurchaseServiceImplementation implements PurchaseService {
 
     @Override
     public void deleteAllPurchasesForBook(String ibsn) {
-        this.deleteAllPurchasesForBook(ibsn);
+        this.purchaseController.deleteAllPurchasesForBook(ibsn);
     }
 
     @Override
     public void deleteAllPurchasesForClient(int id) {
-        this.deleteAllPurchasesForClient(id);
+        this.purchaseController.deleteAllPurchasesForClient(id);
     }
 
     @Override
     public Iterable<Purchase> sortPurchasesByDescription() {
-        return this.sortPurchasesByDescription();
+        return this.purchaseController.sortPurchasesByDescription();
     }
 
     @Override

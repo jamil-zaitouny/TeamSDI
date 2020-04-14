@@ -115,16 +115,14 @@ public class BookConsole extends DefaultConsole {
 
         String ibsn = bufferedReader.readLine();
 
-        this.purchaseController.deleteAllPurchasesForBook(ibsn);
-        this.controller.deleteBook(ibsn);
+        CompletableFuture<Void> future = this.purchaseController.deleteAllPurchasesForBook(ibsn);
+        future.thenAcceptAsync((x)-> this.controller.deleteBook(ibsn));
     }
 
     private void printBooks() throws ExecutionException, InterruptedException {
 
         CompletableFuture<Set<Book>> books = this.controller.print_books();
-        books.thenAcceptAsync((b) -> {
-            b.forEach(System.out::println);
-        });
+        books.thenAcceptAsync((b) -> b.forEach(System.out::println));
     }
 
     @Override

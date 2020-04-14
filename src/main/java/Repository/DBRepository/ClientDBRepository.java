@@ -29,7 +29,7 @@ public class ClientDBRepository implements SortingRepository<Integer, Client> {
         return Optional.ofNullable(clients.get(id));
     }
 
-    private void loadClients() throws FileException {
+    public void loadClients() throws FileException {
         String selectClients = "select * from clients";
         clients = new HashMap<>();
         jdbcOperations.query(selectClients, (rs, rowNum) -> {

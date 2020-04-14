@@ -40,7 +40,7 @@ public class BookServiceImplementation implements BookService {
 
     @Override
     public void updateBook(String ISBN, String newTitle, String newAuthor, String genre) {
-        this.updateBook(ISBN, newTitle, newAuthor, genre);
+        this.bookController.updateBook(ISBN, newTitle, newAuthor, genre);
     }
 
     @Override

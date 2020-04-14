@@ -29,7 +29,8 @@ public class PurchaseDBRepository implements SortingRepository<Integer, Purchase
         return Optional.ofNullable(purchases.get(id));
     }
 
-    private void loadPurchases() throws FileException {
+    public void loadPurchases() throws FileException {
+        purchases = new HashMap<>();
         String selectPurchases = "select * from purchases";
         jdbcOperations.query(selectPurchases, (rs, rowNum) -> {
             int id = rs.getInt("purchaseid");
