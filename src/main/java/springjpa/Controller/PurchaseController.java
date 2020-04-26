@@ -1,45 +1,60 @@
 package springjpa.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import springjpa.Model.Book;
 import springjpa.Model.Exceptions.ValidatorException;
 import springjpa.Model.Purchase;
 import springjpa.Model.Validators.PurchaseValidator;
+import springjpa.Repository.DBRepository.PurchaseDBRepository;
 import springjpa.Repository.SortRepository.Sort;
-import springjpa.Repository.SortRepository.SortingRepository;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+@Service
 public class PurchaseController
 {
-    private SortingRepository<Integer, Purchase> repository;
+    @Autowired
+    private PurchaseDBRepository repository;
+    @Autowired
     private ClientController clients;
+    @Autowired
     private BookController books;
+    @Autowired
     private PurchaseValidator validator;
 
-    public PurchaseController(SortingRepository<Integer, Purchase> repository,ClientController clients,  BookController books) {
+    /*public PurchaseController(SortingRepository<Integer, Purchase> repository,ClientController clients,  BookController books) {
         this.repository = repository;
         this.clients = clients;
         this.books = books;
         validator = new PurchaseValidator();
-    }
+    }*/
 
     public void addPurchase(Purchase purchase) throws Throwable {
         clients.findOne(purchase.getClientId()).orElseThrow(()->new ValidatorException("Client does not exist!"));
         books.findOne(purchase.getBookId()).orElseThrow(()->new ValidatorException("Book does not exist!"));
         validator.validate(purchase);
-        this.repository.add(purchase);
+        Optional<Purchase> previous=repository.findById(purchase.getId());
+        previous.ifPresent(s -> {
+            throw new ValidatorException("ID already exists.");
+        });
+        repository.save(purchase);
     }
 
-    public Set<Purchase> getAllPurchases()
+    public List<Purchase> getAllPurchases()
     {
-        return StreamSupport.stream(sortPurchasesByDescription().spliterator(), false).collect(Collectors.toSet());
+        return repository.findAll();
     }
 
     public void deletePurchase(Integer id)
     {
-        this.repository.delete(id);
+        Optional<Purchase> previous=repository.findById(id);
+        previous.orElseThrow(() -> {
+            throw new ValidatorException("Could not find purchase based on ID.");
+        });
+        repository.deleteById(id);
     }
 
     public void deleteAllPurchasesForClient(Integer id)
@@ -58,15 +73,20 @@ public class PurchaseController
                 .forEach(purchase-> deletePurchase(purchase.getId()));
     }
 
+    @Transactional
     public void updatePurchase(Integer id, String newDetails)
     {
-        Purchase newPurchase = new Purchase(id,this.repository.findOne(id).get().getBookId(),this.repository.findOne(id).get().getClientId(),newDetails);
-        this.validator.validate(newPurchase);
-        this.repository.update(newPurchase);
+        Purchase newPurchase = new Purchase(id,this.repository.findById(id).get().getBookId(),this.repository.findById(id).get().getClientId(),newDetails);
+        repository.findById(newPurchase.getId())
+                .ifPresentOrElse(s -> {
+                    s.setPurcahseDetails(newPurchase.getPurcahseDetails());
+                }, () -> {
+                    throw new ValidatorException("Could not find purchase based on ID.");
+                });
     }
 
     public Optional findOne(int purchaseID){
-        return repository.findOne(purchaseID);
+        return repository.findById(purchaseID);
     }
 
 
@@ -123,7 +143,7 @@ public class PurchaseController
 
     private Map<String, Integer> getBooksBought()
     {
-        Set<Purchase> purchases = getAllPurchases();
+        List<Purchase> purchases = getAllPurchases();
         Map<String, Integer> report = new TreeMap<>();
         purchases.forEach((purchase)->{
             String key = purchase.getBookId();
@@ -134,7 +154,7 @@ public class PurchaseController
     }
     public List<String> getBooksBoughtPerGenre()
     {
-        Set<Purchase> purchases = getAllPurchases();
+        List<Purchase> purchases = getAllPurchases();
         Map<String, Integer> genreNoBooks = new TreeMap<>();
         purchases.forEach((purchase)->{
             String id = purchase.getBookId();
@@ -148,7 +168,7 @@ public class PurchaseController
 
     private Map<Integer, Integer> getClientsWithNumberOfBoughtBooks()
     {
-        Set<Purchase> purchases = getAllPurchases();
+        List<Purchase> purchases = getAllPurchases();
         Map<Integer, Integer> report = new TreeMap<>();
         purchases.forEach((purchase)->{
             int key = purchase.getClientId();
@@ -160,7 +180,7 @@ public class PurchaseController
 
     private Map<Integer, Integer> getClientsWithNumberOfBoughtBooksWithGenre(String genre)
     {
-        Set<Purchase> purchases = getAllPurchases();
+        List<Purchase> purchases = getAllPurchases();
         Map<Integer, Integer> report = new TreeMap<>();
         purchases.stream().filter(v->{
             String bookid = v.getBookId();
@@ -175,7 +195,11 @@ public class PurchaseController
         return report;
     }
     public Iterable<Purchase> sortPurchasesByDescription() {
-        Sort sort=new Sort(Sort.Direction.ASC,"purcahseDetails");
-        return repository.findAll(sort);
+        Sort sort=new Sort("purcahseDetails");
+        return sort.sort(repository.findAll().stream()
+                .map(s -> (Object)s)
+                .collect(Collectors.toList()))
+                .stream().map(s->(Purchase)s)
+                .collect(Collectors.toList());
     }
 }
