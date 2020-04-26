@@ -1,8 +1,10 @@
 package ControllersTests;
 
-import Model.Client;
-import Model.Exceptions.ValidatorException;
-import Repository.RepositoryInMemory;
+import springjpa.Controller.ClientController;
+import springjpa.Model.Client;
+import springjpa.Model.Exceptions.ValidatorException;
+import springjpa.Repository.DBRepository.ClientDBRepository;
+import springjpa.Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,7 +18,7 @@ public class ClientControllerTest {
 
     @Before
     public void setUp() throws IOException {
-        clientController=new ClientController(new RepositoryInMemory<>());
+        clientController=new ClientController(new ClientDBRepository());
         clientController.addClient(1,"a");
         clientController.addClient(2,"a");
         clientController.addClient(3,"a");

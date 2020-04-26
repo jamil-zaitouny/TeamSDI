@@ -1,12 +1,12 @@
 package FileRepositoriesTest;
 
-import Model.Book;
-import Model.Client;
-import Model.Purchase;
-import Repository.FileRepositories.BookFileRepository;
-import Repository.FileRepositories.ClientFileRepository;
-import Repository.FileRepositories.PurchaseFileRepository;
-import Repository.RepositoryInterface;
+import springjpa.Model.Book;
+import springjpa.Model.Client;
+import springjpa.Model.Purchase;
+import springjpa.Repository.FileRepositories.BookFileRepository;
+import springjpa.Repository.FileRepositories.ClientFileRepository;
+import springjpa.Repository.FileRepositories.PurchaseFileRepository;
+import springjpa.Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,9 +31,9 @@ public class PurchaseFileRepositoryTest {
         books.add(new Book("1334567890078","c","c", "bla"));
 
         purchases=new PurchaseFileRepository(directory,"PurchasesTest.csv");
-        purchases.add(new Purchase(1,"1234567890098",1));
-        purchases.add(new Purchase(2,"1234567890078",2));
-        purchases.add(new Purchase(3,"1334567890078",1));
+        purchases.add(new Purchase(1,"1234567890098",1, "bla"));
+        purchases.add(new Purchase(2,"1234567890078",2, "bla"));
+        purchases.add(new Purchase(3,"1334567890078",1,"bla"));
     }
 
     @After
@@ -46,12 +46,12 @@ public class PurchaseFileRepositoryTest {
     @Test
     public void testFindOne() throws Exception {
 
-        assertEquals("Failed",new Purchase(1,"1234567890098",1),purchases.findOne(1).get());
+        assertEquals("Failed",new Purchase(1,"1234567890098",1,"bla"),purchases.findOne(1).get());
     }
 
     @Test
     public void testAdd() throws Exception {
-        assertNotNull(purchases.add(new Purchase(7,"1234567890798",2)));
+        assertNotNull(purchases.add(new Purchase(7,"1234567890798",2,"bla")));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package Models;
 
-import Model.Client;
+import springjpa.Model.Client;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

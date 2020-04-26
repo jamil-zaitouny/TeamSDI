@@ -1,8 +1,8 @@
 package XMLRepositoryTest;
 
-import Model.Book;
-import Repository.RepositoryInterface;
-import Repository.XMLRepositories.BookXMLRepository;
+import springjpa.Model.Book;
+import springjpa.Repository.RepositoryInterface;
+import springjpa.Repository.XMLRepositories.BookXMLRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

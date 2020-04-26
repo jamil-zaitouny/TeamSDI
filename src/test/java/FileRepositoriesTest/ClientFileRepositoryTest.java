@@ -1,10 +1,11 @@
 package FileRepositoriesTest;
 
-import Model.Client;
-import Repository.RepositoryInterface;
+import springjpa.Model.Client;
+import springjpa.Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import springjpa.Repository.FileRepositories.ClientFileRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,7 +15,7 @@ public class ClientFileRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        clients=new Repository.FileRepositories.ClientFileRepository(".\\src\\main\\java\\Files\\","ClientTest.csv");
+        clients=new ClientFileRepository(".\\src\\main\\java\\Files\\","ClientTest.csv");
     }
 
     @After

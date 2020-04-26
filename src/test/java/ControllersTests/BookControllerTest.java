@@ -1,11 +1,10 @@
 package ControllersTests;
 
-import Controller.BookController;
-import Model.Book;
-import Model.Exceptions.ValidatorException;
-import Model.Validators.BookValidator;
-import Repository.FileRepositories.BookFileRepository;
-import Repository.RepositoryInMemory;
+import springjpa.Controller.BookController;
+import springjpa.Model.Book;
+import springjpa.Model.Exceptions.ValidatorException;
+import springjpa.Repository.DBRepository.BookDBRepository;
+import springjpa.Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,7 +19,7 @@ public class BookControllerTest {
 
     @Before
     public void setUp() throws IOException {
-        bookController=new BookController(new RepositoryInMemory<>());
+        bookController=new BookController(new BookDBRepository());
         bookController.addBook("9781234567897","a","a", "a");
         bookController.addBook("9781234567898","b","b", "b");
         bookController.addBook("9781234567899","c","c", "a");

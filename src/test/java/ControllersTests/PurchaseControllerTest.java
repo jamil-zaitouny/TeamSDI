@@ -1,15 +1,21 @@
 package ControllersTests;
 
-import Controller.BookController;
-import Controller.PurchaseController;
-import Model.Book;
-import Model.Client;
-import Model.Purchase;
-import Repository.RepositoryInMemory;
+import springjpa.Controller.BookController;
+import springjpa.Controller.ClientController;
+import springjpa.Controller.PurchaseController;
+import springjpa.Model.Book;
+import springjpa.Model.Client;
+import springjpa.Model.Purchase;
+import springjpa.Repository.DBRepository.BookDBRepository;
+import springjpa.Repository.DBRepository.ClientDBRepository;
+import springjpa.Repository.DBRepository.PurchaseDBRepository;
+import springjpa.Repository.RepositoryInMemory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import springjpa.Repository.RepositoryInterface;
+import springjpa.Repository.SortRepository.SortingRepository;
 
 import java.util.Set;
 
@@ -21,9 +27,9 @@ public class PurchaseControllerTest
 
     @Before
     public void setUp() throws Throwable {
-        RepositoryInMemory<Integer, Client> clientRepo = new RepositoryInMemory<>();
-        RepositoryInMemory<String, Book> bookRepo = new RepositoryInMemory<>();
-        RepositoryInMemory<Integer, Purchase> purchaseRepo = new RepositoryInMemory<>();
+        SortingRepository clientRepo = new ClientDBRepository();
+        SortingRepository bookRepo = new BookDBRepository();
+        SortingRepository purchaseRepo = new PurchaseDBRepository();
 
         clientController = new ClientController(clientRepo);
         bookController = new BookController(bookRepo);

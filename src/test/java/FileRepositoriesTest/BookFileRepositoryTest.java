@@ -1,8 +1,8 @@
 package FileRepositoriesTest;
 
-import Model.Book;
-import Repository.FileRepositories.BookFileRepository;
-import Repository.RepositoryInterface;
+import springjpa.Model.Book;
+import springjpa.Repository.FileRepositories.BookFileRepository;
+import springjpa.Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

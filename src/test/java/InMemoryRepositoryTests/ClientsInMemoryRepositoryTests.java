@@ -1,8 +1,8 @@
 package InMemoryRepositoryTests;
 
-import Model.Client;
-import Repository.RepositoryInMemory;
-import Repository.RepositoryInterface;
+import springjpa.Model.Client;
+import springjpa.Repository.RepositoryInMemory;
+import springjpa.Repository.RepositoryInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
