@@ -1,14 +1,18 @@
 package springjpa.Ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import springjpa.Controller.BookController;
 import springjpa.Controller.PurchaseController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+@Component
 public class BookConsole extends DefaultConsole {
+   @Autowired
     public BookController controller;
+    @Autowired
     public PurchaseController purchaseControllercontroller;
 
     private static final int PrintBooksOption = 1;

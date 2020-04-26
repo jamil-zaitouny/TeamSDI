@@ -1,14 +1,18 @@
 package springjpa.Ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import springjpa.Controller.ClientController;
 import springjpa.Controller.PurchaseController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
+@Component
 public class ClientConsole extends DefaultConsole {
+   @Autowired
     private ClientController clientController;
+   @Autowired
     private PurchaseController purchaseControllercontroller;
 
     private static final int PrintClientsOption = 1;

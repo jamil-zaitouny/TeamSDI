@@ -1,23 +1,29 @@
 package springjpa.Ui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import springjpa.Controller.BookController;
 import springjpa.Controller.ClientController;
 import springjpa.Controller.PurchaseController;
 
+@Component
 public class Console extends DefaultConsole{
+    @Autowired
     private ClientController clientController;
+    @Autowired
     private BookController bookController;
+    @Autowired
     private PurchaseController purchaseController;
 
     private static final int BooksOption = 1;
     private static final int ClientsOption = 2;
     private static final int PurchasesOption = 3;
 
-    public Console(ClientController clientController, BookController bookController,PurchaseController purchaseController) {
+    /*public Console(ClientController clientController, BookController bookController,PurchaseController purchaseController) {
         this.clientController = clientController;
         this.bookController = bookController;
         this.purchaseController=purchaseController;
-    }
+    }*/
 
     @Override
     public int dealChoice(int choice) {
