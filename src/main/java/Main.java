@@ -1,4 +1,5 @@
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import springjpa.Ui.Console;
 
 
 public class Main {
@@ -7,8 +8,9 @@ public class Main {
         System.out.println("Application Running!");
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-            "springjpa"
+            "springjpa.config"
         );
+        context.getBean(Console.class).run();
     }
 
 
