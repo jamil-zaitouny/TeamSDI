@@ -1,6 +1,5 @@
 package springjpa.Model;
 
-import springjpa.Repository.XMLRepositories.XMLUtilities;
 import org.w3c.dom.Element;
 
 import javax.persistence.Entity;
@@ -9,22 +8,20 @@ import java.util.Optional;
 @Entity
 public class Client extends BaseEntity<Integer>{
     private String name;
-    public static String className = "Clients";
+    //public static String className = "Clients";
 
+    public Client()
+    {}
     public Client(int id, String name){
-        super(id);
+        super.setId(id);
         this.name = name;
     }
 
-    public Client(Client copyClient){
-        super(copyClient.getId());
+    /*public Client(Client copyClient){
+        super.setId(copyClient.getId());
         this.name = copyClient.getName();
-    }
+    }*/
 
-    public Client(Element clientElement){
-        super(Integer.parseInt(XMLUtilities.getTextFromTagName(clientElement, "id")));
-        this.name = XMLUtilities.getTextFromTagName(clientElement, "name");
-    }
 
     @Override
     public boolean equals(Object obj) {

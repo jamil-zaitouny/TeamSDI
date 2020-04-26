@@ -1,6 +1,5 @@
 package springjpa.Model;
 
-import springjpa.Repository.XMLRepositories.XMLUtilities;
 import org.w3c.dom.Element;
 
 import javax.persistence.Entity;
@@ -11,18 +10,14 @@ public class Book extends BaseEntity<String> {
     private String authorName;
     private String genre;
 
+    public Book()
+    {}
+
     public Book(String ISBN, String title, String authorName, String genre) {
-        super(ISBN);
+        super.setId(ISBN);
         this.title = title;
         this.authorName = authorName;
         this.genre = genre;
-    }
-    public Book(Element bookElement){
-            super(XMLUtilities.getTextFromTagName(bookElement, "isbn"));
-            this.authorName = XMLUtilities.getTextFromTagName(bookElement, "author");
-            this.title = XMLUtilities.getTextFromTagName(bookElement, "title");
-            this.genre = XMLUtilities.getTextFromTagName(bookElement, "genre");
-
     }
 
     @Override

@@ -1,6 +1,5 @@
 package springjpa.Model;
 
-import springjpa.Repository.XMLRepositories.XMLUtilities;
 import org.w3c.dom.Element;
 
 import javax.persistence.Entity;
@@ -13,16 +12,13 @@ public class Purchase extends BaseEntity<Integer>
     private int clientId;
     private String purcahseDetails;
 
+    public Purchase()
+    {}
     public Purchase(int purchaseID, String bookId, int clientId,String purcahseDetails) {
-        super(purchaseID);
+        super.setId(purchaseID);
         this.bookId = bookId;
         this.clientId = clientId;
         this.purcahseDetails=purcahseDetails;
-    }
-    public Purchase(Element purchaseElement){
-        super(Integer.parseInt(XMLUtilities.getTextFromTagName(purchaseElement, "id")));
-        this.bookId = XMLUtilities.getTextFromTagName(purchaseElement, "bookid");
-        this.clientId = Integer.parseInt(XMLUtilities.getTextFromTagName(purchaseElement, "clientid"));
     }
 
     public String getBookId() {
