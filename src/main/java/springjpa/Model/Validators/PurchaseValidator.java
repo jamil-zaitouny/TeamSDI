@@ -1,11 +1,12 @@
 package springjpa.Model.Validators;
 
+import org.springframework.stereotype.Component;
 import springjpa.Model.Exceptions.ValidatorException;
 import springjpa.Model.Purchase;
 
 import java.util.Optional;
 
-
+@Component
 public class PurchaseValidator implements IValidator<Purchase>
 {
     @Override

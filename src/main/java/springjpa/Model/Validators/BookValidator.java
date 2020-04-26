@@ -1,10 +1,11 @@
 package springjpa.Model.Validators;
 
+import org.springframework.stereotype.Component;
 import springjpa.Model.Book;
 import springjpa.Model.Exceptions.ValidatorException;
 
 import java.util.Optional;
-
+@Component
 public class BookValidator implements IValidator<Book>{
 
     @Override

@@ -1,10 +1,11 @@
 package springjpa.Model.Validators;
 
+import org.springframework.stereotype.Component;
 import springjpa.Model.Client;
 import springjpa.Model.Exceptions.ValidatorException;
 
 import java.util.Optional;
-
+@Component
 public class ClientValidator implements IValidator<Client> {
 
     @Override
