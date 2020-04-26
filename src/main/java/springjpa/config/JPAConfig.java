@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 import javax.xml.crypto.Data;
 
 @Configuration
-@EnableJpaRepositories
+@EnableJpaRepositories("springjpa.Repository.DBRepository")
 @EnableTransactionManagement
 public class JPAConfig {
     @Value("${db.jdbcUrl}")
@@ -54,7 +54,7 @@ public class JPAConfig {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(Database.POSTGRESQL);
         vendorAdapter.setGenerateDdl(generateDDL);
-        vendorAdapter.setShowSql(true);
+        vendorAdapter.setShowSql(false);
 
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setJpaVendorAdapter(vendorAdapter);
@@ -70,7 +70,7 @@ public class JPAConfig {
     }
 
     @Bean
-    PlatformTransactionManager platformTransactionManager(){
+    PlatformTransactionManager transactionManager(){
         JpaTransactionManager manager = new JpaTransactionManager();
         manager.setEntityManagerFactory(entityManagerFactory());
         return manager;
