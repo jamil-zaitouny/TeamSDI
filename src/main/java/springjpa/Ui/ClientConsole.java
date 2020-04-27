@@ -15,6 +15,8 @@ public class ClientConsole extends DefaultConsole {
    @Autowired
     private PurchaseController purchaseControllercontroller;
 
+
+
     private static final int PrintClientsOption = 1;
     private static final int AddClientOption = 2;
     private static final int DeleteClientOption = 3;

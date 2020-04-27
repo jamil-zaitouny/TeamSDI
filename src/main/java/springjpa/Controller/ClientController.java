@@ -1,5 +1,7 @@
 package springjpa.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springjpa.Model.Client;
@@ -17,23 +19,24 @@ import java.util.stream.Collectors;
 
 @Service
 public class ClientController {
+
+    final Logger logger = LoggerFactory.getLogger(ClientController.class);
+
     @Autowired
     private ClientDBRepository repository;
 
     @Autowired
     private IValidator<Client> validator;
-    /*public ClientController(SortingRepository<Integer, Client> repository) {
-        this.validator = new ClientValidator();
-        this.repository = repository;
-    }*/
 
     public void addClient(Integer id, String name) throws ValidatorException, IOException {
         Client client = new Client(id, name);
         validator.validate(client);
         Optional<Client> previous=repository.findById(client.getId());
         previous.ifPresent(s -> {
+            logger.info("ERROR: Adding failed, id existent: " + id);
             throw new ValidatorException("ID already exists.");
         });
+        logger.info("Added new client.");
         repository.save(client);
     }
 
@@ -41,8 +44,10 @@ public class ClientController {
     {
         Optional<Client> previous=repository.findById(id);
         previous.orElseThrow(() -> {
+            logger.info("ERROR: Deleted failed, id non existent: " + id);
             throw new ValidatorException("Could not find client based on ID.");
         });
+        logger.info("Deleted client");
         repository.deleteById(id);
     }
 
@@ -54,29 +59,35 @@ public class ClientController {
                 .ifPresentOrElse(s -> {
                     s.setName(newClient.getName());
                 }, () -> {
+                    logger.info("ERROR: updating client that doesn't exist: " + id);
                     throw new ValidatorException("Could not find book based on ID.");
                 });
     }
 
     public Client searchById(Integer id)
     {
+        logger.info("Search for client: " + id);
         return this.repository.findById(id).get();
     }
 
     public Optional findOne(int ClientID){
+        logger.info("Search for client: " + ClientID);
         return repository.findById(ClientID);
     }
 
     public List<Client> getAllClients()
     {
+        logger.info("Retrieving list of clients");
         return repository.findAll();
     }
 
     public Set<Client> filterByName(String name) {
+        logger.info("Filtering by name: " + name);
         List<Client> clients = getAllClients();
         return clients.stream().filter(v->v.getName().contains(name)).collect(Collectors.toSet());
     }
     public Iterable<Client> sortClientsByName() {
+        logger.info("Sorting client by name.");
         Sort sort=new Sort("name");
         return sort.sort(repository.findAll().stream()
                 .map(s -> (Object)s)

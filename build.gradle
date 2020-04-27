@@ -26,6 +26,8 @@ dependencies {
     //logging
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+
 
     compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.10.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
@@ -43,6 +45,5 @@ dependencies {
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 
     compile group: 'com.zaxxer', name: 'HikariCP', version: '3.4.2'
-
 
 }

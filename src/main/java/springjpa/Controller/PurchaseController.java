@@ -1,5 +1,7 @@
 package springjpa.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springjpa.Model.Book;
@@ -25,26 +27,30 @@ public class PurchaseController
     @Autowired
     private PurchaseValidator validator;
 
-    /*public PurchaseController(SortingRepository<Integer, Purchase> repository,ClientController clients,  BookController books) {
-        this.repository = repository;
-        this.clients = clients;
-        this.books = books;
-        validator = new PurchaseValidator();
-    }*/
+    final Logger logger = LoggerFactory.getLogger(PurchaseController.class);
 
     public void addPurchase(Purchase purchase) throws Throwable {
-        clients.findOne(purchase.getClientId()).orElseThrow(()->new ValidatorException("Client does not exist!"));
-        books.findOne(purchase.getBookId()).orElseThrow(()->new ValidatorException("Book does not exist!"));
+        clients.findOne(purchase.getClientId()).orElseThrow(()->{
+            logger.info("ERROR: Try to add a purchase for a client that doesn't exist");
+            return new ValidatorException("Client does not exist!");
+        });
+        books.findOne(purchase.getBookId()).orElseThrow(()->{
+            logger.info("ERROR: Try to add a purchase with a book that doesn't exist");
+            return new ValidatorException("Book does not exist!");
+        });
         validator.validate(purchase);
         Optional<Purchase> previous=repository.findById(purchase.getId());
         previous.ifPresent(s -> {
+            logger.info("ERROR: Try to add a purchase with an existent id: " + purchase.getId());
             throw new ValidatorException("ID already exists.");
         });
+        logger.info("Adding a new purchase");
         repository.save(purchase);
     }
 
     public List<Purchase> getAllPurchases()
     {
+        logger.info("Retrieve all purchases");
         return repository.findAll();
     }
 
@@ -52,13 +58,16 @@ public class PurchaseController
     {
         Optional<Purchase> previous=repository.findById(id);
         previous.orElseThrow(() -> {
+            logger.info("ERROR: Try to delete a purchase with an id that doesn't exist");
             throw new ValidatorException("Could not find purchase based on ID.");
         });
+        logger.info("Deleting a purchase");
         repository.deleteById(id);
     }
 
     public void deleteAllPurchasesForClient(Integer id)
     {
+        logger.info("Deleting all purchases for client with id: " + id);
         Iterable<Purchase> purchases=repository.findAll();
         StreamSupport.stream(purchases.spliterator(),false)
                 .filter(purchase-> purchase.getClientId()==id)
@@ -67,6 +76,7 @@ public class PurchaseController
 
     public void deleteAllPurchasesForBook(String id)
     {
+        logger.info("Deleting all purchases for book with id: " + id);
         Iterable<Purchase> purchases=repository.findAll();
         StreamSupport.stream(purchases.spliterator(),false)
                 .filter(purchase-> purchase.getBookId().equals(id))
@@ -81,14 +91,16 @@ public class PurchaseController
                 .ifPresentOrElse(s -> {
                     s.setPurcahseDetails(newPurchase.getPurcahseDetails());
                 }, () -> {
+                    logger.info("Trying to update purchase with non existent: " + id);
                     throw new ValidatorException("Could not find purchase based on ID.");
                 });
+        logger.info("Updated a purchases");
     }
 
     public Optional findOne(int purchaseID){
+        logger.info("Searching for purchase with id: " + purchaseID);
         return repository.findById(purchaseID);
     }
-
 
     public List<String> getTopThreeBooksBought()
     {
@@ -195,7 +207,8 @@ public class PurchaseController
         return report;
     }
     public Iterable<Purchase> sortPurchasesByDescription() {
-        Sort sort=new Sort("purcahseDetails");
+        logger.info("Sorting purchases by description");
+        Sort sort=new Sort("purchaseDetails");
         return sort.sort(repository.findAll().stream()
                 .map(s -> (Object)s)
                 .collect(Collectors.toList()))

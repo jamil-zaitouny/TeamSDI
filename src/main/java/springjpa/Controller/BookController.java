@@ -1,5 +1,7 @@
 package springjpa.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springjpa.Model.Book;
@@ -13,28 +15,28 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import java.util.stream.Collectors;
 
 @Service
 public class BookController {
+    final Logger logger = LoggerFactory.getLogger(BookController.class);
+
     @Autowired
     private BookDBRepository repository;
 
     @Autowired
     private IValidator<Book> validator;
 
-    /*public BookController(SortingRepository<String, Book> repository) {
-        validator = new BookValidator();
-        this.repository = repository;
-    }*/
-
     public void addBook(String IBSN, String title, String author, String genre) throws ValidatorException, IOException {
         Book book = new Book(IBSN, title, author, genre);
         validator.validate(book);
         Optional<Book> previous=repository.findById(book.getId());
         previous.ifPresent(s -> {
+            logger.info("ERROR: Try to add an existent book: " + IBSN);
             throw new ValidatorException("ID already exists.");
         });
+        logger.info("Adding a new book: " + IBSN);
         repository.save(book);
     }
 
@@ -42,8 +44,10 @@ public class BookController {
     {
         Optional<Book> previous=repository.findById(ibsn);
         previous.orElseThrow(() -> {
+            logger.info("ERROR: Try to delete a non existent book: " + ibsn);
             throw new ValidatorException("Could not find book based on ID.");
         });
+        logger.info("Deleting a book: " + ibsn);
         repository.deleteById(ibsn);
     }
 
@@ -55,29 +59,36 @@ public class BookController {
                 .ifPresentOrElse(s -> {
                     s.setAuthorName(newBook.getAuthorName()); s.setTitle(newBook.getTitle());
                 }, () -> {
+                    logger.info("ERROR: Try to update a non existent book: " + ibsn);
                     throw new ValidatorException("Could not find book based on ID.");
                 });
+        logger.info("Updating an existent book: " + ibsn);
     }
 
     public Book searchByIbsn(String ibsn){
+        logger.info("Search a book by id: " + ibsn);
         return this.repository.findById(ibsn).get();
     }
 
     public Optional findOne(String  ISBN){
+        logger.info("Search a book by id: " + ISBN);
         return repository.findById(ISBN);
     }
 
     public List<Book> getAllBooks() {
+        logger.info("Retrieve all books: ");
         return repository.findAll();
     }
 
     public Set<Book> filterByGenre(String genre){
         List<Book> filteredBooks = getAllBooks();
+        logger.info("Filtering by genre: " + genre);
         return filteredBooks.stream().filter(v->v.getGenre().equals(genre)).collect(Collectors.toSet());
     }
 
     public Iterable<Book> sortBooksByTitleAuthor() {
         Sort sort=new Sort("title").and(new Sort("authorName"));
+        logger.info("Sorting books by title and author");
         return sort.sort(repository.findAll().stream()
                 .map(s -> (Object)s)
                 .collect(Collectors.toList()))
