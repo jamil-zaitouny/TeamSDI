@@ -208,7 +208,7 @@ public class PurchaseController
     }
     public Iterable<Purchase> sortPurchasesByDescription() {
         logger.info("Sorting purchases by description");
-        Sort sort=new Sort("purchaseDetails");
+        Sort sort=new Sort("purcahseDetails");
         return sort.sort(repository.findAll().stream()
                 .map(s -> (Object)s)
                 .collect(Collectors.toList()))
