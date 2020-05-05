@@ -1,0 +1,11 @@
+dependencies {
+    compile project(':web')
+
+    compile group: 'org.springframework', name: 'spring-web', version: "$springVersion"
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$jacksonDatabindVersion"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$jacksonDatabindVersion"
+
+    //Pairs for sorted list
+    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+}
