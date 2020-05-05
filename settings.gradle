@@ -1,1 +1,6 @@
-rootProject.name = 'lab2-4'
+rootProject.name = 'bookshop'
+
+include 'bookshop-client'
+include 'bookshop-core'
+include 'bookshop-web'
+include 'randomProject'
